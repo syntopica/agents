@@ -62,7 +62,7 @@
         "--extra",
         "mcp",
         "--directory",
-        "/Users/cristiandeluxe/p/atrium",
+        "/Users/cristiandeluxe/p/mem",
         "atrium-mcp"
       ],
       "required": true,

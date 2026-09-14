@@ -294,7 +294,7 @@ Moved verbatim.
   - [ ] **Re-measure serena's call count around 2026-10-01.** The whole point of
         the rule is to give it the two jobs it wins; if it is still at 0 calls
         with the rule in place and loading, the experiment is over and it goes.
-        Detail stale on 2026-09-04: `~/p/atrium/.codegraph` now exists (from
+        Detail stale on 2026-09-04: `~/p/mem/.codegraph` now exists (from
         `index-all-repos.sh`), so "atrium has no codegraph index" no longer
         holds; the 2026-10-01 re-measure stands. Coverage re-checked 2026-09-07
         across the 139 git repositories directly under `~/p`: exactly **one**
@@ -465,4 +465,7 @@ repeats.
 
 ## Shared package scope migration (2026-09-14)
 
-- [ ] After the owner publishes the renamed shared packages, regenerate the lockfile and run the existing repository quality gate. Source references now use the new scope; the lockfile is intentionally unchanged because the packages are not available offline.
+- [ ] After the owner publishes the renamed shared packages, regenerate the
+      lockfile and run the existing repository quality gate. Source references
+      now use the new scope; the lockfile is intentionally unchanged because the
+      packages are not available offline.
