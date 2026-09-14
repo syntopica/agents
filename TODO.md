@@ -462,3 +462,7 @@ repeats.
       last seen 2026-09-12): the daily checkpoint cannot commit (main, 2 dirty):
       Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-import'
       imported from /Users/cristiandeluxe/p/rocket-ag.
+
+## Shared package scope migration (2026-09-14)
+
+- [ ] After the owner publishes the renamed shared packages, regenerate the lockfile and run the existing repository quality gate. Source references now use the new scope; the lockfile is intentionally unchanged because the packages are not available offline.

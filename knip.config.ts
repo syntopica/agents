@@ -1,4 +1,4 @@
-import { createKnipConfig } from '@busirocket/quality-config/knip'
+import { createKnipConfig } from '@syntopica/quality-config/knip'
 import type { KnipConfiguration } from 'knip'
 
 const baseline = createKnipConfig({
