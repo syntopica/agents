@@ -25,6 +25,13 @@
           "reason": "The pinned source exposes an explicit opt-in browser launcher through BRAINSTORM_OPEN_CMD; default launchers use execFile with argument arrays."
         }
       ]
+    },
+    {
+      "id": "better-ui",
+      "source": "jakubkrehel/skills",
+      "resolvedCommit": "267330e1adfc66a718fb65fa6918c1f06d0a689e",
+      "skills": ["better-ui"],
+      "targets": ["claude", "codex", "gemini-cli"]
     }
   ]
 }
