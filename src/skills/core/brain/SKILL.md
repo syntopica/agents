@@ -1,7 +1,7 @@
 ---
 name: brain
 description:
-  Answers from the personal LLM-wiki at ~/p/brain, ingests sources into it, and
+  Answers from the personal LLM-wiki at ~/p/wiki, ingests sources into it, and
   audits its health with the repository's own tooling. Trigger when a task needs
   durable context that sounds previously established (a project's setup, a
   client, a past decision, infra, a credential), when new material has to be
@@ -18,7 +18,7 @@ allowed-tools: Read, Grep, Glob, Bash, Write, Edit
   secret into chat, a commit message, a PR, or any file outside the repository.
   Reading one to use it is the point; echoing it is not.
 - **Read before asking.** A question whose answer sounds previously established
-  is answered from the wiki, not from the user. `~/p/brain/index.md` is the
+  is answered from the wiki, not from the user. `~/p/wiki/brain/index.md` is the
   entry point and every page cross-links.
 - `SCHEMA.md` governs page layout, frontmatter, folder placement and secret
   handling, and `CLAUDE.md` governs the ingest runbook and the several-sessions
@@ -61,9 +61,9 @@ pnpm --dir tools/clips clips ingest --dry-run    # route only, reaches no prompt
 
 A real run is `clips ingest`, and `--manual` selects the interactive
 synthesizer - no model at all, the CLI opens a worktree and this session writes
-the pages into it. **The full FIFO runbook is in `~/p/brain/CLAUDE.md`; follow
-it there rather than improvising**, because the command prompts twice and a
-piped answer sends EOF before the pages exist.
+the pages into it. **The full FIFO runbook is in `~/p/wiki/CLAUDE.md`; follow it
+there rather than improvising**, because the command prompts twice and a piped
+answer sends EOF before the pages exist.
 
 Two mechanics that cost a re-run when forgotten, both from that runbook:
 
@@ -109,7 +109,7 @@ touched, not the wiki - it spends quota per page.
 Bulk passes that read a whole corpus go to Gemini through `agy`; the small
 number of items where being right matters more than the price go to `codex` or
 `agy`'s Anthropic and OpenAI models. The canonical wording is the
-`## Model routing` section of `~/p/brain/CLAUDE.md`. Read-only passes carry
+`## Model routing` section of `~/p/wiki/CLAUDE.md`. Read-only passes carry
 `--sandbox --mode plan --disable-slash-commands`, never
 `--dangerously-skip-permissions`: they inline untrusted captured text into a
 session that can read live credentials.

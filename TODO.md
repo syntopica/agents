@@ -80,9 +80,9 @@ content decisions live in `~/p/rocket-agents-library/TODO.md`.
       is no safe moment. The specific entries are already gone from
       `dotfiles/home-sync.list`; this item is only about whether the general
       trap earns a line in the always-loaded rules or stays as
-      `~/p/brain/topics/atuin-shell-history` and
-      `~/p/brain/topics/machine-sync`. Smallest next step: the owner says rule
-      or wiki-only.
+      `~/p/wiki/brain/topics/atuin-shell-history` and
+      `~/p/wiki/brain/topics/machine-sync`. Smallest next step: the owner says
+      rule or wiki-only.
 - [!] Complete account-local authentication on `macmini`. Managed configuration
   is converged, but `agents:doctor` still reports Cursor MCP failed; Claude
   needs Cloudflare in personal and Favish plus OpenSEO in personal. ZeroHedge is
@@ -124,10 +124,10 @@ content decisions live in `~/p/rocket-agents-library/TODO.md`.
 - [!] Rotate the still-live credentials recovered on 2026-08-17 from
   `~/.gemini/mcp_config.json` (2 GitHub PATs, Context7, Bright Data, Firecrawl,
   Browser Use, n8n JWT, Brave Search; the two ZeroHedge MongoDB URIs only need
-  revoking). Values and uses in `~/p/brain/business/misc-credentials.md`. State
-  2026-08-22: user explicitly deferred the rotation ("de momento no voy a rotar
-  ninguna"); neo cleanup done (no `mcp_config.json` in `/root/.gemini`, and
-  `p/brain`/`p/vault` copies deleted); remaining exposure surface is
+  revoking). Values and uses in `~/p/wiki/brain/business/misc-credentials.md`.
+  State 2026-08-22: user explicitly deferred the rotation ("de momento no voy a
+  rotar ninguna"); neo cleanup done (no `mcp_config.json` in `/root/.gemini`,
+  and `p/brain`/`p/vault` copies deleted); remaining exposure surface is
   `portatil`'s legacy `~/.gemini` (machine unreachable 2026-08-22 — delete it
   when the laptop is next on the network) plus the providers themselves. Unblock
   action when resumed: the per-provider dashboard checklist from the 2026-08-22
@@ -146,7 +146,7 @@ content decisions live in `~/p/rocket-agents-library/TODO.md`.
       are not ours to change. Smallest step, and it needs a yes because it
       writes GitHub settings: enable the organisation default for those two,
       then add gitleaks to the private repositories that are actually active.
-      Source: `~/p/brain/topics/app-security.md`.
+      Source: `~/p/wiki/brain/topics/app-security.md`.
 - [ ] Adopt pnpm 11 supply-chain controls across the other `~/p` repos:
       `minimumReleaseAge: 1440` (a 24h cooldown defeats the compromised-token
       window) and `blockExoticSubdeps: true`. Surveyed 2026-08-31: of 135
@@ -157,13 +157,13 @@ content decisions live in `~/p/rocket-agents-library/TODO.md`.
       per-repo action taken when each is next touched. Command:
       `for d in ~/p/*/; do ... grep minimumReleaseAge ...` (see `TODO_LOG.md`
       2026-08-31 for the exact sweep). Source:
-      `~/p/brain/topics/supply-chain-security.md`.
+      `~/p/wiki/brain/topics/supply-chain-security.md`.
 - [!] Add `uv export --format requirements.txt` to any CI that adopts `uv`, as
   the exit ramp now that OpenAI owns it — one line, converts lock-in into a
   preference. Blocked by its own precondition: a 2026-08-22 sweep of
   `~/p/*/.github/workflows` found no workflow using `uv`. Unblock action: apply
   it in the first workflow that adopts `uv`. Source:
-  `~/p/brain/topics/supply-chain-security.md`.
+  `~/p/wiki/brain/topics/supply-chain-security.md`.
 
 ## Harness
 
@@ -182,7 +182,8 @@ content decisions live in `~/p/rocket-agents-library/TODO.md`.
       Out of this repository's scope to execute - it changes other projects'
       dependencies - so the smallest real step is to run it in one frontend when
       that project is next open, and file the result there. Tracked here by the
-      2026-08-13 routing decision. Source: `~/p/brain/topics/web-platform.md`.
+      2026-08-13 routing decision. Source:
+      `~/p/wiki/brain/topics/web-platform.md`.
 
 ### Four harness experiments routed from `~/p/TODO.md`, 2026-09-08
 
@@ -193,19 +194,19 @@ from brain reading. Moved verbatim with their sources.
 - [ ] Audit tool/prompt churn for cache economics: cache hits cost 10% of input
       price but need an exact stable prefix, so mid-session tool changes or
       naive compaction silently destroy it. `/cost` cache-hit % is the
-      diagnostic. Source: `~/p/brain/topics/claude-code-practice.md`.
+      diagnostic. Source: `~/p/wiki/brain/topics/claude-code-practice.md`.
 - [ ] Try prompt contracts (Goal / Constraints / Output Format / Failure
       Conditions) plus a session-opening CLAUDE.md handshake on one real task;
       failure conditions turn vague quality bars into rejection tests. Source:
-      `~/p/brain/topics/claude-code-practice.md`.
+      `~/p/wiki/brain/topics/claude-code-practice.md`.
 - [ ] Watch the Advisor Tool (`advisor-tool-2026-03-01`) out of beta: a Sonnet
       or Haiku executor consulting Opus in a single request is the supported
       form of the codex/agy offload used here, and the published numbers are
       cheaper and better on two benchmarks. Source:
-      `~/p/brain/topics/claude-code-practice.md`.
+      `~/p/wiki/brain/topics/claude-code-practice.md`.
 - [ ] Try RTK (Rust command-output filter, 63k stars) on one real session and
       measure with `/caveman-stats` alongside; the interventions may overlap.
-      Source: `~/p/brain/topics/agent-token-economy.md`.
+      Source: `~/p/wiki/brain/topics/agent-token-economy.md`.
 
 ### Serena's scoped keep, and the read-to-edit measurement, routed from `~/p/TODO.md`, 2026-09-09
 
@@ -309,7 +310,7 @@ Moved verbatim.
   AMD's 6.6->2 regression band, though Write here includes new-file creation,
   which inflates the denominator against AMD's definition. Remaining half: run
   `/insights` from an interactive CLI session (user command, cannot be run from
-  inside a session). Source: `~/p/brain/topics/claude-code-practice.md`.
+  inside a session). Source: `~/p/wiki/brain/topics/claude-code-practice.md`.
 
 ## Conversations export
 
@@ -353,7 +354,7 @@ Moved verbatim.
   `LC_ALL=C grep -c '"hosts":' ~/.local/share/rocket-agents/conversations/archive.jsonl`
   (0 before the change; expect every conversation whose source still exists on
   that Mac, and both labels after the next daily sync). Then (3): point
-  `~/p/brain/tools/sessions/convert.py` at the archive's `hosts` and retire the
+  `~/p/wiki/tools/sessions/convert.py` at the archive's `hosts` and retire the
   rsync mirror `sources/agent-sessions/hosts/macmini/` - brain work, tracked
   there in the AI-conversation-inventory item, which already names this
   repository as its precondition. The label defaults to the short hostname

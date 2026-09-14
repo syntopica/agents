@@ -35,7 +35,7 @@ argument-hint: [week-start-date]
 ## Workflow
 
 1. Baseline. Read the brain project pages for each active Favish client
-   (`~/p/brain/projects/`), the project memories, and last week's Everhour
+   (`~/p/wiki/brain/projects/`), the project memories, and last week's Everhour
    entries. Note what was already reported at the previous all-hands (Gemini
    notes email) so Monday does not repeat it.
 2. Collect this week, Monday to today, from every source in

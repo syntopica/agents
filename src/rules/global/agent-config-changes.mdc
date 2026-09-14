@@ -16,7 +16,7 @@ matters.
 If `autoMode` is ever configured, its `allow` and `soft_deny` lists **must**
 include `"$defaults"`. Omitting it does not add permissions on top of the
 built-in safety blocks — it silently **replaces** them, so the blocks disappear
-with no error and no log line. Source: `~/p/brain/topics/claude-code-practice.md`.
+with no error and no log line. Source: `~/p/wiki/brain/topics/claude-code-practice.md`.
 
 ## A model-id change is a dependency upgrade, not a string edit
 
@@ -33,7 +33,7 @@ changes behaviour in three ways that do not announce themselves:
 
 So pin deliberately, verify the wrapper's parameters against the new model, and
 shadow the change before routing real traffic to it. Source:
-`~/p/brain/topics/agent-failure-modes.md`.
+`~/p/wiki/brain/topics/agent-failure-modes.md`.
 
 ## Budgets worth copying into any custom agent loop
 
@@ -45,4 +45,4 @@ same failure — a context window filling with material nobody will read again:
 - **Summarize at ~85% of the window**, not at the wall, so the summarization
   itself has room to run.
 
-Source: `~/p/brain/topics/agent-frameworks.md`.
+Source: `~/p/wiki/brain/topics/agent-frameworks.md`.

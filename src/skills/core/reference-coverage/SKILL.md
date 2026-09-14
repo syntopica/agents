@@ -22,7 +22,7 @@ conversations** while loaded in both profiles — not because it is useless, but
 because nothing pointed at it. That is why this rule lives in a repository.
 
 Measured head-to-head, 2026-09-01, on a pnpm monorepo and a Python repo. Full
-evidence: `~/p/brain/topics/codegraph.md`, section "CodeGraph vs Serena".
+evidence: `~/p/wiki/brain/topics/codegraph.md`, section "CodeGraph vs Serena".
 
 ## Which tool
 

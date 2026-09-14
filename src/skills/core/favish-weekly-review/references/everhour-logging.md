@@ -1,6 +1,6 @@
 # Everhour: reconcile and log the week
 
-API key: `~/p/brain/business/apis.md`, section Everhour. Base
+API key: `~/p/wiki/brain/business/apis.md`, section Everhour. Base
 `https://api.everhour.com`, header `X-Api-Key`. Copy the key into a mode-600
 file in the scratchpad and read it from there; never echo it.
 

@@ -10,7 +10,7 @@ implemented by this control-plane repository.
 | Control plane    | `~/p/agents`                            | Policy, adapters, diagnostics, machine convergence, and conversation transport |
 | Machine instance | `~/p/dotfiles`                          | Host bootstrap, packages, services, and private machine manifests              |
 | Skill library    | `~/p/rocket-agents-library`             | Curated skill sources and provenance shared across clients                     |
-| Knowledge vault  | `~/p/brain`                             | Human-authored knowledge and operational source material                       |
+| Knowledge vault  | `~/p/wiki`                              | Human-authored knowledge and operational source material                       |
 | Memory runtime   | `~/p/mempalace` plus machine-local data | Search and indexing derived from knowledge and conversations                   |
 
 Credentials and client databases are intentionally outside this graph. They are

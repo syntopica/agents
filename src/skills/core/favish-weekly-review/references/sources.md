@@ -122,7 +122,7 @@ gh api graphql -f query='query{repository(owner:"favish",name:"<repo>"){pullRequ
 
 ## Brain and memory
 
-- `~/p/brain/projects/cbs-execed.md`, `atc-portal.md`, `kitco.md`,
+- `~/p/wiki/brain/projects/cbs-execed.md`, `atc-portal.md`, `kitco.md`,
   `favish-gateway.md`; `business/communication-norms.md` for the report shape.
 - Project memories under
   `~/.claude-favish/projects/-Users-cristiandeluxe-p-<repo>/memory/` (and the

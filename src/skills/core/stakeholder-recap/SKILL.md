@@ -19,9 +19,10 @@ argument-hint: [channel-or-stakeholder]
 - Every claim of progress must be cross-checked against evidence (commits,
   deploy state, closed tickets) before it goes into the recap. A claim with no
   artifact behind it is a plan, and must be phrased as one.
-- Follow the disclosure norms in `~/p/brain/business/communication-norms.md`.
-  Outcome first, system health second, pointer to the ticket for depth, 3-5
-  sentences; never inline the found-and-fixed list to a non-technical audience.
+- Follow the disclosure norms in
+  `~/p/wiki/brain/business/communication-norms.md`. Outcome first, system health
+  second, pointer to the ticket for depth, 3-5 sentences; never inline the
+  found-and-fixed list to a non-technical audience.
 - Draft in the language and register the channel already uses.
 - Never post without the user seeing the draft first, and never send credentials
   or internal details into an external channel.

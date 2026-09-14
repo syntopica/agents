@@ -73,4 +73,4 @@ When a suite fails strangely on a loaded machine, check memory before touching
 the code, and re-run with `--workers=1` rather than debugging a test that was
 killed rather than failed.
 
-Full incident, with the numbers: `~/p/brain/topics/process-hygiene.md`.
+Full incident, with the numbers: `~/p/wiki/brain/topics/process-hygiene.md`.

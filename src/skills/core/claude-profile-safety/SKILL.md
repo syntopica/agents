@@ -15,7 +15,7 @@ allowed-tools: Read, Grep, Glob, Bash
 
 Two profiles, no more. Two Anthropic accounts means two quotas; everything that
 is not credentials or session state is shared between them by symlink.
-Background and repair history: `~/p/brain/topics/claude-code-profiles.md`.
+Background and repair history: `~/p/wiki/brain/topics/claude-code-profiles.md`.
 
 | profile                                | account               | how to start it                                   | its config file                 |
 | -------------------------------------- | --------------------- | ------------------------------------------------- | ------------------------------- |

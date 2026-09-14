@@ -190,7 +190,7 @@ compile fails. Descriptions need a `Trigger when` clause before character 150, a
 - **Why a decision was made, with its evidence** → the owning repository's
   knowledge base (for job hunting, `career/hiring-playbook-2026.md` as a
   numbered rule).
-- **A fact about the world that other tasks need** → `~/p/brain`.
+- **A fact about the world that other tasks need** → `~/p/wiki`.
 - **Something actionable but out of scope right now** → the repository's
   `TODO.md`, with the observation, the evidence, and the smallest next step.
 

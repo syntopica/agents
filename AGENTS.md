@@ -80,7 +80,7 @@ Releases use the `brp-release` workflow.
 - `~/p/dotfiles` owns host bootstrap, private machine manifests, and scheduled
   invocations.
 - `~/p/mem` owns derived conversation indexing and semantic retrieval.
-- `~/p/brain` owns deliberate, human-authored knowledge.
+- `~/p/wiki` owns deliberate, human-authored knowledge.
 
 ## Security
 

@@ -18,11 +18,11 @@ argument-hint: [company-or-quarter]
   bank CSV, the filed model PDFs); never infer them from stale context or
   earlier chat turns.
 - The method lives in the brain, not here. Read
-  `~/p/brain/business/quarter-close-playbook.md` (the nine steps, Holded API
-  gotchas, supplier treatment) before acting, and
-  `~/p/brain/business/quarter-close.md` for the current mission state. Company
-  identifiers are in `~/p/brain/business/companies.md`; per-company Holded keys
-  in `~/p/brain/business/holded.md`.
+  `~/p/wiki/brain/business/quarter-close-playbook.md` (the nine steps, Holded
+  API gotchas, supplier treatment) before acting, and
+  `~/p/wiki/brain/business/quarter-close.md` for the current mission state.
+  Company identifiers are in `~/p/wiki/brain/business/companies.md`; per-company
+  Holded keys in `~/p/wiki/brain/business/holded.md`.
 - Holded document listings without a `starttmp`/`endtmp` range are silently
   capped to recent documents. An empty result without a date range proves
   nothing.
