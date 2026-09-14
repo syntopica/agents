@@ -79,7 +79,7 @@ Releases use the `brp-release` workflow.
 - `~/p/rocket-agents-library` owns curated skill sources consumed by the linker.
 - `~/p/dotfiles` owns host bootstrap, private machine manifests, and scheduled
   invocations.
-- `~/p/mempalace` owns derived conversation indexing and semantic retrieval.
+- `~/p/atrium` owns derived conversation indexing and semantic retrieval.
 - `~/p/brain` owns deliberate, human-authored knowledge.
 
 ## Security

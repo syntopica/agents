@@ -53,7 +53,7 @@ ROUTES = [
         "Agent-configuration work. Change the durable config (rules, CLAUDE.md, "
         "skills, memory), not just this session, and verify the change actually "
         "loads rather than assuming it does.",
-        r"(mempalace|"
+        r"(atrium|"
         r"(actualiza|pon(lo|gas)?|a[ñn]ade) .{0,30}claude\.md|"
         r"claude\.md .{0,20}(actualiz|regla|global)|"
         r"esa regla (hazla|ponla) global|regla global|"
