@@ -11,14 +11,14 @@ export const parseConnectorManifest = (
     return { ok: false, errors: [...errors, 'manifest must be an object'] }
   }
   const candidate = raw as Record<string, unknown>
-  if (candidate.version !== 1) errors.push('version must be 1')
-  if (!Array.isArray(candidate.connectors)) {
+  if (candidate['version'] !== 1) errors.push('version must be 1')
+  if (!Array.isArray(candidate['connectors'])) {
     errors.push('connectors must be an array')
     return { ok: false, errors }
   }
 
   const ids = new Set<string>()
-  for (const [index, value] of candidate.connectors.entries()) {
+  for (const [index, value] of candidate['connectors'].entries()) {
     errors.push(...collectConnectorDefinitionErrors(value, index, ids))
   }
 

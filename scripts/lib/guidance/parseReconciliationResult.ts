@@ -16,24 +16,24 @@ export const parseReconciliationResult = (
     Object.keys(value).every((key) =>
       ['provider', 'url', 'retrievedAt'].includes(key),
     ) &&
-    (value.provider === 'claude' || value.provider === 'codex') &&
-    typeof value.url === 'string' &&
-    typeof value.retrievedAt === 'string' &&
-    !Number.isNaN(Date.parse(value.retrievedAt))
+    (value['provider'] === 'claude' || value['provider'] === 'codex') &&
+    typeof value['url'] === 'string' &&
+    typeof value['retrievedAt'] === 'string' &&
+    !Number.isNaN(Date.parse(value['retrievedAt']))
   const isDecision = (value: unknown): boolean =>
     isRecord(value) &&
     Object.keys(value).every((key) =>
       ['action', 'source', 'rationale'].includes(key),
     ) &&
     ['promoted', 'preserved', 'translated', 'removed'].includes(
-      String(value.action),
+      String(value['action']),
     ) &&
-    ['shared', 'claude', 'codex', 'rule'].includes(String(value.source)) &&
-    typeof value.rationale === 'string' &&
-    value.rationale.trim() !== ''
+    ['shared', 'claude', 'codex', 'rule'].includes(String(value['source'])) &&
+    typeof value['rationale'] === 'string' &&
+    value['rationale'].trim() !== ''
   const errors = findUnknownReconciliationResultProperties(raw)
-  if (raw.version !== 1) errors.push('version must be 1')
-  const parsedInputHashes = parseGuidanceInputHashes(raw.inputHashes)
+  if (raw['version'] !== 1) errors.push('version must be 1')
+  const parsedInputHashes = parseGuidanceInputHashes(raw['inputHashes'])
   errors.push(...(parsedInputHashes.ok ? [] : [parsedInputHashes.error]))
   for (const key of [
     'shared',
@@ -45,12 +45,12 @@ export const parseReconciliationResult = (
     if (typeof raw[key] !== 'string' || raw[key].trim() === '')
       errors.push(`${key} must be non-empty text`)
   if (
-    !Array.isArray(raw.documentation) ||
-    raw.documentation.length === 0 ||
-    !raw.documentation.every(isEvidence)
+    !Array.isArray(raw['documentation']) ||
+    raw['documentation'].length === 0 ||
+    !raw['documentation'].every(isEvidence)
   )
     errors.push('documentation entries are invalid')
-  if (!Array.isArray(raw.decisions) || !raw.decisions.every(isDecision))
+  if (!Array.isArray(raw['decisions']) || !raw['decisions'].every(isDecision))
     errors.push('decisions are invalid')
   for (const key of ['warnings', 'unresolvedLimitations'] as const)
     if (
@@ -64,15 +64,15 @@ export const parseReconciliationResult = (
     result: {
       version: 1,
       inputHashes: parsedInputHashes.ok ? parsedInputHashes.inputHashes : [],
-      shared: raw.shared as string,
-      claudeOverlay: raw.claudeOverlay as string,
-      codexOverlay: raw.codexOverlay as string,
-      claudeDocument: raw.claudeDocument as string,
-      codexDocument: raw.codexDocument as string,
-      documentation: raw.documentation as DocumentationEvidence[],
-      decisions: raw.decisions as GuidanceDecision[],
-      warnings: raw.warnings as string[],
-      unresolvedLimitations: raw.unresolvedLimitations as string[],
+      shared: raw['shared'] as string,
+      claudeOverlay: raw['claudeOverlay'] as string,
+      codexOverlay: raw['codexOverlay'] as string,
+      claudeDocument: raw['claudeDocument'] as string,
+      codexDocument: raw['codexDocument'] as string,
+      documentation: raw['documentation'] as DocumentationEvidence[],
+      decisions: raw['decisions'] as GuidanceDecision[],
+      warnings: raw['warnings'] as string[],
+      unresolvedLimitations: raw['unresolvedLimitations'] as string[],
     },
   }
 }

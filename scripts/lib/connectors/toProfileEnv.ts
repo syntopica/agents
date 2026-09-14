@@ -15,11 +15,11 @@ export const toProfileEnv = (
   const env = { ...base }
 
   if (profile === 'claude-favish') {
-    env.CLAUDE_CONFIG_DIR = `${home}/.claude-favish`
+    env['CLAUDE_CONFIG_DIR'] = `${home}/.claude-favish`
     return env
   }
 
-  delete env.CLAUDE_CONFIG_DIR
+  delete env['CLAUDE_CONFIG_DIR']
 
   return env
 }

@@ -11,7 +11,7 @@ import { join } from 'node:path'
  */
 export const defaultConversationStatePath = (home = homedir()) =>
   join(
-    process.env.XDG_STATE_HOME ?? join(home, '.local', 'state'),
+    process.env['XDG_STATE_HOME'] ?? join(home, '.local', 'state'),
     'rocket-agents',
     'conversations',
     'archive-index.sqlite3',

@@ -10,12 +10,12 @@ export const loadRouterExpectations = async (
     throw new Error('router expectations must be an object')
   }
   const record = raw as Record<string, unknown>
-  if (record.version !== 1 || !Array.isArray(record.expectations)) {
+  if (record['version'] !== 1 || !Array.isArray(record['expectations'])) {
     throw new Error(
       'router expectations need version 1 and an expectations array',
     )
   }
-  for (const value of record.expectations) {
+  for (const value of record['expectations']) {
     if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       throw new Error('router expectation must be an object')
     }

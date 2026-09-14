@@ -54,9 +54,9 @@ export const collectSkillSourceErrors = (
     errors.push(`${prefix}.targets contains an invalid target`)
   }
   if (
-    raw.securityExceptions !== undefined &&
-    (!Array.isArray(raw.securityExceptions) ||
-      raw.securityExceptions.some(
+    raw['securityExceptions'] !== undefined &&
+    (!Array.isArray(raw['securityExceptions']) ||
+      raw['securityExceptions'].some(
         (exception: unknown) =>
           !isValidSkillSourceSecurityException(exception, source.skills ?? []),
       ))

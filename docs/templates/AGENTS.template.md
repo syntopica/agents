@@ -4,7 +4,7 @@ Instructions for AI coding agents working in this repository. Humans: start with
 [README.md](README.md).
 
 <!--
-Template from BusiRocket/rocket-agents docs/agent-ready-repo-standard.md.
+Template from syntopica/agents docs/agent-ready-repo-standard.md.
 Fill every section with VERIFIED facts (run the commands, check the real
 cluster/registry). Delete sections that genuinely do not apply. Keep the
 whole file under ~120 lines. Selection test for every line: "Would removing

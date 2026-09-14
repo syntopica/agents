@@ -6,11 +6,11 @@ import { captureMcpManifest } from './captureMcpManifest'
 
 void test('a live server is captured with every target that carries it', () => {
   const state = createEmptyMcpState()
-  state.byTarget['claude-personal'].serena = {
+  state.byTarget['claude-personal']['serena'] = {
     command: 'serena',
     args: ['start-mcp-server'],
   }
-  state.byTarget.cursor.serena = {
+  state.byTarget.cursor['serena'] = {
     command: 'serena',
     args: ['start-mcp-server'],
   }
@@ -20,7 +20,7 @@ void test('a live server is captured with every target that carries it', () => {
     declared: createDeclaredContext7Manifest(),
   })
 
-  assert.deepEqual(capture.manifest.servers.serena, {
+  assert.deepEqual(capture.manifest.servers['serena'], {
     targets: ['claude-personal', 'cursor'],
     transport: 'stdio',
     command: 'serena',
@@ -32,7 +32,7 @@ void test('a live server is captured with every target that carries it', () => {
 void test('a concrete value is replaced by the reference the tracked manifest already declares', () => {
   const secret = 'c7-live-value-000'
   const state = createEmptyMcpState()
-  state.byTarget['claude-personal'].context7 = {
+  state.byTarget['claude-personal']['context7'] = {
     type: 'http',
     url: 'https://mcp.context7.com/mcp',
     headers: { CONTEXT7_API_KEY: secret },
@@ -43,7 +43,7 @@ void test('a concrete value is replaced by the reference the tracked manifest al
     declared: createDeclaredContext7Manifest(),
   })
 
-  assert.deepEqual(capture.manifest.servers.context7, {
+  assert.deepEqual(capture.manifest.servers['context7'], {
     targets: ['claude-personal'],
     transport: 'http',
     url: 'https://mcp.context7.com/mcp',
@@ -75,14 +75,14 @@ void test('a server with an undeclared concrete value is refused instead of capt
 
 void test('a codex http header bound to an environment variable captures as that reference', () => {
   const state = createEmptyMcpState()
-  state.byTarget.codex.context7 = {
+  state.byTarget.codex['context7'] = {
     url: '"https://mcp.context7.com/mcp"',
     'env_http_headers.CONTEXT7_API_KEY': '"CONTEXT7_API_KEY"',
   }
 
   const capture = captureMcpManifest({ state, declared: undefined })
 
-  assert.deepEqual(capture.manifest.servers.context7, {
+  assert.deepEqual(capture.manifest.servers['context7'], {
     targets: ['codex'],
     transport: 'http',
     url: 'https://mcp.context7.com/mcp',
@@ -94,7 +94,7 @@ void test('a codex http header bound to an environment variable captures as that
 void test('a codex environment sub-table with an undeclared value is refused', () => {
   const secret = 'paperclip-live-value-000'
   const state = createEmptyMcpState()
-  state.byTarget.codex.paperclip = {
+  state.byTarget.codex['paperclip'] = {
     command: '"paperclip-mcp"',
     'env.PAPERCLIP_API_URL': `"${secret}"`,
   }
@@ -111,7 +111,7 @@ void test('a codex environment sub-table with an undeclared value is refused', (
 
 void test('codex approval and timeout policy is captured, not silently dropped', () => {
   const state = createEmptyMcpState()
-  state.byTarget.codex.mempalace = {
+  state.byTarget.codex['mempalace'] = {
     command: '"mempalace-mcp"',
     args: '["--read-only"]',
     required: 'true',
@@ -121,7 +121,7 @@ void test('codex approval and timeout policy is captured, not silently dropped',
 
   const capture = captureMcpManifest({ state, declared: undefined })
 
-  assert.deepEqual(capture.manifest.servers.mempalace, {
+  assert.deepEqual(capture.manifest.servers['mempalace'], {
     targets: ['codex'],
     transport: 'stdio',
     command: 'mempalace-mcp',

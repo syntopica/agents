@@ -29,7 +29,7 @@ export class ConversationCaptureStore {
 
   mergeFragment(record: ConversationRecord): ConversationStoreChange {
     const existing = this.#find.get(record.id)
-    if (existing === undefined || typeof existing.record_json !== 'string') {
+    if (existing === undefined || typeof existing['record_json'] !== 'string') {
       this.#upsert.run(
         record.id,
         JSON.stringify(record),
@@ -38,7 +38,7 @@ export class ConversationCaptureStore {
       )
       return 'added'
     }
-    const current = JSON.parse(existing.record_json) as ConversationRecord
+    const current = JSON.parse(existing['record_json']) as ConversationRecord
     if (current.provenance.contentSha256 === record.provenance.contentSha256) {
       // Same bytes, so nothing about the conversation moves - but a second
       // machine reading them is worth one write, or the archive would never
@@ -74,7 +74,7 @@ export class ConversationCaptureStore {
    */
   replace(record: ConversationRecord): ConversationStoreChange {
     const existing = this.#find.get(record.id)
-    if (existing === undefined || typeof existing.record_json !== 'string') {
+    if (existing === undefined || typeof existing['record_json'] !== 'string') {
       this.#upsert.run(
         record.id,
         JSON.stringify(record),
@@ -83,7 +83,7 @@ export class ConversationCaptureStore {
       )
       return 'added'
     }
-    const current = JSON.parse(existing.record_json) as ConversationRecord
+    const current = JSON.parse(existing['record_json']) as ConversationRecord
     if (current.provenance.contentSha256 === record.provenance.contentSha256)
       return 'duplicate'
     this.#upsert.run(
@@ -109,7 +109,7 @@ export class ConversationCaptureStore {
       'SELECT record_json, schema_version FROM records ORDER BY id',
     )
     for (const row of statement.iterate()) {
-      if (typeof row.record_json !== 'string') continue
+      if (typeof row['record_json'] !== 'string') continue
       // The version is a column, so the common case costs a comparison rather
       // than a parse. A publication walks this twice -- once to hash the
       // manifest, once to write the body -- and parsing every record on both
@@ -117,13 +117,13 @@ export class ConversationCaptureStore {
       // while holding the write lock. A record already at the current version
       // is passed through byte for byte, which is what the old code did too
       // after paying to discover it.
-      if (row.schema_version === CONVERSATION_SCHEMA_VERSION) {
-        yield row.record_json
+      if (row['schema_version'] === CONVERSATION_SCHEMA_VERSION) {
+        yield row['record_json']
         continue
       }
-      const stored = JSON.parse(row.record_json) as ConversationRecord
+      const stored = JSON.parse(row['record_json']) as ConversationRecord
       const upgraded = upgradeConversationRecord(stored)
-      yield upgraded === stored ? row.record_json : JSON.stringify(upgraded)
+      yield upgraded === stored ? row['record_json'] : JSON.stringify(upgraded)
     }
   }
 
@@ -131,14 +131,14 @@ export class ConversationCaptureStore {
     const row = this.#database
       .prepare('SELECT count(*) AS total FROM records')
       .get()
-    return typeof row?.total === 'number' ? row.total : 0
+    return typeof row?.['total'] === 'number' ? row['total'] : 0
   }
 
   redactions() {
     const row = this.#database
       .prepare('SELECT coalesce(sum(redactions), 0) AS total FROM records')
       .get()
-    return typeof row?.total === 'number' ? row.total : 0
+    return typeof row?.['total'] === 'number' ? row['total'] : 0
   }
 
   close() {

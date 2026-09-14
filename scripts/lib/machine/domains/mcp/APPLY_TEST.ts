@@ -22,7 +22,7 @@ void test('keys outside mcpServers survive the write', async () => {
     string,
     unknown
   >
-  assert.equal(written.theme, 'dark')
+  assert.equal(written['theme'], 'dark')
 })
 
 void test('a foreign server is preserved', async () => {

@@ -19,12 +19,12 @@ export const parsePluginsManifest = (
     }
   }
 
-  if (manifest.version !== 1) {
+  if (manifest['version'] !== 1) {
     errors.push('manifest.version must be 1')
   }
 
-  collectMarketplaceErrors(manifest.marketplaces, errors)
-  collectDeclaredPluginErrors(manifest.plugins, errors)
+  collectMarketplaceErrors(manifest['marketplaces'], errors)
+  collectDeclaredPluginErrors(manifest['plugins'], errors)
 
   return errors.length === 0
     ? { ok: true, manifest: raw as unknown as PluginsManifestDocument }

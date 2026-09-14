@@ -20,8 +20,8 @@ void test('Cursor config preserves foreign keys and is idempotent', async () => 
   })
   const first = await readFile(path, 'utf8')
   const parsed = JSON.parse(first) as Record<string, unknown>
-  assert.deepEqual(parsed.metadata, { owner: 'user' })
-  assert.deepEqual(parsed.mcpServers, {
+  assert.deepEqual(parsed['metadata'], { owner: 'user' })
+  assert.deepEqual(parsed['mcpServers'], {
     foreign: { command: 'x' },
     serena: { command: 'serena' },
   })

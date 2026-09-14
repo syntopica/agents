@@ -34,7 +34,7 @@ export const withArchiveWriteLock = async <T>(
   // Long enough for a queued writer to sit through a full publication of an
   // archive several times today's size, short enough that a lock nobody will
   // ever release is reported within one scheduling interval.
-  const waitMs = Number(process.env.ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS ?? 0)
+  const waitMs = Number(process.env['ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS'] ?? 0)
   const deadline = Date.now() + (waitMs > 0 ? waitMs : 90 * 60_000)
   const lock = `${archive}.write-lock`
   // The lock sits beside the archive, so on a host that has never held one the

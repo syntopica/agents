@@ -13,7 +13,7 @@ void test('a bundle on disk but absent from the lock is still described', () => 
 
 void test('an authored bundle absent from the lock is adopted, not parked', () => {
   const manifest = seedManifestFromLock(LOCK_FIXTURE, ['core'], ['core'])
-  assert.equal(manifest.entries.core?.state, 'adopted')
+  assert.equal(manifest.entries['core']?.state, 'adopted')
 })
 
 void test('a bundle present in both the lock and on disk keeps its provenance', () => {

@@ -6,7 +6,7 @@ export const readInstalledPlugins = async (
   path: string,
 ): Promise<InstalledPlugin[]> => {
   const parsed = await readJsonRecord(path)
-  const plugins = parsed.plugins
+  const plugins = parsed['plugins']
 
   if (typeof plugins !== 'object' || plugins === null) {
     return []

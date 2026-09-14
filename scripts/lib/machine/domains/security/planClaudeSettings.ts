@@ -10,20 +10,21 @@ export const planClaudeSettings = (
   for (const profile of policy.profiles) {
     const current = settings[profile]
     const permissions =
-      typeof current.permissions === 'object' && current.permissions !== null
-        ? (current.permissions as Record<string, unknown>)
+      typeof current['permissions'] === 'object' &&
+      current['permissions'] !== null
+        ? (current['permissions'] as Record<string, unknown>)
         : {}
 
-    if (permissions.defaultMode !== policy.defaultMode) {
+    if (permissions['defaultMode'] !== policy.defaultMode) {
       changes.push({ profile, key: 'permissions.defaultMode' })
     }
     if (
-      current.skipDangerousModePermissionPrompt !==
+      current['skipDangerousModePermissionPrompt'] !==
       policy.skipDangerousModePermissionPrompt
     ) {
       changes.push({ profile, key: 'skipDangerousModePermissionPrompt' })
     }
-    if (current.remoteControlAtStartup !== policy.remoteControlAtStartup) {
+    if (current['remoteControlAtStartup'] !== policy.remoteControlAtStartup) {
       changes.push({ profile, key: 'remoteControlAtStartup' })
     }
   }

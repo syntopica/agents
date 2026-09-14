@@ -13,7 +13,7 @@ import { hostname } from 'node:os'
 export const conversationHostLabel = (
   environment: NodeJS.ProcessEnv = process.env,
 ) => {
-  const configured = environment.ROCKET_AGENTS_HOST?.trim()
+  const configured = environment['ROCKET_AGENTS_HOST']?.trim()
   if (configured !== undefined && configured.length > 0) return configured
   const short = hostname().split('.').at(0)?.trim().toLowerCase() ?? ''
   return short.length > 0 ? short : 'unknown-host'

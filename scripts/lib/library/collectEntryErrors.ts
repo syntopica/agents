@@ -11,7 +11,7 @@ export const collectEntryErrors = (
   }
 
   const record = entry as Record<string, unknown>
-  const state = record.state
+  const state = record['state']
 
   if (
     typeof state !== 'string' ||
@@ -22,19 +22,19 @@ export const collectEntryErrors = (
   }
 
   if (state === 'forked') {
-    if (typeof record.patch !== 'string') {
+    if (typeof record['patch'] !== 'string') {
       errors.push(`${name}: forked entries need a patch`)
     }
-    if (typeof record.upstreamHash !== 'string') {
+    if (typeof record['upstreamHash'] !== 'string') {
       errors.push(`${name}: forked entries need an upstreamHash`)
     }
   }
 
-  if (state === 'extracted' && typeof record.extractedInto !== 'string') {
+  if (state === 'extracted' && typeof record['extractedInto'] !== 'string') {
     errors.push(`${name}: extracted entries need extractedInto`)
   }
 
-  if (state === 'parked' && typeof record.reason !== 'string') {
+  if (state === 'parked' && typeof record['reason'] !== 'string') {
     errors.push(`${name}: parked entries need a reason`)
   }
 }

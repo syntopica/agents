@@ -11,13 +11,13 @@ export const appendCursorComposerSqliteRow = (
   const value = parseCursorSqliteObject(row.key, row.value)
   const current = conversations.get(composerId) ?? { messages: [] }
   current.metadata = {
-    composerId: value.composerId ?? composerId,
-    name: value.name ?? value.title,
-    workspace: value.workspace ?? value.workspaceId,
+    composerId: value['composerId'] ?? composerId,
+    name: value['name'] ?? value['title'],
+    workspace: value['workspace'] ?? value['workspaceId'],
   }
 
-  if (Array.isArray(value.conversation)) {
-    for (const bubble of value.conversation) {
+  if (Array.isArray(value['conversation'])) {
+    for (const bubble of value['conversation']) {
       if (typeof bubble === 'object' && bubble !== null) {
         current.messages.push(
           projectCursorBubble(bubble as Record<string, unknown>),

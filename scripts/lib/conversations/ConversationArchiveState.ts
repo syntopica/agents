@@ -72,7 +72,7 @@ export class ConversationArchiveState {
     const row = this.#database
       .prepare('SELECT value FROM meta WHERE key = ?')
       .get(key)
-    return typeof row?.value === 'string' ? row.value : undefined
+    return typeof row?.['value'] === 'string' ? row['value'] : undefined
   }
 
   setMeta(key: string, value: string) {
@@ -96,7 +96,7 @@ export class ConversationArchiveState {
       'SELECT sha256 FROM segments ORDER BY sha256',
     )
     return hashText(
-      [...statement.iterate()].map((row) => String(row.sha256)).join('\n'),
+      [...statement.iterate()].map((row) => String(row['sha256'])).join('\n'),
     )
   }
 
@@ -171,9 +171,11 @@ export class ConversationArchiveState {
       'SELECT record_json, hosts_json FROM fragments WHERE conversation_id = ? ORDER BY fragment_sha256',
     )
     return [...statement.iterate(conversationId)].map((row) => {
-      const record = JSON.parse(String(row.record_json)) as ConversationRecord
+      const record = JSON.parse(
+        String(row['record_json']),
+      ) as ConversationRecord
       const hosts = mergeConversationHosts(
-        JSON.parse(String(row.hosts_json)) as string[],
+        JSON.parse(String(row['hosts_json'])) as string[],
       )
       return hosts === undefined ? record : { ...record, hosts }
     })
@@ -184,8 +186,8 @@ export class ConversationArchiveState {
     const row = this.#database
       .prepare('SELECT hosts_json FROM fragments WHERE fragment_sha256 = ?')
       .get(fragmentSha256)
-    return typeof row?.hosts_json === 'string'
-      ? (JSON.parse(row.hosts_json) as string[])
+    return typeof row?.['hosts_json'] === 'string'
+      ? (JSON.parse(row['hosts_json']) as string[])
       : []
   }
 
@@ -205,8 +207,8 @@ export class ConversationArchiveState {
     const row = this.#database
       .prepare('SELECT record_json FROM conversations WHERE id = ?')
       .get(conversationId)
-    return typeof row?.record_json === 'string'
-      ? (JSON.parse(row.record_json) as ConversationRecord)
+    return typeof row?.['record_json'] === 'string'
+      ? (JSON.parse(row['record_json']) as ConversationRecord)
       : undefined
   }
 
@@ -215,7 +217,7 @@ export class ConversationArchiveState {
       'SELECT record_json FROM conversations ORDER BY id',
     )
     for (const row of statement.iterate()) {
-      yield JSON.parse(String(row.record_json)) as ConversationRecord
+      yield JSON.parse(String(row['record_json'])) as ConversationRecord
     }
   }
 
@@ -227,12 +229,12 @@ export class ConversationArchiveState {
       .get(key.source, key.relativePath, key.storageKind)
     if (row === undefined) return undefined
     return {
-      generationId: String(row.generation_id),
+      generationId: String(row['generation_id']),
       fingerprint: JSON.parse(
-        String(row.fingerprint_json),
+        String(row['fingerprint_json']),
       ) as ConversationArtifactFingerprint,
-      captureVersions: String(row.capture_versions),
-      fragmentHashes: String(row.fragment_hashes)
+      captureVersions: String(row['capture_versions']),
+      fragmentHashes: String(row['fragment_hashes'])
         .split(',')
         .filter((hash) => hash.length > 0),
     }
@@ -286,9 +288,9 @@ export class ConversationArchiveState {
       'SELECT source, relative_path, storage_kind FROM artifacts',
     )
     return [...statement.iterate()].map((row) => ({
-      source: String(row.source),
-      relativePath: String(row.relative_path),
-      storageKind: String(row.storage_kind),
+      source: String(row['source']),
+      relativePath: String(row['relative_path']),
+      storageKind: String(row['storage_kind']),
     }))
   }
 
@@ -303,7 +305,7 @@ export class ConversationArchiveState {
     const statement = this.#database.prepare(
       'SELECT conversation_id FROM pending_deliveries ORDER BY conversation_id',
     )
-    return [...statement.iterate()].map((row) => String(row.conversation_id))
+    return [...statement.iterate()].map((row) => String(row['conversation_id']))
   }
 
   clearPendingDeliveries(conversationIds: string[]) {
@@ -318,7 +320,7 @@ export class ConversationArchiveState {
       const row = this.#database
         .prepare(`SELECT count(*) AS total FROM ${table}`)
         .get()
-      return typeof row?.total === 'number' ? row.total : 0
+      return typeof row?.['total'] === 'number' ? row['total'] : 0
     }
     return {
       segments: count('segments'),

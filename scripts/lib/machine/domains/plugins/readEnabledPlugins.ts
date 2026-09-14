@@ -4,7 +4,7 @@ export const readEnabledPlugins = async (
   path: string,
 ): Promise<Record<string, boolean>> => {
   const parsed = await readJsonRecord(path)
-  const enabled = parsed.enabledPlugins
+  const enabled = parsed['enabledPlugins']
 
   if (typeof enabled !== 'object' || enabled === null) {
     return {}

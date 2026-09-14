@@ -9,18 +9,18 @@ export const parseCurationManifest = (raw: unknown): ManifestParseResult => {
 
   const record = raw as Record<string, unknown>
 
-  if (typeof record.version !== 'number') {
+  if (typeof record['version'] !== 'number') {
     return { ok: false, errors: ['manifest needs a numeric version'] }
   }
 
-  if (typeof record.entries !== 'object' || record.entries === null) {
+  if (typeof record['entries'] !== 'object' || record['entries'] === null) {
     return { ok: false, errors: ['manifest.entries must be an object'] }
   }
 
   const errors: string[] = []
 
   for (const [name, entry] of Object.entries(
-    record.entries as Record<string, unknown>,
+    record['entries'] as Record<string, unknown>,
   )) {
     collectEntryErrors(name, entry, errors)
   }

@@ -26,7 +26,7 @@ void test('a bare path in a directory listing is not a read', () => {
 
 void test('repeated reads accumulate', () => {
   const counts = readCodexSkillReads('skillkit read pdf\nskillkit read pdf')
-  assert.equal(counts.pdf, 2)
+  assert.equal(counts['pdf'], 2)
 })
 
 void test('unrelated text yields nothing', () => {

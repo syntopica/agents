@@ -99,8 +99,8 @@
   },
   "devDependencies": {
     "@syntopica/prettier-config": "^0.2.0",
-    "@syntopica/quality-config": "^0.10.0",
-    "@syntopica/tsconfig": "^0.2.1",
+    "@syntopica/quality-config": "^0.11.0",
+    "@syntopica/tsconfig": "^0.3.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.1.1",
     "@typescript/native": "npm:typescript@^7.0.2",

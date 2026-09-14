@@ -8,29 +8,29 @@ export const normalizeCodexServer = (
 ): NormalizedCodexServer => {
   const normalized: NormalizedCodexServer = {}
 
-  if (record.command !== undefined) {
-    normalized.command = unquoteTomlString(record.command)
+  if (record['command'] !== undefined) {
+    normalized.command = unquoteTomlString(record['command'])
   }
 
-  if (record.args !== undefined) {
-    normalized.args = parseTomlArray(record.args)
+  if (record['args'] !== undefined) {
+    normalized.args = parseTomlArray(record['args'])
   }
 
-  if (record.url !== undefined) {
-    normalized.url = unquoteTomlString(record.url)
+  if (record['url'] !== undefined) {
+    normalized.url = unquoteTomlString(record['url'])
   }
 
-  if (record.startup_timeout_sec !== undefined) {
-    normalized.startup_timeout_sec = Number(record.startup_timeout_sec)
+  if (record['startup_timeout_sec'] !== undefined) {
+    normalized.startup_timeout_sec = Number(record['startup_timeout_sec'])
   }
 
-  if (record.required !== undefined) {
-    normalized.required = record.required === 'true'
+  if (record['required'] !== undefined) {
+    normalized.required = record['required'] === 'true'
   }
 
-  if (record.default_tools_approval_mode !== undefined) {
+  if (record['default_tools_approval_mode'] !== undefined) {
     normalized.default_tools_approval_mode = unquoteTomlString(
-      record.default_tools_approval_mode,
+      record['default_tools_approval_mode'],
     )
   }
 

@@ -6,5 +6,5 @@ export const isSecretReference = (value: unknown): value is SecretReference => {
   }
 
   const candidate = value as Record<string, unknown>
-  return typeof candidate.from_env === 'string'
+  return typeof candidate['from_env'] === 'string'
 }

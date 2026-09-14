@@ -72,7 +72,7 @@ export const main = async () => {
   }
 
   const update = buildManagedOAuthApplicationUpdate(currentBody.result)
-  const desiredOAuth = update.oauth_configuration as {
+  const desiredOAuth = update['oauth_configuration'] as {
     enabled?: boolean
     dynamic_client_registration?: {
       enabled?: boolean
@@ -86,8 +86,8 @@ export const main = async () => {
         {
           ok: true,
           mode: 'dry-run',
-          name: currentBody.result.name,
-          domain: currentBody.result.domain,
+          name: currentBody.result['name'],
+          domain: currentBody.result['domain'],
           endpoint,
           desired: {
             enabled: desiredOAuth.enabled === true,
@@ -138,7 +138,7 @@ export const main = async () => {
       `Cloudflare application verification failed (${String(verifyResponse.status)}): ${JSON.stringify(verifyBody.errors ?? [])}`,
     )
   }
-  const verifiedOAuth = verifyBody.result.oauth_configuration as
+  const verifiedOAuth = verifyBody.result['oauth_configuration'] as
     | {
         enabled?: boolean
         dynamic_client_registration?: {
@@ -165,8 +165,8 @@ export const main = async () => {
       {
         ok,
         mode: 'apply',
-        name: verifyBody.result.name,
-        domain: verifyBody.result.domain,
+        name: verifyBody.result['name'],
+        domain: verifyBody.result['domain'],
         verification,
       },
       null,

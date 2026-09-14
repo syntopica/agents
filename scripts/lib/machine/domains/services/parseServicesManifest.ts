@@ -18,14 +18,14 @@ export const parseServicesManifest = (
     }
   }
 
-  if (manifest.version !== 1) {
+  if (manifest['version'] !== 1) {
     errors.push('manifest.version must be 1')
   }
 
-  if (!Array.isArray(manifest.services)) {
+  if (!Array.isArray(manifest['services'])) {
     errors.push('manifest.services must be an array')
   } else {
-    manifest.services.forEach((service, index) => {
+    manifest['services'].forEach((service, index) => {
       collectServiceErrors(service, index, errors)
     })
   }

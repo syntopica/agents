@@ -49,12 +49,12 @@ export const classifyHttpProbe = ({
   }
   try {
     const payload = JSON.parse(body) as Record<string, unknown>
-    const result = payload.result
+    const result = payload['result']
     const isMcp =
-      payload.jsonrpc === '2.0' &&
+      payload['jsonrpc'] === '2.0' &&
       typeof result === 'object' &&
       result !== null &&
-      typeof (result as Record<string, unknown>).protocolVersion === 'string'
+      typeof (result as Record<string, unknown>)['protocolVersion'] === 'string'
     return isMcp
       ? {
           status: 'healthy',

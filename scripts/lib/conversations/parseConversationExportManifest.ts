@@ -16,11 +16,11 @@ export const parseConversationExportManifest = (
 
   const manifest = parsed as Record<string, unknown>
   if (
-    manifest.kind !== 'rocket-agents-conversation-export' ||
-    (manifest.schemaVersion !== 1 && manifest.schemaVersion !== 2) ||
-    typeof manifest.createdAt !== 'string' ||
-    typeof manifest.records !== 'number' ||
-    typeof manifest.contentSha256 !== 'string'
+    manifest['kind'] !== 'rocket-agents-conversation-export' ||
+    (manifest['schemaVersion'] !== 1 && manifest['schemaVersion'] !== 2) ||
+    typeof manifest['createdAt'] !== 'string' ||
+    typeof manifest['records'] !== 'number' ||
+    typeof manifest['contentSha256'] !== 'string'
   ) {
     return { error: 'invalid export manifest' }
   }

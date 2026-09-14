@@ -18,12 +18,12 @@ export const verifyCodexSnapshot = async (
     return { ok: false, errors: ['manifest schema is invalid'] }
   }
   const manifest = parsed as Record<string, unknown>
-  if (manifest.version !== 1 || !Array.isArray(manifest.entries)) {
+  if (manifest['version'] !== 1 || !Array.isArray(manifest['entries'])) {
     return { ok: false, errors: ['manifest schema is invalid'] }
   }
 
   const errors: string[] = []
-  for (const rawEntry of manifest.entries) {
+  for (const rawEntry of manifest['entries']) {
     errors.push(...(await verifySnapshotEntry(snapshotDir, rawEntry)))
   }
   return { ok: errors.length === 0, errors }

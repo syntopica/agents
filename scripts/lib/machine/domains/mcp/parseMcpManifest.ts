@@ -12,7 +12,7 @@ export const parseMcpManifest = (raw: unknown): ParseResult => {
     return { ok: false, errors: ['manifest must be an object'] }
   }
 
-  const servers = (raw as Record<string, unknown>).servers
+  const servers = (raw as Record<string, unknown>)['servers']
   if (typeof servers !== 'object' || servers === null) {
     return { ok: false, errors: ['manifest.servers must be an object'] }
   }
@@ -26,13 +26,13 @@ export const parseMcpManifest = (raw: unknown): ParseResult => {
     }
 
     const server = value as Record<string, unknown>
-    collectTargetErrors(name, server.targets, errors)
+    collectTargetErrors(name, server['targets'], errors)
     collectTransportErrors(name, server, errors)
-    collectStartupTimeoutErrors(name, server.startup_timeout_sec, errors)
-    collectRequiredErrors(name, server.required, errors)
+    collectStartupTimeoutErrors(name, server['startup_timeout_sec'], errors)
+    collectRequiredErrors(name, server['required'], errors)
     collectToolApprovalModeErrors(
       name,
-      server.default_tools_approval_mode,
+      server['default_tools_approval_mode'],
       errors,
     )
 

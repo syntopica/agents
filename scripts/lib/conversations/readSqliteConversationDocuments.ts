@@ -28,12 +28,13 @@ export const readSqliteConversationDocuments = (
     const rows = runSqliteQuery(artifact.path, query)
     for (const row of rows) {
       const recordId =
-        typeof row.record_id === 'string' || typeof row.record_id === 'number'
-          ? String(row.record_id)
+        typeof row['record_id'] === 'string' ||
+        typeof row['record_id'] === 'number'
+          ? String(row['record_id'])
           : String(documents.length)
       documents.push({
         contents:
-          typeof row.value === 'string' ? row.value : JSON.stringify(row),
+          typeof row['value'] === 'string' ? row['value'] : JSON.stringify(row),
         relativePath: `${artifact.relativePath}#${table}:${recordId}`,
         source: artifact.source,
         sourceIdHint: `${artifact.relativePath}:${table}:${recordId}`,

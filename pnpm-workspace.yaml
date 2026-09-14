@@ -13,3 +13,8 @@ allowBuilds:
   # Installs the git hooks in lefthook.yml on `pnpm install`.
   lefthook: true
   unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - '@syntopica/prettier-config@0.2.0'
+  - '@syntopica/quality-config@0.11.0'
+  - '@syntopica/tsconfig@0.3.0'

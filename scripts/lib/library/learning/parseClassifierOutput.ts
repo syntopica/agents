@@ -28,7 +28,7 @@ export const parseClassifierOutput = (raw: string) => {
     }
 
     const record = item as Record<string, unknown>
-    const procedure = record.procedure ?? record.recurring_shape
+    const procedure = record['procedure'] ?? record['recurring_shape']
 
     if (typeof procedure !== 'string') {
       continue
@@ -36,8 +36,8 @@ export const parseClassifierOutput = (raw: string) => {
 
     classified.push({
       procedure,
-      ...(typeof record.project === 'string'
-        ? { project: record.project }
+      ...(typeof record['project'] === 'string'
+        ? { project: record['project'] }
         : {}),
     })
   }

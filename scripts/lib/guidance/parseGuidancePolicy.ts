@@ -32,12 +32,12 @@ export const parseGuidancePolicy = (
   const errors: string[] = []
   for (const key of Object.keys(raw))
     if (!policyKeys.has(key)) errors.push(`unknown property: ${key}`)
-  const invariants = raw.requiredInvariants
-  const origins = raw.officialDocumentationOrigins
-  const command = raw.agentCommand
-  const readAllowlist = raw.agentReadAllowlist
-  const bootstrapFiles = raw.agentBootstrapFiles
-  if (raw.version !== 1) errors.push('version must be 1')
+  const invariants = raw['requiredInvariants']
+  const origins = raw['officialDocumentationOrigins']
+  const command = raw['agentCommand']
+  const readAllowlist = raw['agentReadAllowlist']
+  const bootstrapFiles = raw['agentBootstrapFiles']
+  if (raw['version'] !== 1) errors.push('version must be 1')
   if (
     !Array.isArray(invariants) ||
     invariants.length === 0 ||
@@ -62,10 +62,10 @@ export const parseGuidancePolicy = (
       'officialDocumentationOrigins must provide Claude and Codex HTTPS origins',
     )
   if (
-    typeof raw.maxOutputBytes !== 'number' ||
-    !Number.isSafeInteger(raw.maxOutputBytes) ||
-    raw.maxOutputBytes < 1024 ||
-    raw.maxOutputBytes > 1_048_576
+    typeof raw['maxOutputBytes'] !== 'number' ||
+    !Number.isSafeInteger(raw['maxOutputBytes']) ||
+    raw['maxOutputBytes'] < 1024 ||
+    raw['maxOutputBytes'] > 1_048_576
   )
     errors.push('maxOutputBytes must be between 1024 and 1048576')
   if (
@@ -79,10 +79,10 @@ export const parseGuidancePolicy = (
     errors.push('agentCommand must be a non-empty argument array')
   errors.push(...collectGuidancePolicyPathErrors(readAllowlist, bootstrapFiles))
   if (
-    typeof raw.timeoutMs !== 'number' ||
-    !Number.isSafeInteger(raw.timeoutMs) ||
-    raw.timeoutMs < 1000 ||
-    raw.timeoutMs > 300_000
+    typeof raw['timeoutMs'] !== 'number' ||
+    !Number.isSafeInteger(raw['timeoutMs']) ||
+    raw['timeoutMs'] < 1000 ||
+    raw['timeoutMs'] > 300_000
   )
     errors.push('timeoutMs must be between 1000 and 300000')
   if (containsSensitiveGuidanceContent(JSON.stringify(raw)))

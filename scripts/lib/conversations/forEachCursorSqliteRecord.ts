@@ -13,12 +13,13 @@ export const forEachCursorSqliteRecord = (
     'SELECT key, value FROM cursorDiskKV WHERE key >= ? AND key < ? ORDER BY key',
   )
   for (const row of statement.iterate(prefix, upperBound)) {
-    if (typeof row.key !== 'string' || typeof row.value !== 'string') continue
-    if (Buffer.byteLength(row.value) > MAX_CONVERSATION_FILE_BYTES) {
+    if (typeof row['key'] !== 'string' || typeof row['value'] !== 'string')
+      continue
+    if (Buffer.byteLength(row['value']) > MAX_CONVERSATION_FILE_BYTES) {
       throw new Error(
-        `Cursor conversation record exceeds the safe size limit: ${row.key}`,
+        `Cursor conversation record exceeds the safe size limit: ${row['key']}`,
       )
     }
-    consume({ key: row.key, value: row.value })
+    consume({ key: row['key'], value: row['value'] })
   }
 }

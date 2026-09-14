@@ -32,9 +32,9 @@ void test('managed OAuth updates preserve writable application configuration', (
   assert.equal('aud' in update, false)
   assert.equal('created_at' in update, false)
   assert.equal('updated_at' in update, false)
-  assert.equal(update.name, 'OpenSEO')
-  assert.deepEqual(update.policies, [{ id: 'policy-id' }])
-  assert.deepEqual(update.oauth_configuration, {
+  assert.equal(update['name'], 'OpenSEO')
+  assert.deepEqual(update['policies'], [{ id: 'policy-id' }])
+  assert.deepEqual(update['oauth_configuration'], {
     enabled: true,
     custom_property: 'preserved',
     dynamic_client_registration: {
@@ -54,7 +54,7 @@ void test('managed OAuth updates create configuration when the application has n
     type: 'self_hosted',
   })
 
-  assert.deepEqual(update.oauth_configuration, {
+  assert.deepEqual(update['oauth_configuration'], {
     enabled: true,
     dynamic_client_registration: {
       enabled: true,

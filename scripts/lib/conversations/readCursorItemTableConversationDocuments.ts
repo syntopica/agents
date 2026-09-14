@@ -14,16 +14,19 @@ export const readCursorItemTableConversationDocuments = (
       "SELECT rowid AS record_id, key, value FROM ItemTable WHERE key IN ('aiService.prompts', 'aiService.generations', 'composer.composerData', 'workbench.panel.aichat.view.aichat.chatdata') ORDER BY key",
     )
     for (const row of statement.iterate()) {
-      if (typeof row.key !== 'string' || typeof row.value !== 'string') continue
-      if (Buffer.byteLength(row.value) > MAX_CONVERSATION_FILE_BYTES) {
+      if (typeof row['key'] !== 'string' || typeof row['value'] !== 'string')
+        continue
+      if (Buffer.byteLength(row['value']) > MAX_CONVERSATION_FILE_BYTES) {
         throw new Error(
-          `Cursor conversation record exceeds the safe size limit: ${row.key}`,
+          `Cursor conversation record exceeds the safe size limit: ${row['key']}`,
         )
       }
       const recordId =
-        typeof row.record_id === 'number' ? String(row.record_id) : row.key
+        typeof row['record_id'] === 'number'
+          ? String(row['record_id'])
+          : row['key']
       documents.push({
-        contents: row.value,
+        contents: row['value'],
         relativePath: `${artifact.relativePath}#ItemTable:${recordId}`,
         source: artifact.source,
         sourceIdHint: `${artifact.relativePath}:ItemTable:${recordId}`,

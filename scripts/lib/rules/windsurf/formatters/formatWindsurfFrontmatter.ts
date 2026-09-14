@@ -7,8 +7,8 @@ import type { RuleFrontmatter } from '../../types/RuleFrontmatter'
  */
 export function formatWindsurfFrontmatter(frontmatter: RuleFrontmatter) {
   const lines = ['---']
-  if (frontmatter.description) {
-    lines.push(`description: "${frontmatter.description as string}"`)
+  if (frontmatter['description']) {
+    lines.push(`description: "${frontmatter['description'] as string}"`)
   }
 
   if (frontmatter.globs) {
@@ -19,8 +19,8 @@ export function formatWindsurfFrontmatter(frontmatter: RuleFrontmatter) {
     lines.push(`alwaysApply: ${String(frontmatter.alwaysApply)}`)
   }
 
-  if (frontmatter.priority) {
-    lines.push(`priority: ${frontmatter.priority as string}`)
+  if (frontmatter['priority']) {
+    lines.push(`priority: ${frontmatter['priority'] as string}`)
   } else {
     // Default priority based on alwaysApply
     lines.push(`priority: ${frontmatter.alwaysApply ? 'high' : 'medium'}`)

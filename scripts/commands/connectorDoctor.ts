@@ -11,7 +11,7 @@ import { resolveInstanceDir } from '../lib/machine/instance/resolveInstanceDir'
 export const main = async () => {
   const home = homedir()
   const env = createManagedAgentCliEnvironment(home, process.env)
-  process.env.PATH = env.PATH
+  process.env['PATH'] = env['PATH']
   const instance = flagValue(process.argv, '--instance')
   const instanceDir = resolveInstanceDir({
     ...(instance === undefined ? {} : { flag: instance }),

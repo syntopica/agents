@@ -11,7 +11,7 @@ export const collectCodexSecurityErrors = (
     if (key !== 'forcedLoginMethod')
       errors.push(`manifest.codex.${key} is not supported`)
   }
-  if (policy.forcedLoginMethod !== 'chatgpt') {
+  if (policy['forcedLoginMethod'] !== 'chatgpt') {
     errors.push('manifest.codex.forcedLoginMethod must be chatgpt')
   }
 }

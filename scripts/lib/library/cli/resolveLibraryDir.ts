@@ -10,7 +10,7 @@ export const resolveLibraryDir = ({
     return flag
   }
 
-  const fromEnv = env.AGENTS_LIBRARY_DIR
+  const fromEnv = env['AGENTS_LIBRARY_DIR']
   if (fromEnv) {
     return fromEnv
   }

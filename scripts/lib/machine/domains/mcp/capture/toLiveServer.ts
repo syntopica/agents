@@ -24,15 +24,17 @@ export const toLiveServer = ({
     }
   }
 
-  const args = toStringArray(live.args)
+  const args = toStringArray(live['args'])
 
   return {
-    ...(typeof live.command === 'string' ? { command: live.command } : {}),
+    ...(typeof live['command'] === 'string'
+      ? { command: live['command'] }
+      : {}),
     ...(args === undefined ? {} : { args }),
-    ...(typeof live.url === 'string' ? { url: live.url } : {}),
-    ...(typeof live.type === 'string' ? { type: live.type } : {}),
-    env: toRecord(live.env),
-    headers: toRecord(live.headers),
+    ...(typeof live['url'] === 'string' ? { url: live['url'] } : {}),
+    ...(typeof live['type'] === 'string' ? { type: live['type'] } : {}),
+    env: toRecord(live['env']),
+    headers: toRecord(live['headers']),
     headerReferences: {},
   }
 }

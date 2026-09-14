@@ -18,16 +18,16 @@ export const parseGuidanceInputHashes = (
       Object.keys(value).length !== 2 ||
       !Object.hasOwn(value, 'path') ||
       !Object.hasOwn(value, 'sha256') ||
-      typeof value.path !== 'string' ||
-      value.path === '' ||
-      typeof value.sha256 !== 'string' ||
-      !/^[a-f0-9]{64}$/u.test(value.sha256)
+      typeof value['path'] !== 'string' ||
+      value['path'] === '' ||
+      typeof value['sha256'] !== 'string' ||
+      !/^[a-f0-9]{64}$/u.test(value['sha256'])
     )
       return {
         ok: false,
         error: 'inputHashes must be a non-empty path and sha256 array',
       }
-    inputHashes.push({ path: value.path, sha256: value.sha256 })
+    inputHashes.push({ path: value['path'], sha256: value['sha256'] })
   }
   if (new Set(inputHashes.map(({ path }) => path)).size !== inputHashes.length)
     return { ok: false, error: 'inputHashes must not contain duplicate paths' }

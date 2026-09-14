@@ -9,7 +9,10 @@ export const writeClaudeConfig = async ({
   ownedNames,
 }: WriteClaudeConfigInput) => {
   const existing = await readExistingJson(path)
-  const currentServers = (existing.mcpServers ?? {}) as Record<string, unknown>
+  const currentServers = (existing['mcpServers'] ?? {}) as Record<
+    string,
+    unknown
+  >
   const merged: Record<string, unknown> = {}
 
   for (const [name, value] of Object.entries(currentServers)) {

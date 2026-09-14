@@ -9,8 +9,8 @@ export const toOwnedByTarget = (
   return {
     'claude-personal': domain['claude-personal'] ?? [],
     'claude-favish': domain['claude-favish'] ?? [],
-    codex: domain.codex ?? [],
-    gemini: domain.gemini ?? [],
-    cursor: domain.cursor ?? [],
+    codex: domain['codex'] ?? [],
+    gemini: domain['gemini'] ?? [],
+    cursor: domain['cursor'] ?? [],
   }
 }

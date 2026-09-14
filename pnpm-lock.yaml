@@ -12,18 +12,18 @@ importers:
 
   .:
     devDependencies:
-      '@busirocket/prettier-config':
-        specifier: ^0.2.0
-        version: 0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)
-      '@busirocket/quality-config':
-        specifier: ^0.10.0
-        version: 0.10.0(@typescript/typescript6@6.0.2)(dependency-cruiser@18.2.0)(knip@6.32.2)
-      '@busirocket/tsconfig':
-        specifier: ^0.2.1
-        version: 0.2.1
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.7.0(jiti@2.7.0)(supports-color@7.2.0))
+      '@syntopica/prettier-config':
+        specifier: ^0.2.0
+        version: 0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)
+      '@syntopica/quality-config':
+        specifier: ^0.11.0
+        version: 0.11.0(@typescript/typescript6@6.0.2)(dependency-cruiser@18.2.0)(knip@6.32.2)
+      '@syntopica/tsconfig':
+        specifier: ^0.3.0
+        version: 0.3.0
       '@types/node':
         specifier: ^26.1.1
         version: 26.1.1
@@ -111,39 +111,6 @@ packages:
   '@boundaries/elements@3.0.1':
     resolution: {integrity: sha512-T53UueJVRIn1B2G5FWo6T3rqAA1aHcuypRweQcbW6Z/leUygsHW54Gezkm/8uxB9Fw8ewE+izfKKmA9XVv7HdQ==}
     engines: {node: '>=18.18'}
-
-  '@busirocket/prettier-config@0.2.0':
-    resolution: {integrity: sha512-XHey3eprO6kRuK/DGAgF/qlRtxtN2w0zXXkOSAbJ1gyobhJY6oZCUtfk3KSstcvoHwZ/PtF484WqHA4ZazRu2g==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      prettier: '>=3.0.0'
-      prettier-plugin-astro: '>=0.14.0'
-      prettier-plugin-css-order: '>=2.0.0'
-      prettier-plugin-organize-imports: '>=4.0.0'
-      prettier-plugin-tailwindcss: '>=0.6.0'
-    peerDependenciesMeta:
-      prettier-plugin-astro:
-        optional: true
-      prettier-plugin-tailwindcss:
-        optional: true
-
-  '@busirocket/quality-config@0.10.0':
-    resolution: {integrity: sha512-gA47Y3HF9F21g3S7Azd1c/YPGlrs2yDm05JDMCIbioJVduRR/OB55kp1KBV8nJaVd7iX8VAHI7TbY+8e3zX64A==}
-    engines: {node: '>=22'}
-    hasBin: true
-    peerDependencies:
-      dependency-cruiser: '>=18.0.0'
-      knip: '>=6.0.0'
-      typescript: '>=5.4.0'
-    peerDependenciesMeta:
-      dependency-cruiser:
-        optional: true
-      knip:
-        optional: true
-
-  '@busirocket/tsconfig@0.2.1':
-    resolution: {integrity: sha512-HYFnVC8ay0+NujmyuFqdpNu6yplGz845x9IT4bLyJYURY8ckHccj5tAuOmvopp71vIyC2bMn/xPUueihQLZ3bQ==}
-    engines: {node: '>=20'}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -627,6 +594,45 @@ packages:
     resolution: {integrity: sha512-UqGPmo56KDfLlfXFAFIrNflHT8tFxWGEivWg3Zeyp4Uy2NlKN1FGPr6/BxcLGG3+kZ6Wp14g5Uj+n71boqZfiw==}
     cpu: [x64]
     os: [win32]
+
+  '@syntopica/prettier-config@0.2.0':
+    resolution: {integrity: sha512-/ORTmzDnVwRIbaUo6+dFYR3FRkGRwhp600hZD3soQm3nSW6t7LcZxgJpsCC0mlkRU3ndxuME17WN5Xc9FzqAtA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+      prettier-plugin-astro: '>=0.14.0'
+      prettier-plugin-css-order: '>=2.0.0'
+      prettier-plugin-organize-imports: '>=4.0.0'
+      prettier-plugin-tailwindcss: '>=0.6.0'
+    peerDependenciesMeta:
+      prettier-plugin-astro:
+        optional: true
+      prettier-plugin-tailwindcss:
+        optional: true
+
+  '@syntopica/quality-config@0.11.0':
+    resolution: {integrity: sha512-sv9aHgLG/VMWPlgcsTWYhpgZhjm+SVvo2rUiaSHF+eo5fKgiRh4rywltIi8fdMiVp3VsrDdH7g6v4FwhOfsyXg==}
+    engines: {node: '>=22'}
+    hasBin: true
+    peerDependencies:
+      '@commitlint/config-conventional': '>=21.0.0'
+      dependency-cruiser: '>=18.0.0'
+      knip: '>=6.0.0'
+      oxlint: '>=1.0.0'
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      '@commitlint/config-conventional':
+        optional: true
+      dependency-cruiser:
+        optional: true
+      knip:
+        optional: true
+      oxlint:
+        optional: true
+
+  '@syntopica/tsconfig@0.3.0':
+    resolution: {integrity: sha512-0gkw4Q4iLTjwYVlFKXHGfKbjiDMDbNLPY3Gpien6Z3Av98KC1O4TatojyQ7eWe/LiErXog1xQk2wX1sTuDXXIQ==}
+    engines: {node: '>=20'}
 
   '@ts-morph/common@0.29.0':
     resolution: {integrity: sha512-35oUmphHbJvQ/+UTwFNme/t2p3FoKiGJ5auTjjpNTop2dyREspirjMy82PLSC1pnDJ8ah1GU98hwpVt64YXQsg==}
@@ -2040,20 +2046,6 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@busirocket/prettier-config@0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)':
-    dependencies:
-      prettier: 3.9.5
-      prettier-plugin-organize-imports: 4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5)
-
-  '@busirocket/quality-config@0.10.0(@typescript/typescript6@6.0.2)(dependency-cruiser@18.2.0)(knip@6.32.2)':
-    dependencies:
-      typescript: '@typescript/typescript6@6.0.2'
-    optionalDependencies:
-      dependency-cruiser: 18.2.0
-      knip: 6.32.2
-
-  '@busirocket/tsconfig@0.2.1': {}
-
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -2364,6 +2356,20 @@ snapshots:
 
   '@oxc-resolver/binding-win32-x64-msvc@11.24.2':
     optional: true
+
+  '@syntopica/prettier-config@0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)':
+    dependencies:
+      prettier: 3.9.5
+      prettier-plugin-organize-imports: 4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5)
+
+  '@syntopica/quality-config@0.11.0(@typescript/typescript6@6.0.2)(dependency-cruiser@18.2.0)(knip@6.32.2)':
+    dependencies:
+      typescript: '@typescript/typescript6@6.0.2'
+    optionalDependencies:
+      dependency-cruiser: 18.2.0
+      knip: 6.32.2
+
+  '@syntopica/tsconfig@0.3.0': {}
 
   '@ts-morph/common@0.29.0':
     dependencies:

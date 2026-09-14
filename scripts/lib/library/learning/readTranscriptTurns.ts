@@ -18,17 +18,17 @@ export const readTranscriptTurns = (contents: string) => {
       continue
     }
 
-    const message = parsed.message as { content?: unknown } | undefined
+    const message = parsed['message'] as { content?: unknown } | undefined
     if (message === undefined) {
       continue
     }
 
-    if (parsed.type === 'assistant') {
+    if (parsed['type'] === 'assistant') {
       turns.push(...collectSkillInvocations(message.content))
       continue
     }
 
-    if (parsed.type !== 'user' || parsed.isSidechain === true) {
+    if (parsed['type'] !== 'user' || parsed['isSidechain'] === true) {
       continue
     }
 

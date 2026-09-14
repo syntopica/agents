@@ -20,28 +20,31 @@ export const restoreGuidanceSnapshot = async (
       throw new Error('guidance snapshot entry is invalid')
     const value = entry as Record<string, unknown>
     if (
-      typeof value.target !== 'string' ||
-      typeof value.storage !== 'string' ||
-      typeof value.existed !== 'boolean' ||
-      typeof value.key !== 'string' ||
-      expectedTargets[value.key] !== value.target
+      typeof value['target'] !== 'string' ||
+      typeof value['storage'] !== 'string' ||
+      typeof value['existed'] !== 'boolean' ||
+      typeof value['key'] !== 'string' ||
+      expectedTargets[value['key']] !== value['target']
     )
       throw new Error('guidance snapshot entry is invalid')
-    if (!value.existed) {
-      await rm(value.target, { force: true })
+    if (!value['existed']) {
+      await rm(value['target'], { force: true })
       continue
     }
-    if (typeof value.sha256 !== 'string' || typeof value.mode !== 'number')
+    if (
+      typeof value['sha256'] !== 'string' ||
+      typeof value['mode'] !== 'number'
+    )
       throw new Error('guidance snapshot entry is invalid')
     const content = await readFile(
-      join(snapshotDir, 'files', value.storage),
+      join(snapshotDir, 'files', value['storage']),
       'utf8',
     )
-    if (sha256Text(content) !== value.sha256)
+    if (sha256Text(content) !== value['sha256'])
       throw new Error('guidance snapshot hash mismatch')
-    await writeGuidanceAtomically(value.target, content)
-    await chmod(value.target, value.mode)
-    if (sha256Text(await readFile(value.target, 'utf8')) !== value.sha256)
+    await writeGuidanceAtomically(value['target'], content)
+    await chmod(value['target'], value['mode'])
+    if (sha256Text(await readFile(value['target'], 'utf8')) !== value['sha256'])
       throw new Error('guidance restore target hash mismatch')
   }
 }

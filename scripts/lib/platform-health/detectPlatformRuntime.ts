@@ -13,7 +13,7 @@ export const detectPlatformRuntime = async (
       async (candidate): Promise<ProbeResult> => {
         const resolvedPath = await findCommandOnPath(
           candidate,
-          options.env.PATH,
+          options.env['PATH'],
         )
         return {
           kind: 'command',

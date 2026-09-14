@@ -13,11 +13,11 @@ export const collectSkillInvocations = (content: unknown): ObservedTurn[] => {
     }
 
     const record = block as Record<string, unknown>
-    if (record.type !== 'tool_use' || record.name !== 'Skill') {
+    if (record['type'] !== 'tool_use' || record['name'] !== 'Skill') {
       continue
     }
 
-    const input = record.input as { skill?: unknown } | undefined
+    const input = record['input'] as { skill?: unknown } | undefined
     if (typeof input?.skill === 'string') {
       turns.push({ text: '', invokedSkill: input.skill })
     }

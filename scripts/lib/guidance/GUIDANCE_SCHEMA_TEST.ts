@@ -13,32 +13,32 @@ void test('the reconciliation output schema is strict at every object boundary',
     const schemaNode = value as Record<string, unknown>
     if ('const' in schemaNode || 'enum' in schemaNode) {
       assert.equal(
-        typeof schemaNode.type,
+        typeof schemaNode['type'],
         'string',
         `${path} must declare an explicit type`,
       )
     }
-    if (schemaNode.type === 'object') {
+    if (schemaNode['type'] === 'object') {
       assert.equal(
-        schemaNode.additionalProperties,
+        schemaNode['additionalProperties'],
         false,
         `${path} must reject extra properties`,
       )
       assert.equal(
-        typeof schemaNode.properties,
+        typeof schemaNode['properties'],
         'object',
         `${path} must declare properties`,
       )
       assert.notEqual(
-        schemaNode.properties,
+        schemaNode['properties'],
         null,
         `${path} must declare properties`,
       )
       assert.deepEqual(
-        [...((schemaNode.required as string[] | undefined) ?? [])].sort(
+        [...((schemaNode['required'] as string[] | undefined) ?? [])].sort(
           (left, right) => left.localeCompare(right),
         ),
-        Object.keys(schemaNode.properties as Record<string, unknown>).sort(
+        Object.keys(schemaNode['properties'] as Record<string, unknown>).sort(
           (left, right) => left.localeCompare(right),
         ),
         `${path} must require every declared property`,

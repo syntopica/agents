@@ -20,9 +20,9 @@ void test('Gemini settings preserve foreign settings and MCP servers', async () 
   })
   const first = await readFile(path, 'utf8')
   const parsed = JSON.parse(first) as Record<string, unknown>
-  assert.equal(parsed.theme, 'dark')
-  assert.deepEqual(parsed.hooks, { BeforeTool: [] })
-  assert.deepEqual(parsed.mcpServers, {
+  assert.equal(parsed['theme'], 'dark')
+  assert.deepEqual(parsed['hooks'], { BeforeTool: [] })
+  assert.deepEqual(parsed['mcpServers'], {
     foreign: { command: 'x' },
     serena: { command: 'serena' },
   })

@@ -24,7 +24,7 @@ import { COMPILE_RULES_PATHS } from './constants/COMPILE_RULES_PATHS'
 
 export const main = async () => {
   // When RULES_INDEX_ONLY=0, legacy full-content could be used; currently index-only is the only path.
-  const RULES_INDEX_ONLY = process.env.RULES_INDEX_ONLY !== '0'
+  const RULES_INDEX_ONLY = process.env['RULES_INDEX_ONLY'] !== '0'
 
   if (!RULES_INDEX_ONLY) {
     console.warn(

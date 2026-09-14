@@ -16,7 +16,7 @@ export const resolveAgentCliExecutable = (
 ): string => {
   const candidates = [
     join(home, '.local', 'bin', name),
-    ...(env.PATH ?? '')
+    ...(env['PATH'] ?? '')
       .split(delimiter)
       .filter((directory) => isAbsolute(directory))
       .map((directory) => join(directory, name)),

@@ -15,8 +15,8 @@ export const extractTurnText = (content: unknown) => {
     }
 
     const record = block as Record<string, unknown>
-    if (record.type === 'text' && typeof record.text === 'string') {
-      texts.push(record.text)
+    if (record['type'] === 'text' && typeof record['text'] === 'string') {
+      texts.push(record['text'])
     }
   }
 

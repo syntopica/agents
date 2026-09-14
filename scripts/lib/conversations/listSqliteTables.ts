@@ -5,5 +5,7 @@ export const listSqliteTables = (database: string) => {
     database,
     "SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name",
   )
-  return rows.flatMap((row) => (typeof row.name === 'string' ? [row.name] : []))
+  return rows.flatMap((row) =>
+    typeof row['name'] === 'string' ? [row['name']] : [],
+  )
 }

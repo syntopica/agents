@@ -6,6 +6,24 @@
 
 ### 2026-09
 
+- [x] 2026-09-14 - **Shared package scope migration:** the repository installs
+      and gates on the `@syntopica` scope.
+  - Result: `@syntopica/quality-config@^0.11.0` and `@syntopica/tsconfig@^0.3.0`
+    replace the old ranges, the lockfile is regenerated, and 129 source files
+    carry the mechanical updates `noPropertyAccessFromIndexSignature` requires
+    (`entry.relativePath` becomes `entry['relativePath']`).
+  - The gate was blocked by an uncommitted `eslint.config.mjs` dating from
+    2026-09-12 that reverted the `import-x` migration committed in `eb25567` and
+    imported `eslint-plugin-import`, which is not a dependency and is not
+    installed, so that state had never run. Restored from HEAD; the superseded
+    file is kept outside the repository rather than discarded.
+  - `docs/templates/AGENTS.template.md` and its bundled copy under
+    `src/skills/core/brp-code-quality/references/` both named repositories that
+    no longer exist (`BusiRocket/rocket-agents`, `BusiRocket/agents-tools`);
+    both now name `syntopica/agents`, which is what `git remote -v` reports.
+  - Evidence: `pnpm run check` exits 0 (lint, knip, depcruise 1407 modules,
+    type-coverage 99.34%, tests).
+
 - [x] 2026-09-09 - **Conversations export:** `conversations:rewrite` repairs the
       archived records the captures will never revisit.
   - Result: one command for the two rewrite items - the 5,121 records whose

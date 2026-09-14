@@ -19,7 +19,7 @@ export const findStaleLinkedHooks = (): string[] => {
     '../../..',
   )
   const source = path.join(repoRoot, 'src/hooks')
-  const linked = path.join(process.env.HOME ?? '', '.agents/hooks')
+  const linked = path.join(process.env['HOME'] ?? '', '.agents/hooks')
   if (!existsSync(linked)) return []
 
   const walk = (dir: string, prefix = ''): string[] =>

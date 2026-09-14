@@ -13,7 +13,7 @@ export const collectPlatformDefinitionErrors = (
   }
 
   const platform = raw as Record<string, unknown>
-  const registryId = platform.registryId
+  const registryId = platform['registryId']
 
   if (typeof registryId !== 'string' || registryId.length === 0) {
     errors.push(
@@ -25,7 +25,7 @@ export const collectPlatformDefinitionErrors = (
   if (!registryIds.has(registryId))
     errors.push(`${registryId}: unknown registry id`)
 
-  const capabilities = platform.capabilities
+  const capabilities = platform['capabilities']
   if (!Array.isArray(capabilities)) {
     errors.push(`${registryId}: capabilities must be an array`)
   } else {
@@ -36,6 +36,6 @@ export const collectPlatformDefinitionErrors = (
     }
   }
 
-  collectPlatformProbeErrors(registryId, platform.probe, errors)
+  collectPlatformProbeErrors(registryId, platform['probe'], errors)
   return registryId
 }

@@ -129,14 +129,14 @@ void test('a lock whose holder is still running is not reclaimed', async () => {
     // through it rather than declaring the lock stale and writing too. Age is
     // no longer the test: this lock is instantly older than the one-minute
     // window the previous version reclaimed at.
-    process.env.ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS = '750'
+    process.env['ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS'] = '750'
     try {
       await assert.rejects(
         withArchiveWriteLock(archive, () => Promise.resolve(1)),
         /timed out waiting for/,
       )
     } finally {
-      delete process.env.ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS
+      delete process.env['ROCKET_AGENTS_ARCHIVE_LOCK_WAIT_MS']
     }
     // Refusing to steal the lock must not remove it either.
     assert.equal((await readFile(lock, 'utf8')).trim(), String(process.pid))

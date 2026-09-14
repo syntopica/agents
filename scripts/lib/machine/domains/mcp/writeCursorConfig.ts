@@ -21,8 +21,9 @@ export const writeCursorConfig = async ({
   }
 
   const currentServers =
-    typeof existing.mcpServers === 'object' && existing.mcpServers !== null
-      ? (existing.mcpServers as Record<string, unknown>)
+    typeof existing['mcpServers'] === 'object' &&
+    existing['mcpServers'] !== null
+      ? (existing['mcpServers'] as Record<string, unknown>)
       : {}
   const merged: Record<string, unknown> = {}
   for (const [name, value] of Object.entries(currentServers)) {

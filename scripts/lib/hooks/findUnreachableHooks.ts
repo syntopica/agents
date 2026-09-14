@@ -34,7 +34,7 @@ export const findUnreachableHooks = (): string[] => {
   }
 
   const settingsPath = path.join(
-    process.env.HOME ?? '',
+    process.env['HOME'] ?? '',
     '.claude/settings.json',
   )
   if (!existsSync(settingsPath)) return []

@@ -14,7 +14,11 @@ export function getOneLineDescription(
   const fm = item.frontmatter ?? {}
 
   const fromFrontmatter = toOneLine(
-    (fm.description ?? fm.overview ?? fm.title ?? fm.name ?? '') as string,
+    (fm['description'] ??
+      fm['overview'] ??
+      fm['title'] ??
+      fm['name'] ??
+      '') as string,
   )
   const raw = (() => {
     if (!includeShortSummary) return fromFrontmatter

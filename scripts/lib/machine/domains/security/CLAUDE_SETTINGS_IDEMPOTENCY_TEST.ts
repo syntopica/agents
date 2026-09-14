@@ -54,13 +54,15 @@ void test('owned Claude settings converge while foreign settings and profile sta
     'skipDangerousModePermissionPrompt',
     'remoteControlAtStartup',
   ])
-  assert.deepEqual(current['claude-personal'].enabledPlugins, { alpha: true })
-  assert.deepEqual(current['claude-favish'].enabledPlugins, { beta: true })
-  assert.deepEqual(current['claude-personal'].permissions, {
+  assert.deepEqual(current['claude-personal']['enabledPlugins'], {
+    alpha: true,
+  })
+  assert.deepEqual(current['claude-favish']['enabledPlugins'], { beta: true })
+  assert.deepEqual(current['claude-personal']['permissions'], {
     allow: ['Read'],
     defaultMode: 'auto',
   })
-  assert.deepEqual(current['claude-favish'].permissions, {
+  assert.deepEqual(current['claude-favish']['permissions'], {
     deny: ['Read(.env)'],
     defaultMode: 'auto',
   })
@@ -81,7 +83,7 @@ void test('owned Claude settings converge while foreign settings and profile sta
 
   await restoreSnapshot({ runDir })
   assert.equal(
-    (await readClaudeSettings(paths))['claude-personal'].theme,
+    (await readClaudeSettings(paths))['claude-personal']['theme'],
     'dark',
   )
 })

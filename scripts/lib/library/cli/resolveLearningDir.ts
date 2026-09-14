@@ -10,7 +10,7 @@ export const resolveLearningDir = ({
     return flag
   }
 
-  const fromEnv = env.AGENTS_LEARNING_DIR
+  const fromEnv = env['AGENTS_LEARNING_DIR']
   if (fromEnv) {
     return fromEnv
   }

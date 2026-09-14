@@ -4,8 +4,9 @@ import { extractRepositoryUrl } from './extractRepositoryUrl'
 export const buildPluginManifest = (
   pkg: Record<string, unknown>,
 ): PluginManifest => {
-  const version = typeof pkg.version === 'string' ? pkg.version : '0.0.0'
-  const license = typeof pkg.license === 'string' ? pkg.license : undefined
+  const version = typeof pkg['version'] === 'string' ? pkg['version'] : '0.0.0'
+  const license =
+    typeof pkg['license'] === 'string' ? pkg['license'] : undefined
   const repositoryUrl = extractRepositoryUrl(pkg)
 
   return {

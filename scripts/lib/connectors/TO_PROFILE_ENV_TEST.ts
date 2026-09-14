@@ -5,7 +5,7 @@ import { toProfileEnv } from './toProfileEnv'
 void test('the favish profile pins its own configuration directory', () => {
   const env = toProfileEnv('claude-favish', '/home/u', {})
 
-  assert.equal(env.CLAUDE_CONFIG_DIR, '/home/u/.claude-favish')
+  assert.equal(env['CLAUDE_CONFIG_DIR'], '/home/u/.claude-favish')
 })
 
 void test('the personal profile removes an inherited override', () => {
@@ -17,7 +17,7 @@ void test('the personal profile removes an inherited override', () => {
   })
 
   assert.equal('CLAUDE_CONFIG_DIR' in env, false)
-  assert.equal(env.PATH, '/usr/bin')
+  assert.equal(env['PATH'], '/usr/bin')
 })
 
 void test("the caller's environment is not mutated", () => {

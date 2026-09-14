@@ -15,19 +15,19 @@ export const buildManagedOAuthApplicationUpdate = (
   )
 
   const currentOAuth =
-    typeof update.oauth_configuration === 'object' &&
-    update.oauth_configuration !== null &&
-    !Array.isArray(update.oauth_configuration)
-      ? (update.oauth_configuration as Record<string, unknown>)
+    typeof update['oauth_configuration'] === 'object' &&
+    update['oauth_configuration'] !== null &&
+    !Array.isArray(update['oauth_configuration'])
+      ? (update['oauth_configuration'] as Record<string, unknown>)
       : {}
   const currentRegistration =
-    typeof currentOAuth.dynamic_client_registration === 'object' &&
-    currentOAuth.dynamic_client_registration !== null &&
-    !Array.isArray(currentOAuth.dynamic_client_registration)
-      ? (currentOAuth.dynamic_client_registration as Record<string, unknown>)
+    typeof currentOAuth['dynamic_client_registration'] === 'object' &&
+    currentOAuth['dynamic_client_registration'] !== null &&
+    !Array.isArray(currentOAuth['dynamic_client_registration'])
+      ? (currentOAuth['dynamic_client_registration'] as Record<string, unknown>)
       : {}
 
-  update.oauth_configuration = {
+  update['oauth_configuration'] = {
     ...currentOAuth,
     enabled: true,
     dynamic_client_registration: {

@@ -15,17 +15,19 @@ export const parseProceduresFile = (raw: unknown): Procedure[] => {
     const record = item as Record<string, unknown>
 
     if (
-      typeof record.name !== 'string' ||
-      typeof record.requests !== 'number'
+      typeof record['name'] !== 'string' ||
+      typeof record['requests'] !== 'number'
     ) {
       continue
     }
 
     procedures.push({
-      name: record.name,
-      requests: record.requests,
-      projects: typeof record.projects === 'number' ? record.projects : 1,
-      ...(typeof record.covers === 'string' ? { covers: record.covers } : {}),
+      name: record['name'],
+      requests: record['requests'],
+      projects: typeof record['projects'] === 'number' ? record['projects'] : 1,
+      ...(typeof record['covers'] === 'string'
+        ? { covers: record['covers'] }
+        : {}),
     })
   }
 

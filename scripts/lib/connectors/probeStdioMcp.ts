@@ -59,7 +59,7 @@ export const probeStdioMcp = (
           )
             continue
           const envelope = response as Record<string, unknown>
-          if (envelope.id === 'connector-doctor-initialize') {
+          if (envelope['id'] === 'connector-doctor-initialize') {
             if (!isSupportedStdioMcpInitialization(response)) {
               finish('failed', 'MCP initialization negotiation is unsupported')
               continue
@@ -77,12 +77,14 @@ export const probeStdioMcp = (
             )
           }
           if (
-            envelope.jsonrpc === '2.0' &&
-            envelope.id === 'connector-doctor-tools-list' &&
-            typeof envelope.result === 'object' &&
-            envelope.result !== null &&
-            !Array.isArray(envelope.result) &&
-            Array.isArray((envelope.result as Record<string, unknown>).tools)
+            envelope['jsonrpc'] === '2.0' &&
+            envelope['id'] === 'connector-doctor-tools-list' &&
+            typeof envelope['result'] === 'object' &&
+            envelope['result'] !== null &&
+            !Array.isArray(envelope['result']) &&
+            Array.isArray(
+              (envelope['result'] as Record<string, unknown>)['tools'],
+            )
           ) {
             finish('healthy', 'MCP initialize and tools/list succeeded')
           }

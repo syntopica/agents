@@ -13,16 +13,16 @@ export const parseAcceptedGuidanceState = (
     !['runId', 'acceptedAt', 'inputHashes', 'outputHashes'].every((key) =>
       Object.hasOwn(raw, key),
     ) ||
-    typeof raw.runId !== 'string' ||
-    raw.runId === '' ||
-    typeof raw.acceptedAt !== 'string' ||
-    !Number.isFinite(Date.parse(raw.acceptedAt))
+    typeof raw['runId'] !== 'string' ||
+    raw['runId'] === '' ||
+    typeof raw['acceptedAt'] !== 'string' ||
+    !Number.isFinite(Date.parse(raw['acceptedAt']))
   )
     return { ok: false, error: 'accepted guidance state has an invalid shape' }
-  const outputHashes = raw.outputHashes
+  const outputHashes = raw['outputHashes']
   if (!isRecord(outputHashes))
     return { ok: false, error: 'accepted guidance state has an invalid shape' }
-  const parsedInputs = parseGuidanceInputHashes(raw.inputHashes)
+  const parsedInputs = parseGuidanceInputHashes(raw['inputHashes'])
   if (!parsedInputs.ok) return { ok: false, error: parsedInputs.error }
   const outputKeys = [
     'shared',
@@ -44,8 +44,8 @@ export const parseAcceptedGuidanceState = (
   return {
     ok: true,
     state: {
-      runId: raw.runId,
-      acceptedAt: raw.acceptedAt,
+      runId: raw['runId'],
+      acceptedAt: raw['acceptedAt'],
       inputHashes: parsedInputs.inputHashes,
       outputHashes:
         outputHashes as unknown as AcceptedGuidanceState['outputHashes'],

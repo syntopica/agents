@@ -11,7 +11,7 @@ export const readMarketplaces = async (
     .filter(([, value]) => typeof value === 'object' && value !== null)
     .map(([name, value]) => ({
       name,
-      source: toMarketplaceSource((value as Record<string, unknown>).source),
+      source: toMarketplaceSource((value as Record<string, unknown>)['source']),
     }))
     .sort((left, right) => left.name.localeCompare(right.name))
 }

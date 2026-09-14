@@ -24,7 +24,7 @@ void test('provenance is carried across verbatim', () => {
 
 void test('our own bundles are seeded adopted, not parked', () => {
   const manifest = seedManifestFromLock({ core: { source: '' } }, ['core'])
-  assert.equal(manifest.entries.core?.state, 'adopted')
+  assert.equal(manifest.entries['core']?.state, 'adopted')
 })
 
 void test('a seeded manifest passes its own parser', async () => {

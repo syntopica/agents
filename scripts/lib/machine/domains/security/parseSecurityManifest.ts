@@ -17,9 +17,9 @@ export const parseSecurityManifest = (
       errors.push(`manifest.${key} is not supported`)
     }
   }
-  if (manifest.version !== 1) errors.push('manifest.version must be 1')
-  collectClaudeSecurityErrors(manifest.claude, errors)
-  collectCodexSecurityErrors(manifest.codex, errors)
+  if (manifest['version'] !== 1) errors.push('manifest.version must be 1')
+  collectClaudeSecurityErrors(manifest['claude'], errors)
+  collectCodexSecurityErrors(manifest['codex'], errors)
   return errors.length === 0
     ? { ok: true, manifest: raw as SecurityManifest }
     : {

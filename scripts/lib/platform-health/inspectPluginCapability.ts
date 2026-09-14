@@ -17,7 +17,7 @@ export const inspectPluginCapability = async (
     const settings = JSON.parse(
       await fs.readFile(settingsPath, 'utf8'),
     ) as Record<string, unknown>
-    const enabled = settings.enabledPlugins
+    const enabled = settings['enabledPlugins']
     const count =
       typeof enabled === 'object' && enabled !== null
         ? Object.keys(enabled).length

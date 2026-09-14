@@ -11,12 +11,12 @@ export const parseSkillSourceManifest = (
 
   const record = raw as Record<string, unknown>
   const errors: string[] = []
-  if (record.version !== 1)
+  if (record['version'] !== 1)
     errors.push('skill source manifest version must be 1')
-  if (!Array.isArray(record.sources))
+  if (!Array.isArray(record['sources']))
     errors.push('skill source manifest needs a sources array')
 
-  const sources = Array.isArray(record.sources) ? record.sources : []
+  const sources = Array.isArray(record['sources']) ? record['sources'] : []
   const ids = new Set<string>()
   for (const [index, value] of sources.entries()) {
     collectSkillSourceErrors(value, index, ids, errors)

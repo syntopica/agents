@@ -21,7 +21,10 @@ export const readTauriConversationDocuments = async (
       .filter(({ value }) => typeof value === 'object' && value !== null)
       .flatMap(({ key, value }) => {
         const object = value as Record<string, unknown>
-        if (!Array.isArray(object.messages) && !Array.isArray(object.history))
+        if (
+          !Array.isArray(object['messages']) &&
+          !Array.isArray(object['history'])
+        )
           return []
         return [
           {

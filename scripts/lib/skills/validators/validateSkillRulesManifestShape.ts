@@ -10,21 +10,21 @@ export const validateSkillRulesManifestShape = (
     return { errors: ['Manifest must be a JSON object.'], warnings }
   }
 
-  if (!Number.isInteger(manifest.version)) {
+  if (!Number.isInteger(manifest['version'])) {
     errors.push("Manifest field 'version' must be an integer.")
   }
 
   if (
-    !manifest.skills ||
-    typeof manifest.skills !== 'object' ||
-    Array.isArray(manifest.skills)
+    !manifest['skills'] ||
+    typeof manifest['skills'] !== 'object' ||
+    Array.isArray(manifest['skills'])
   ) {
     errors.push("Manifest field 'skills' must be an object map.")
     return { errors, warnings }
   }
 
   for (const [skillName, entry] of Object.entries(
-    manifest.skills as Record<string, unknown>,
+    manifest['skills'] as Record<string, unknown>,
   )) {
     validateSkillEntry(skillName, entry, errors)
   }

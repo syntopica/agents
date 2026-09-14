@@ -51,7 +51,7 @@ void test('acknowledgements and ordinary work stay silent', () => {
 })
 
 void test('a lane fires at most once per session', () => {
-  const prompt = ROUTER_FIXTURES.routes.debug?.[0]
+  const prompt = ROUTER_FIXTURES.routes['debug']?.[0]
   assert.ok(prompt, 'debug lane needs at least one fixture prompt')
   const first = `router-test-${randomUUID()}`
   const second = `router-test-${randomUUID()}`

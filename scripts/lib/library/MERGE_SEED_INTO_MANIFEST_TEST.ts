@@ -6,9 +6,9 @@ import { mergeSeedIntoManifest } from './mergeSeedIntoManifest'
 
 void test('a decision already made is never overwritten by a reseed', () => {
   const { manifest } = mergeSeedIntoManifest(EXISTING_MANIFEST, SEEDED_MANIFEST)
-  assert.ok(manifest.entries.promoted)
-  assert.equal(manifest.entries.promoted.state, 'adopted')
-  assert.equal(manifest.entries.promoted.reason, 'measured demand')
+  assert.ok(manifest.entries['promoted'])
+  assert.equal(manifest.entries['promoted'].state, 'adopted')
+  assert.equal(manifest.entries['promoted'].reason, 'measured demand')
 })
 
 void test('an entry the manifest did not know about is added', () => {
@@ -16,7 +16,7 @@ void test('an entry the manifest did not know about is added', () => {
     EXISTING_MANIFEST,
     SEEDED_MANIFEST,
   )
-  assert.equal(manifest.entries.fresh?.state, 'parked')
+  assert.equal(manifest.entries['fresh']?.state, 'parked')
   assert.deepEqual(added, ['fresh'])
 })
 

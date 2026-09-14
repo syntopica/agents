@@ -7,11 +7,14 @@
  * always safe; the caller re-reads and merges again.
  */
 export class ConversationArchiveChangedError extends Error {
-  constructor(readonly archive: string) {
+  readonly archive: string
+
+  constructor(archive: string) {
     super(
       `the archive changed while it was being merged: ${archive}. ` +
         'Nothing was written. Re-run the import to merge against the new revision.',
     )
+    this.archive = archive
     this.name = 'ConversationArchiveChangedError'
   }
 }

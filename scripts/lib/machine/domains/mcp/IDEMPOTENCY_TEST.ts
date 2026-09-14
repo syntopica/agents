@@ -62,7 +62,7 @@ void test('a foreign key added between runs is not disturbed', async () => {
   ) as {
     mcpServers: Record<string, unknown>
   }
-  config.mcpServers.injectedByAnotherTool = { type: 'stdio', command: 'x' }
+  config.mcpServers['injectedByAnotherTool'] = { type: 'stdio', command: 'x' }
   await writeFile(paths['claude-personal'], JSON.stringify(config, null, 2))
 
   await apply({ manifest, paths, owned: first.owned, env: TEST_ENV })

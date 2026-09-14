@@ -15,18 +15,24 @@ export const collectServiceErrors = (
 
   const service = raw as Record<string, unknown>
 
-  if (typeof service.name !== 'string' || !/^[a-z0-9.-]+$/.test(service.name)) {
+  if (
+    typeof service['name'] !== 'string' ||
+    !/^[a-z0-9.-]+$/.test(service['name'])
+  ) {
     errors.push(`${at}.name must be a lowercase reverse-domain label`)
   }
-  if (typeof service.command !== 'string' || service.command === '') {
+  if (typeof service['command'] !== 'string' || service['command'] === '') {
     errors.push(`${at}.command must be a non-empty string`)
   }
-  if (!isPortableHomePath(service.workingDirectory)) {
+  if (!isPortableHomePath(service['workingDirectory'])) {
     errors.push(
       `${at}.workingDirectory must be a path relative to the home directory`,
     )
   }
-  if (service.logPath !== undefined && !isPortableHomePath(service.logPath)) {
+  if (
+    service['logPath'] !== undefined &&
+    !isPortableHomePath(service['logPath'])
+  ) {
     errors.push(`${at}.logPath must be a path relative to the home directory`)
   }
 
@@ -36,5 +42,5 @@ export const collectServiceErrors = (
     }
   }
 
-  collectScheduleErrors(service.schedule, at, errors)
+  collectScheduleErrors(service['schedule'], at, errors)
 }

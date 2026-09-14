@@ -12,7 +12,7 @@ void test('promoting a parked entry to adopted records the date and the reason',
     '2026-08-18',
   )
   assert.ok(result.ok)
-  const entry = result.manifest.entries.parkedOne
+  const entry = result.manifest.entries['parkedOne']
   assert.ok(entry)
   assert.equal(entry.state, 'adopted')
   assert.equal(entry.decidedAt, '2026-08-18')
@@ -63,5 +63,5 @@ void test('the original manifest is left untouched', () => {
     { reason: 'x' },
     '2026-08-18',
   )
-  assert.equal(FAN_OUT_MANIFEST.entries.parkedOne?.state, 'parked')
+  assert.equal(FAN_OUT_MANIFEST.entries['parkedOne']?.state, 'parked')
 })

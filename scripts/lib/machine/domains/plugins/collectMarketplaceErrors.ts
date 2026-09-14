@@ -12,12 +12,12 @@ export const collectMarketplaceErrors = (raw: unknown, errors: string[]) => {
 
     const record = entry as Record<string, unknown>
 
-    if (typeof record.name !== 'string' || record.name === '') {
+    if (typeof record['name'] !== 'string' || record['name'] === '') {
       errors.push(
         `manifest.marketplaces[${String(index)}].name must be a non-empty string`,
       )
     }
-    if (typeof record.source !== 'string' || record.source === '') {
+    if (typeof record['source'] !== 'string' || record['source'] === '') {
       errors.push(
         `manifest.marketplaces[${String(index)}].source must be a non-empty string`,
       )

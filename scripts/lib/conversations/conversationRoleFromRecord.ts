@@ -7,7 +7,7 @@ export const conversationRoleFromRecord = (
   record: unknown,
 ): ConversationRole => {
   if (typeof record === 'object' && record !== null) {
-    const numericType = (record as Record<string, unknown>).type
+    const numericType = (record as Record<string, unknown>)['type']
     if (numericType === 1) return 'user'
     if (numericType === 2) return 'assistant'
   }

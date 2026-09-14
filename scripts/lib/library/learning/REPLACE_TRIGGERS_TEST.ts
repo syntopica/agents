@@ -22,7 +22,7 @@ void test('a skill the scan no longer attributes loses its triggers entirely', (
 
 void test('entries that never had triggers are left byte-identical', () => {
   const next = replaceTriggersInManifest(stale, {}, {}, 8)
-  assert.deepEqual(next.entries.untouched, { state: 'parked', reason: 'x' })
+  assert.deepEqual(next.entries['untouched'], { state: 'parked', reason: 'x' })
 })
 
 void test('the cap applies on replacement too', () => {

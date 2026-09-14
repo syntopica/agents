@@ -31,7 +31,7 @@ void test('a single phrase naming the skill is enough on its own', () => {
   const { kept } = selectRecurringTriggers({
     codex: ['si vas a quemar cuota usa codex para eso'],
   })
-  assert.equal(kept.codex?.length, 1)
+  assert.equal(kept['codex']?.length, 1)
 })
 
 void test('a single phrase that does not name the skill is unconfirmed and dropped', () => {

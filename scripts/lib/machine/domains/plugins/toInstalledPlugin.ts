@@ -10,7 +10,7 @@ export const toInstalledPlugin = (
 
   const record = entry as Record<string, unknown>
   const installPath =
-    typeof record.installPath === 'string' ? record.installPath : ''
+    typeof record['installPath'] === 'string' ? record['installPath'] : ''
 
   if (installPath === '') {
     return undefined
@@ -18,11 +18,12 @@ export const toInstalledPlugin = (
 
   return {
     id,
-    scope: typeof record.scope === 'string' ? record.scope : 'unknown',
-    version: typeof record.version === 'string' ? record.version : 'unknown',
+    scope: typeof record['scope'] === 'string' ? record['scope'] : 'unknown',
+    version:
+      typeof record['version'] === 'string' ? record['version'] : 'unknown',
     installPath,
-    ...(typeof record.gitCommitSha === 'string'
-      ? { gitCommitSha: record.gitCommitSha }
+    ...(typeof record['gitCommitSha'] === 'string'
+      ? { gitCommitSha: record['gitCommitSha'] }
       : {}),
   }
 }

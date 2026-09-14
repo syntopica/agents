@@ -466,7 +466,7 @@ repeats.
 
 ## Shared package scope migration (2026-09-14)
 
-- [ ] After the owner publishes the renamed shared packages, regenerate the
-      lockfile and run the existing repository quality gate. Source references
-      now use the new scope; the lockfile is intentionally unchanged because the
-      packages are not available offline.
+- [ ] Remove the temporary `minimumReleaseAgeExclude` entries for
+      `@syntopica/prettier-config@0.2.0`, `@syntopica/quality-config@0.11.0`,
+      and `@syntopica/tsconfig@0.3.0` after the publication quarantine expires;
+      verify `pnpm install --frozen-lockfile`.

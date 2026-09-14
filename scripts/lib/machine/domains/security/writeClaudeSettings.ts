@@ -20,8 +20,9 @@ export const writeClaudeSettings = async ({
   for (const profile of policy.profiles) {
     const existing = current[profile]
     const existingPermissions =
-      typeof existing.permissions === 'object' && existing.permissions !== null
-        ? (existing.permissions as Record<string, unknown>)
+      typeof existing['permissions'] === 'object' &&
+      existing['permissions'] !== null
+        ? (existing['permissions'] as Record<string, unknown>)
         : {}
     const next = {
       ...existing,

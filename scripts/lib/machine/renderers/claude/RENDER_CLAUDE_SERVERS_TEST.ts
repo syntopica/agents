@@ -38,7 +38,7 @@ void test('the target override is appended to args', () => {
   const { servers } = renderClaudeServers(manifest, 'claude-personal', {
     CONTEXT7_API_KEY: 'k',
   })
-  assert.deepEqual(servers.serena, {
+  assert.deepEqual(servers['serena'], {
     type: 'stdio',
     command: 'uvx',
     args: ['serena', 'start-mcp-server', '--context', 'claude-code'],
@@ -49,7 +49,7 @@ void test('a resolved header is written as an environment reference', () => {
   const { servers } = renderClaudeServers(manifest, 'claude-personal', {
     CONTEXT7_API_KEY: 'k',
   })
-  assert.deepEqual(servers.context7, {
+  assert.deepEqual(servers['context7'], {
     type: 'http',
     url: 'https://mcp.context7.com/mcp',
     headers: { CONTEXT7_API_KEY: '${CONTEXT7_API_KEY}' },
@@ -71,7 +71,7 @@ void test('secret references are never rendered as literals', () => {
   const { servers } = renderClaudeServers(geminiManifest, 'gemini', {
     CONTEXT7_API_KEY: 'k',
   })
-  assert.deepEqual(servers.context7, {
+  assert.deepEqual(servers['context7'], {
     type: 'http',
     url: 'https://mcp.context7.com/mcp',
     headers: { CONTEXT7_API_KEY: '${CONTEXT7_API_KEY}' },

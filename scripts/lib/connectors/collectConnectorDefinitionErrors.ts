@@ -14,44 +14,50 @@ export const collectConnectorDefinitionErrors = (
   const probeKinds = new Set(['native-cli', 'claude-cli-prefix', 'http-mcp'])
   const criticalities = new Set(['required', 'optional'])
 
-  if (typeof connector.id !== 'string' || connector.id.length === 0) {
+  if (typeof connector['id'] !== 'string' || connector['id'].length === 0) {
     errors.push(`${path}.id must be a non-empty string`)
-  } else if (ids.has(connector.id)) {
-    errors.push(`${path}.id duplicates ${connector.id}`)
+  } else if (ids.has(connector['id'])) {
+    errors.push(`${path}.id duplicates ${connector['id']}`)
   } else {
-    ids.add(connector.id)
+    ids.add(connector['id'])
   }
-  if (typeof connector.match !== 'string' || connector.match.length === 0) {
+  if (
+    typeof connector['match'] !== 'string' ||
+    connector['match'].length === 0
+  ) {
     errors.push(`${path}.match must be a non-empty string`)
   }
   if (
-    !Array.isArray(connector.profiles) ||
-    connector.profiles.length === 0 ||
-    connector.profiles.some(
+    !Array.isArray(connector['profiles']) ||
+    connector['profiles'].length === 0 ||
+    connector['profiles'].some(
       (profile) => typeof profile !== 'string' || !profiles.has(profile),
     )
   ) {
     errors.push(`${path}.profiles contains an unknown or missing profile`)
   }
   if (
-    typeof connector.ownership !== 'string' ||
-    !ownershipKinds.has(connector.ownership)
+    typeof connector['ownership'] !== 'string' ||
+    !ownershipKinds.has(connector['ownership'])
   ) {
     errors.push(`${path}.ownership is invalid`)
   }
-  if (typeof connector.probe !== 'string' || !probeKinds.has(connector.probe)) {
+  if (
+    typeof connector['probe'] !== 'string' ||
+    !probeKinds.has(connector['probe'])
+  ) {
     errors.push(`${path}.probe is invalid`)
   }
   if (
-    typeof connector.criticality !== 'string' ||
-    !criticalities.has(connector.criticality)
+    typeof connector['criticality'] !== 'string' ||
+    !criticalities.has(connector['criticality'])
   ) {
     errors.push(`${path}.criticality is invalid`)
   }
   if (
-    typeof connector.endpoint === 'string' &&
+    typeof connector['endpoint'] === 'string' &&
     /[?&](?:token|api[_-]?key|access[_-]?token|authorization)=/i.test(
-      connector.endpoint,
+      connector['endpoint'],
     )
   ) {
     errors.push(`${path}.endpoint contains a credential query parameter`)

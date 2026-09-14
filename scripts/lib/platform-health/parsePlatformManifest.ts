@@ -13,8 +13,9 @@ export const parsePlatformManifest = (
   const manifest = raw as Record<string, unknown>
   const errors: string[] = []
 
-  if (manifest.version !== 1) errors.push('platform manifest version must be 1')
-  if (!Array.isArray(manifest.platforms)) {
+  if (manifest['version'] !== 1)
+    errors.push('platform manifest version must be 1')
+  if (!Array.isArray(manifest['platforms'])) {
     return {
       ok: false,
       errors: [...errors, 'platforms must be an array'].toSorted(
@@ -26,7 +27,7 @@ export const parsePlatformManifest = (
   const registryIds = new Set(IDE_REGISTRY.map(({ id }) => id))
   const seen = new Set<string>()
 
-  for (const [index, platform] of manifest.platforms.entries()) {
+  for (const [index, platform] of manifest['platforms'].entries()) {
     const registryId = collectPlatformDefinitionErrors(
       platform,
       index,

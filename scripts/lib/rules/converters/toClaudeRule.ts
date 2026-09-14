@@ -7,7 +7,7 @@ export const toClaudeRule = (content: string) => {
     return content.trimEnd()
   }
 
-  const globs = (frontmatter.globs ?? '')
+  const globs = (frontmatter['globs'] ?? '')
     .split(',')
     .map((value: string) => value.trim())
     .filter(Boolean)

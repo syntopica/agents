@@ -9,10 +9,10 @@ export const parseCodexMcpListEntries = (
       if (typeof value !== 'object' || value === null || Array.isArray(value))
         continue
       const entry = value as Record<string, unknown>
-      if (typeof entry.name === 'string' && entry.name.length > 0) {
+      if (typeof entry['name'] === 'string' && entry['name'].length > 0) {
         entries.set(
-          entry.name,
-          typeof entry.enabled === 'boolean' ? entry.enabled : undefined,
+          entry['name'],
+          typeof entry['enabled'] === 'boolean' ? entry['enabled'] : undefined,
         )
       }
     }

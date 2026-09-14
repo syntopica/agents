@@ -45,7 +45,7 @@ export const main = async () => {
   const config = await readLoopConfig(learningDir)
   const classifyCommand =
     flagValue(process.argv, '--classify-command') ??
-    process.env.LIBRARY_CLASSIFY_COMMAND ??
+    process.env['LIBRARY_CLASSIFY_COMMAND'] ??
     config.classifyCommand
 
   const bin = (script: string) => join(process.cwd(), 'scripts', 'bin', script)

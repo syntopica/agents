@@ -82,13 +82,12 @@ so the mini and the next session read the same `TODO.md`.
   (`onlyBuiltDependencies`) installs without the flag, because pnpm 10.33
   refuses the pair; installs run under `CI=true` so a module purge does not wait
   for a TTY.
-- TypeScript goes to latest. TypeScript 7 (and `@syntopica/tsconfig` 0.3.0)
-  turn on `noPropertyAccessFromIndexSignature`;
-  `bin/daily/ts4111-bracket-access.mjs` rewrites the flagged `.prop` to
-  `['prop']` from the tsc output, up to five passes, whether or not other errors
-  sit beside them (since 2026-09-12 evening; contratos had shipped 188
-  unrewritten next to 8 real errors). Repos that also depend on
-  typescript-eslint get the side-by-side pair from
+- TypeScript goes to latest. TypeScript 7 (and `@syntopica/tsconfig` 0.3.0) turn
+  on `noPropertyAccessFromIndexSignature`; `bin/daily/ts4111-bracket-access.mjs`
+  rewrites the flagged `.prop` to `['prop']` from the tsc output, up to five
+  passes, whether or not other errors sit beside them (since 2026-09-12 evening;
+  contratos had shipped 188 unrewritten next to 8 real errors). Repos that also
+  depend on typescript-eslint get the side-by-side pair from
   `brain/topics/dev-environment.md` applied by `bin/daily/ts7-side-by-side.mjs`
   (`typescript` on the `@typescript/typescript6` shim, TS 7 under
   `@typescript/native`), because typescript-eslint refuses TS 7 in the

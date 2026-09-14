@@ -10,7 +10,7 @@ export const resolveInstanceDir = ({
     return flag
   }
 
-  const fromEnv = env.AGENTS_MACHINE_DIR
+  const fromEnv = env['AGENTS_MACHINE_DIR']
   if (fromEnv) {
     return fromEnv
   }

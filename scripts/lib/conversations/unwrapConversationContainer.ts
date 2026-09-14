@@ -16,8 +16,8 @@ export const unwrapConversationContainer = (
   if (typeof value !== 'object' || value === null) return [value]
 
   const object = value as Record<string, unknown>
-  if (Array.isArray(object.tabs)) {
-    return object.tabs.flatMap((tab) =>
+  if (Array.isArray(object['tabs'])) {
+    return object['tabs'].flatMap((tab) =>
       unwrapConversationContainer(tab, depth + 1),
     )
   }
