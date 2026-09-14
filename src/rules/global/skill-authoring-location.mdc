@@ -9,7 +9,7 @@ Unscoped on purpose: it matters at the first Write of a new `SKILL.md`, before
 any path-scoped rule loads, and the superpowers `writing-skills` skill points at
 `~/.claude/skills/`, which here deletes the skill.
 
-The only source is `~/p/rocket-agents/src/skills/core/<name>/SKILL.md`,
+The only source is `~/p/agents/src/skills/core/<name>/SKILL.md`,
 registered in `src/skills/skill-rules.map.json`, then `skills:compile` and
 `skills:link`. `~/.claude/skills/`, `~/.agents/` and the rocket-agents-library
 checkout are generated output the link wipes: `ui-verification-loop` was

@@ -9,7 +9,7 @@ import { createUnscheduledService } from './fixtures/createUnscheduledService'
 void test('the launch agent expands the home directory as a shell token, not a literal path', () => {
   const rendered = renderLaunchAgent(createServiceDefinition())
 
-  assert.match(rendered, /cd &quot;\$HOME\/p\/rocket-agents&quot;/)
+  assert.match(rendered, /cd &quot;\$HOME\/p\/agents&quot;/)
   assert.equal(rendered.includes('/Users/'), false)
 })
 
@@ -39,7 +39,7 @@ void test('a service without a schedule renders no calendar interval', () => {
 void test('the same description renders a systemd unit with the systemd home specifier', () => {
   const rendered = renderSystemdService(createServiceDefinition())
 
-  assert.match(rendered, /WorkingDirectory=%h\/p\/rocket-agents/)
+  assert.match(rendered, /WorkingDirectory=%h\/p\/agents/)
   assert.equal(rendered.includes('$HOME'), false)
   assert.equal(rendered.includes('/Users/'), false)
 })

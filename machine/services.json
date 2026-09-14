@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "com.cristian.library-loop",
-      "workingDirectory": "p/rocket-agents",
+      "workingDirectory": "p/agents",
       "command": "npx tsx scripts/bin/run-library-loop.ts --if-due 7",
       "logPath": ".agents-learning/loop.log",
       "schedule": { "intervalSeconds": 21600 }

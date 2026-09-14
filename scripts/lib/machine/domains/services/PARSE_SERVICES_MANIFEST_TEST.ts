@@ -17,7 +17,7 @@ void test('an absolute home path is rejected, which is the portability defect th
     version: 1,
     services: [
       createServiceDefinition({
-        workingDirectory: '/Users/cristiandeluxe/p/rocket-agents',
+        workingDirectory: '/Users/cristiandeluxe/p/agents',
       }),
     ],
   })
@@ -30,9 +30,7 @@ void test('an absolute home path is rejected, which is the portability defect th
 void test('a shell home token is rejected too, so one description renders on both platforms', () => {
   const result = parseServicesManifest({
     version: 1,
-    services: [
-      createServiceDefinition({ workingDirectory: '$HOME/p/rocket-agents' }),
-    ],
+    services: [createServiceDefinition({ workingDirectory: '$HOME/p/agents' })],
   })
 
   assert.deepEqual(!result.ok && result.errors, [
@@ -81,7 +79,7 @@ void test('an interval schedule is accepted', () => {
     services: [
       {
         name: 'com.example.poller',
-        workingDirectory: 'p/rocket-agents',
+        workingDirectory: 'p/agents',
         command: 'npx tsx scripts/bin/run-library-loop.ts --if-due 7',
         schedule: { intervalSeconds: 21_600 },
       },
@@ -97,7 +95,7 @@ void test('a schedule that is both an interval and a calendar slot is rejected',
     services: [
       {
         name: 'com.example.confused',
-        workingDirectory: 'p/rocket-agents',
+        workingDirectory: 'p/agents',
         command: 'true',
         schedule: { intervalSeconds: 60, hour: 6, minute: 30 },
       },
@@ -113,7 +111,7 @@ void test('a zero or negative interval is rejected', () => {
     services: [
       {
         name: 'com.example.zero',
-        workingDirectory: 'p/rocket-agents',
+        workingDirectory: 'p/agents',
         command: 'true',
         schedule: { intervalSeconds: 0 },
       },

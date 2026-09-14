@@ -299,7 +299,7 @@ pnpm run rules:check
 pnpm run machine:diff -- --json
 pnpm run connectors:doctor -- --json
 codex mcp list
-codegraph status /Users/cristiandeluxe/p/rocket-agents
+codegraph status /Users/cristiandeluxe/p/agents
 mempalace daemon status
 mempalace repair --mode max-seq-id --dry-run --backup
 ```

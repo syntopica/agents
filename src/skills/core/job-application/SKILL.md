@@ -489,7 +489,7 @@ time if it had been written down.
 
 ### Ship the change
 
-Skills live in `~/p/rocket-agents`, not in the project repo. Edit
+Skills live in `~/p/agents`, not in the project repo. Edit
 `src/skills/core/<name>/SKILL.md`, never a compiled or linked copy.
 
 ```bash

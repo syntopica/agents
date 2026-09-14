@@ -7,7 +7,7 @@ implemented by this control-plane repository.
 
 | Component        | Source of truth                         | Responsibility                                                                 |
 | ---------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
-| Control plane    | `~/p/rocket-agents`                     | Policy, adapters, diagnostics, machine convergence, and conversation transport |
+| Control plane    | `~/p/agents`                            | Policy, adapters, diagnostics, machine convergence, and conversation transport |
 | Machine instance | `~/p/dotfiles`                          | Host bootstrap, packages, services, and private machine manifests              |
 | Skill library    | `~/p/rocket-agents-library`             | Curated skill sources and provenance shared across clients                     |
 | Knowledge vault  | `~/p/brain`                             | Human-authored knowledge and operational source material                       |

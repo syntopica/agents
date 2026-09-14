@@ -201,7 +201,7 @@
   - `codex mcp list`.
   - `mempalace daemon status`, `mempalace repair-status`, and a scoped semantic
     search.
-  - `codegraph status /Users/cristiandeluxe/p/rocket-agents` and a real MCP
+  - `codegraph status /Users/cristiandeluxe/p/agents` and a real MCP
     exploration.
   - Fresh Claude and Codex non-interactive behavioral probes.
 - Acceptance criteria:

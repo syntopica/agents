@@ -1266,8 +1266,8 @@
     succeeded and the script was simply absent - the loop would have failed
     silently at its first scheduled run on 2026-08-23 06:30, and the missing
     report would have looked like the job never fired. Repointed to
-    `$HOME/p/rocket-agents` and reloaded. A sweep of all 25 user LaunchAgents
-    found no second instance of the stale path.
+    `$HOME/p/agents` and reloaded. A sweep of all 25 user LaunchAgents found no
+    second instance of the stale path.
   - Evidence: `ls ~/p/agents-tools/scripts/bin/run-library-loop.ts` reported no
     such file while the same path exists under `rocket-agents`; `plutil -lint`
     OK after the edit; `launchctl bootout` plus `bootstrap` reloaded it and

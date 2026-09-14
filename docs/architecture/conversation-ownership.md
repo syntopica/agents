@@ -51,7 +51,7 @@ rendered Markdown corpus.
 Run the owner-specific gates:
 
 ```bash
-cd ~/p/rocket-agents && pnpm run conversations:test
+cd ~/p/agents && pnpm run conversations:test
 cd ~/p/dotfiles && ./scripts/check
 cd ~/p/mempalace && uv run pytest tests/test_normalize.py tests/test_convo_miner_unit.py -q
 ```

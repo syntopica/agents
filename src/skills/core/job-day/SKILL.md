@@ -119,7 +119,7 @@ the dated observation that forced the change. When a round succeeds and
 something would have saved time if written down, add it; delete any step that
 has never once mattered.
 
-Skills live in `~/p/rocket-agents`, never in the project repo:
+Skills live in `~/p/agents`, never in the project repo:
 
 ```bash
 git pull --ff-only origin main
