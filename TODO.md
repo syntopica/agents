@@ -16,6 +16,22 @@
 > verified complete · `[-]` obsolete or superseded. Closed work moves to
 > `TODO_LOG.md`.
 
+## Verification tooling
+
+- [ ] 2026-09-15: the local `/opt/homebrew/bin/pnpm` launcher has no shebang;
+      Node `spawnSync('pnpm', ...)` fails with `ENOEXEC` inside the final
+      type-coverage gate although direct coverage is 99.34%. The complete gate
+      passed with a temporary executable shell shim. Smallest next step: finish
+      the native pnpm installation or repair its managed launcher, then run
+      `pnpm run check` unwrapped.
+- [ ] 2026-09-15: `guidance:sync --accept-published` exhausted the
+      reconciliation agent's 270-second bound while applying one approved
+      routing paragraph. No partial write occurred. Existing source validation
+      and atomic application APIs applied the reviewed result, and
+      `guidance:doctor` plus the next normal sync confirmed convergence.
+      Smallest next step: add a deterministic validated path for canonical-only
+      changes that do not need reconciliation judgment.
+
 ## Skills library cleanup
 
 > Decided 2026-08-17: curate one list and link it to every IDE including

@@ -6,6 +6,18 @@
 
 ### 2026-09
 
+- [x] 2026-09-15 - **Unified context skill:** the Brain skill now prefers
+      resident `atrium_context`, combines history and curated notes in one call,
+      and resolves manual fallback paths from the configured Syntopica instance.
+      Compiled personal and portable copies were deployed with exact hash
+      parity; unrelated library changes were preserved. Verified with
+      `pnpm run skills:compile`, `pnpm run skills:validate`,
+      `pnpm run skills:test`, `pnpm run skills:lint`, `pnpm run guidance:test`
+      and `pnpm run check` (temporary pnpm launcher shim; see active tooling
+      issue). A fresh Codex session used the installed skill and
+      `atrium_context` to recover synthetic access/history/runbook evidence
+      without claiming a current delivery outcome.
+
 - [x] 2026-09-14 - **Shared package scope migration:** the repository installs
       and gates on the `@syntopica` scope.
   - Result: `@syntopica/quality-config@^0.11.0` and `@syntopica/tsconfig@^0.3.0`
