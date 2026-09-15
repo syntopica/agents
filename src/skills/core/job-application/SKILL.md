@@ -53,6 +53,26 @@ are the usual one.
 
 **One role per company** unless the hiring surface explicitly invites more.
 
+**A form that accepts your answers is not an open requisition.** On a custom
+form (digitaltalentpartner.com, 2026-09-15) the `country` select contained
+Spain, the `workAuth` select contained `not_authorized`, all eight requirement
+checkboxes reported `required === false`, and every field including a `.docx`
+resume was accepted with no validation error. The form was still US-only: the
+submit button sat inside a container classed
+`group-has-[[data-must-have]:not(:checked)]/gate:hidden`, so with any
+`data-must-have` box unticked the whole form was `display: none` — and two of
+the eight were affirmative "I'm based in the United States" and "I am legally
+authorized to work in the US" statements, with no outside-the-US option. So:
+
+- Walk the **ancestor chain of the submit control** and read what conditions its
+  visibility before concluding a gated posting is reachable. Playwright reports
+  this as `element is not visible` with a 0x0 rect while the button itself is
+  `visibility: visible` and not disabled.
+- `required=false` is not evidence a requirement is optional, and a select that
+  offers your country is not evidence the requisition does — a shared form
+  component carries every option its other roles need.
+- Read the `<title>`: "… — Remote — United States" costs one fetch.
+
 ## Phase 2 — Draft, then audit every noun and number
 
 Write the answer first. Then re-read it against `career/evidence/stories.md`
@@ -143,6 +163,39 @@ phrases are absent:
   })
 }
 ```
+
+### Attaching a resume through the Playwright extension MCP
+
+`browser_file_upload` and `page.setInputFiles` both fail on this transport: CDP
+answers `DOM.setFileInputFiles … "Not allowed"`, and with the input's
+`sr-only`/`visually-hidden` class stripped `setInputFiles` still times out
+("locator resolved to … 62x") rather than erroring. Fetching the file from a
+local HTTP server inside the page does not work either — 127.0.0.1 and localhost
+both hang to an AbortError even with no CSP on the site.
+
+What works is a `DataTransfer` built in the page, and the way to get the bytes
+there without spending them in the conversation is the tool's own `filename`
+parameter:
+
+```bash
+# write the script with the base64 embedded by the shell, never through context
+{ printf 'async (page) => {\n  const b64 = "'; base64 -i cv.docx | tr -d '\n'; \
+  printf '";\n  return await page.evaluate((b64) => { /* atob, Uint8Array, new File,\n    DataTransfer, input.files = dt.files, dispatchEvent(new Event("change",\n    {bubbles:true})) */ }, b64);\n}\n'; } > .playwright-mcp/attach.js
+```
+
+Then call `browser_run_code_unsafe` with `filename` pointing at it. Two
+constraints: the file must live under an allowed root (the workspace or its
+`.playwright-mcp/`, and the error names them), and the Playwright process has no
+`require` and no dynamic `import`, so it cannot read the file itself —
+`ReferenceError: require is not defined`, then
+`ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING`. The bytes have to be inlined in the
+script. Note the tool echoes the script back in its result, so the base64 lands
+in context once regardless.
+
+Prefer a pandoc `.docx` over a PDF: 13.8 KB against ~88 KB for the same
+one-pager, and it is the ATS-parseable artifact anyway. Confirm the attach by
+reading the widget's own text ("Selected file: …"), not `input.files.length`
+alone.
 
 ### Greenhouse
 
