@@ -19,7 +19,3 @@ allowBuilds:
 # 1440-minute cooldown above expires. Each entry pins one exact version, so
 # every other release of the same package still waits. Remove these entries
 # after 2026-09-15 and verify with `pnpm install --frozen-lockfile`.
-minimumReleaseAgeExclude:
-  - '@syntopica/prettier-config@0.2.0'
-  - '@syntopica/quality-config@0.11.0'
-  - '@syntopica/tsconfig@0.3.0'
