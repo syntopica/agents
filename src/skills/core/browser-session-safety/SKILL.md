@@ -23,8 +23,16 @@ site, so do not launch one for that.
 does not cover. `orca tab create --url`, `snapshot`, `fill`, `upload`, `click`,
 `eval`; full command list in the `orca-cli` skill. It shares no tab and no focus
 with the owner, so none of the traps below apply, and Ashby's bot gate accepted
-it where a Playwright-launched Chrome was refused. It holds no owner identity: a
-logged-in site still needs the real Chrome below.
+it where a Playwright-launched Chrome was refused. It also holds the sessions
+imported from the real Chrome through Orca's UI: `orca tab profile list --json`
+lists them (Cristian as `default`, Favish, BusiRocket; imported 2026-08-08), and
+on 2026-09-23 Favish and BusiRocket still carried a live LinkedIn `li_at` while
+`default` landed on the authwall. Switch a tab with
+`orca tab profile set --page <browserPageId> --profile <id>` and confirm with
+`orca cookie get` before reading the page as logged in;
+`orca tab profile create --scope imported` only creates an empty profile, the
+import itself is a UI action. A site none of the imported profiles is logged
+into still needs the real Chrome below.
 
 0. **Before any of this, ask whether the site has an API key here.** Discord is
    the measured case: an instance that already owns a bot token (recorded in its
