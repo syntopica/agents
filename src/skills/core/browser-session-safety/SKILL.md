@@ -144,17 +144,25 @@ Chrome" to the wrong process; chrome-cli still hits the real one.
      Real key events (`pressSequentially`) work, so type the text; a 1,500
      character answer costs about twenty seconds at a 12 ms delay.
 
-   - **The relay opens its connect page in the last-used Chrome profile that has
-     the extension, not in the profile its token belongs to.** Measured
-     2026-09-22 under the secondary Claude profile: both `playwright-chrome` and
-     `playwright-busirocket` failed with
+   - **The relay spawns Chrome with `--profile-directory=<profile-dir-name>`,
+     which defaults to `Default`, so a server whose token belongs to another
+     profile never connects.** Measured 2026-09-22 under the secondary Claude
+     profile: `playwright-chrome` (Profile 1 token) and `playwright-busirocket`
+     (Profile 2 token) both failed with
      `Playwright extension did not connect within 30s … Chrome profile "Default"`,
-     because Chrome's `profile.last_used` was `Default` and each server's token
-     belongs to another profile. Opening any URL with
-     `open -na "Google Chrome" --args --profile-directory="Profile 2"` first
-     made the next `browser_tabs` call connect through `playwright-busirocket`
-     with no config change. The durable fix is `--profile-dir-name "<dir>"` in
-     that server's `args`.
+     and every connect page landed in the Default window. One attempt connected
+     when a Profile 2 window had just been opened with
+     `open -na … --profile-directory="Profile 2"`, and it dropped again once
+     another window took the front, so that is not a route. Re-opening the
+     connect URL in the right profile within the 30 s window did not connect
+     either. The fix is `--profile-dir-name "Profile 2"` in that server's `args`
+     (both profile configs), which needs a session restart; until then use the
+     persistent agent profile below for boards without a bot check, and close
+     the connect tabs the failed attempts leave behind (fourteen on 2026-09-22).
+   - **The `chrome-devtools` MCP profile is one browser for the whole machine**:
+     `The browser is already running for ~/.cache/chrome-devtools-mcp/chrome-profile`
+     means another session holds it. Do not stop that browser; launch
+     `~/.agent-chrome/<identity>` instead.
    - **A tab that is not in the front window gets no keystrokes.** With the
      relay tab hidden (`document.hidden === true`) behind the owner's window,
      `pressSequentially` typed nothing and screenshots timed out, while
