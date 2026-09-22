@@ -80,6 +80,16 @@ form-filling still go through `execute` and therefore still need the front
 window, which is exactly when to confirm whose window it is. A read has no such
 excuse.
 
+**`execute` follows the owner's tab switches, so never drive a fill while they
+are using Chrome.** On 2026-09-22 a form tab opened with `chrome-cli open -w` in
+the front window was the active tab for one call; the owner switched back to X
+between two calls, and the next `insertText` typed the location query into X's
+search box (cleared by hand, nothing sent). Before every write call, read
+`chrome-cli info` and abort when the tab id is not the one you opened; if the id
+changes once, stop the fill and hand the remaining fields to the owner, because
+a second write will land in their page too. A tab switch you did not make is the
+signal that the owner is at the keyboard.
+
 To find the tabs you opened without touching anyone else's, diff
 `chrome-cli list tabs` before and after your `open -na`, then close only the ids
 that appeared.
