@@ -18,6 +18,14 @@ each, and the trusted-device state banks demand. A browser launched with a
 temporary or isolated profile has none of it and is unusable for any logged-in
 site, so do not launch one for that.
 
+0a. **A page that needs no owner login goes to Orca's embedded browser first**
+(owner decision 2026-09-23): application forms, public boards, anything an API
+does not cover. `orca tab create --url`, `snapshot`, `fill`, `upload`, `click`,
+`eval`; full command list in the `orca-cli` skill. It shares no tab and no focus
+with the owner, so none of the traps below apply, and Ashby's bot gate accepted
+it where a Playwright-launched Chrome was refused. It holds no owner identity: a
+logged-in site still needs the real Chrome below.
+
 0. **Before any of this, ask whether the site has an API key here.** Discord is
    the measured case: an instance that already owns a bot token (recorded in its
    wiki under the API page) reads and posts through the API, so
