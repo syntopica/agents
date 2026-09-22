@@ -1,0 +1,14 @@
+# Gitleaks configuration for the pre-push secrets gate (lefthook).
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Deliberately fake credential literals in the detector's own tests"
+# FIND_CREDENTIAL_LITERALS_TEST.ts exists to prove findCredentialLiterals flags
+# credential-shaped strings, so its fixtures are credential-shaped by design
+# (synthetic patterned strings, never real values). Scanning it will always
+# "find" them.
+paths = [
+  '''scripts/lib/machine/schemas/FIND_CREDENTIAL_LITERALS_TEST\.ts''',
+]

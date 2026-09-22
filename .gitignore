@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.swp
+*.swo
+
+# Python venv (skills validation)
+.venv-validate/
+
+# Generated output
+rules/compiled/
+
+# Build artifacts
+dist/
+.worktrees/
+*.log
+
+*.tsbuildinfo
+# CocoIndex Code (ccc)
+/.cocoindex_code/
+eslint-report.json
+firebase-debug.log
+
+# Python bytecode from hook helpers
+__pycache__/
+*.pyc
+
+# Local pnpm content-addressable store, created when a command runs with a
+# repo-local store directory instead of the shared one.
+.pnpm-store/
+TODO_HISTORY_INDEX.jsonl
+
+# The backlog and its log are this instance's, not the engine's: they name the
+# owner's machines, clients and repositories. Kept on disk, never published.
+TODO.md
+TODO_LOG.md
+TODO-skills-audit.md
+
+# Machine manifests are instance data and live in the private instance;
+# AGENTS_MACHINE_DIR points at them. examples/machine/ is the public template
+# and is tracked in full, so a stranger can copy it into machine/ and run. The
+# rule below is anchored: an unanchored `machine/` also swallowed
+# scripts/lib/machine/, which is engine source.
+/machine/

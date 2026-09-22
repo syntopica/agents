@@ -1,0 +1,40 @@
+---
+globs: "**/*.md,**/*.mdx,**/*.txt,**/*.json,**/*.yml,**/*.yaml,**/*.toml,**/*.rst"
+description: Text hygiene for docs/config (ASCII punctuation)
+alwaysApply: false
+---
+
+# Text Hygiene (ASCII)
+
+## Goal
+
+Keep docs/config text easy to diff and safe for tooling.
+
+## Never introduce
+
+Almost always paste artifacts, and they break tooling or hide inside diffs.
+No file convention justifies them.
+
+- Invisible characters: NBSP, zero-width, variation selectors.
+- Smart quotes. Use `'` and `"`.
+
+## Prefer, unless the file says otherwise
+
+Prefer the ASCII hyphen (`-`) over en and em dashes, and plain ASCII over
+decorative punctuation generally. New files start ASCII.
+
+When the file being edited already carries a non-ASCII convention
+consistently, match it. Prose that uses em dashes throughout stays that way:
+a file mixing both conventions reads worse than either one, and the diff noise
+of converting it costs more than the convention does.
+
+## Scope
+
+Edit the lines the task touches. Never sweep a file for punctuation you had no
+other reason to change.
+
+## Output discipline
+
+Speak up only when the reader has to act: a `never introduce` character sitting
+in existing content, or a replacement that would change meaning. Following the
+file's existing convention is the expected outcome and needs no remark.

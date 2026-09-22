@@ -1,0 +1,5 @@
+@rules/core/security-baseline.mdc
+@rules/core/anti-patterns.mdc
+@rules/react/testing.mdc
+@rules/nextjs/rendering-performance.mdc
+@rules/typescript/typescript-debug.mdc

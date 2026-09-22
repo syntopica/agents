@@ -1,0 +1,27 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: URL state and server state strategy (nuqs, RSC-first, TanStack Query optional)
+alwaysApply: false
+---
+
+# URL State and Server State
+
+## Priority order
+
+- Prefer Server Components and server-side fetch/caching first.
+- Use client-side server state only when interaction requires it.
+
+## URL search params
+
+- If the repo already uses `nuqs`, prefer `nuqs` for URL param state.
+- Avoid ad-hoc parsing spread across components.
+
+## Client server state
+
+- Use TanStack Query only for cases that benefit from client cache/sync behavior.
+- Do not introduce query libraries for static or purely server-rendered flows.
+
+## Local vs global
+
+- Prefer local component state and composition first.
+- Promote to store/query only when shared behavior or cache lifecycle is truly needed.

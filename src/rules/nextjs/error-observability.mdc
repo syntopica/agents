@@ -1,0 +1,29 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Next.js error handling and observability (boundaries, context-rich logs)
+alwaysApply: false
+---
+
+# Error Handling and Observability
+
+## UI boundaries
+
+- Use `error.tsx` for route-level failures.
+- Use `global-error.tsx` for app-level unexpected failures.
+- Keep fallback UI actionable and user-friendly.
+
+## Expected vs unexpected errors
+
+- Expected failures should return typed values where possible.
+- Unexpected failures should throw and be captured by boundaries/logging.
+
+## Logging
+
+- Log errors with actionable context (operation, identifiers, boundary).
+- Never log secrets, tokens, or sensitive personal data.
+
+## Sentry (optional)
+
+- If Sentry is already configured, use it for unexpected errors and key
+  execution context.
+- Do not add observability dependencies unless needed by the project.

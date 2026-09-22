@@ -1,0 +1,5 @@
+@rules/refactor/file-refactor.mdc
+@rules/core/code-quality-guidelines.mdc
+@rules/core/boundaries.mdc
+@rules/react/react-architecture.mdc
+@rules/typescript/refactoring-typescript.mdc

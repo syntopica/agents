@@ -1,0 +1,38 @@
+---
+globs: "**/*.py"
+description: Django REST API standards (DRF design, contracts, authz, pagination)
+alwaysApply: false
+---
+
+# Django REST API Standards
+
+## API design
+
+- Follow RESTful semantics with clear method/status usage.
+- Keep response contracts stable and documented.
+- Use standardized success/error response shapes across endpoints.
+
+## DRF layers
+
+- Use serializers for validation + transformation, not just output formatting.
+- Keep API views/viewsets focused on transport orchestration.
+- Move domain rules to models/managers/services instead of bloating views.
+- Use reusable permissions and validators for shared rules.
+
+## Security
+
+- Enforce authentication + authorization for every protected endpoint.
+- Prefer framework-native auth stacks (Session/Auth headers/JWT libs already used).
+- Validate/sanitize external input at boundaries; never trust client payloads.
+
+## Performance and operability
+
+- Apply pagination consistently for list endpoints.
+- Prevent N+1 and monitor query counts in API hot paths.
+- Use caching for expensive read paths with clear invalidation strategy.
+- Add structured logs for request id, latency, status, and error context.
+
+## Error handling
+
+- Use centralized exception handling for predictable API error shape.
+- Map validation/auth/domain errors to appropriate HTTP status codes.

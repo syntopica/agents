@@ -1,0 +1,1 @@
+export const RULES_INDEX_START = '<!-- GENERATED-RULES-INDEX:START -->'

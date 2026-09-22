@@ -1,0 +1,15 @@
+interface:
+  display_name: BRP Code Quality
+  short_description: Audit and harden TypeScript, lint, and architecture quality gates.
+  default_prompt:
+    Audit the repository quality gates, report findings first, then propose the smallest hardening
+    steps that improve style fidelity and safety.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to a planning pass (the brp orchestrator's brp-plan reference) when hardening work
+    becomes a multi-milestone repo migration.

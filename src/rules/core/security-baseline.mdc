@@ -1,0 +1,27 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.php,**/*.py,**/*.go,**/*.rs"
+description: Security baseline for web features (XSS, secrets, least privilege)
+alwaysApply: false
+---
+
+# Security Baseline
+
+## Input and output safety
+
+- Treat external input as untrusted; validate and narrow at boundaries.
+- Do not render untrusted HTML directly.
+
+## XSS protections
+
+- Avoid `dangerouslySetInnerHTML` unless explicitly required.
+- If raw HTML must be rendered, sanitize first with a reviewed sanitizer.
+
+## Secrets and auth
+
+- Never expose secrets to client bundles.
+- Keep sensitive checks server-side even when client guards exist.
+- Prefer least-privilege access patterns for roles/permissions.
+
+## Logging
+
+- Log actionable context, never secrets or personal tokens.

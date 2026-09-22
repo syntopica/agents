@@ -1,0 +1,39 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Next.js Route Handlers (thin handlers, service boundaries)
+alwaysApply: false
+---
+
+# Route Handlers (App Router)
+
+## Placement & Conflicts
+
+- Route handlers live in `app/**/route.ts`.
+- You **cannot** have `route.ts` and `page.tsx` in the same route segment.
+
+## Thin Handler Rule (STRICT)
+
+Route handlers must be thin: validate input, call service, return response. Canonical definition: see `@rules/core/boundaries.mdc`. Next.js-specific placement and caching: below.
+
+## HTTP Methods
+
+- Supported: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`.
+
+## Caching Model (docs-aligned)
+
+- Route handlers are **not cached by default**.
+- Only `GET` can opt into caching.
+- Opt in or out explicitly with route segment config: `export const revalidate = 60` for time-based
+  revalidation, `export const dynamic = "force-dynamic"` to force per-request execution.
+
+## Cache Components Note
+
+- If the project uses Next.js Cache Components (experimental):
+  - `GET` handlers follow the same model as UI routes.
+  - `use cache` **cannot** be used directly inside a Route Handler body; extract it to a helper function.
+
+## References
+
+- Response shapes: `@rules/nextjs/api-response-shapes.mdc`
+- Validation: `@rules/api/validation.mdc`
+- utils vs services: `@rules/backend/services-and-utils.mdc`

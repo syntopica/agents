@@ -1,0 +1,9 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: Legacy Tailwind entrypoint (use @tailwind)
+alwaysApply: false
+---
+
+# Tailwind Legacy Pointer
+
+Use `@rules/styling/tailwind/*` and summary in `@rules/tailwind.mdc`. Same canonical rules as **@tailwind**.

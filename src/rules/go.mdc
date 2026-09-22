@@ -1,0 +1,19 @@
+---
+globs: "**/*.go"
+description: "Go backend and microservices standards"
+alwaysApply: false
+---
+
+# Go Rules
+
+Use **@go** when working on Go codebases.
+
+This rule references:
+
+- **Go microservices**: `@rules/go/microservices.mdc` - clean architecture, interfaces, observability, resilience, testing
+
+## Short summary
+
+- Keep handlers thin and domain logic isolated. See `@rules/core/boundaries.mdc` for the universal thin-handler principle.
+- Depend on interfaces, use explicit DI, avoid global mutable state.
+- Enforce context propagation, explicit error handling, and observability.

@@ -1,0 +1,1 @@
+export const ROLLOUT_HEADER_LIMIT = 65_536

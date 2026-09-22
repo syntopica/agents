@@ -1,0 +1,15 @@
+interface:
+  display_name: Handoff
+  short_description: Serialize working state into a document another session can resume from.
+  default_prompt:
+    Capture the current goal, verified progress, remaining work, and exact resume commands into a
+    standalone handoff document with no session-local shorthand.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Report explicitly when parts of the session state cannot be evidenced from commands or files,
+    instead of serializing unverified claims.

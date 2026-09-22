@@ -1,0 +1,23 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: React forms and validation strategy (Zod, RHF optional)
+alwaysApply: false
+---
+
+# Forms and Validation
+
+## Validation baseline
+
+- Use schema-based validation for external/user input boundaries.
+- If Zod is present in the repo, prefer Zod schema + inferred types.
+- Return clear, user-facing validation messages.
+
+## React Hook Form (optional)
+
+- If RHF is present in the project, prefer it for non-trivial forms.
+- Do not force RHF for tiny forms where simple local state is clearer.
+
+## Form architecture
+
+- Keep field UI, schema, and submission flow coherent.
+- Avoid duplicating validation logic between UI and boundary services.

@@ -1,0 +1,12 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: Tailwind responsive strategy (mobile-first and breakpoint discipline)
+alwaysApply: false
+---
+
+# Tailwind Responsive Strategy
+
+- Mobile-first defaults, then progressive breakpoints:
+  - `sm` -> `md` -> `lg` -> `xl` -> `2xl`
+- Avoid breakpoint thrash on the same property unless justified.
+- Prefer fluid primitives (`w-full`, `max-w-*`, `mx-auto`) before micro-managing every breakpoint.

@@ -1,0 +1,43 @@
+---
+globs: "**/background.ts,**/background.js,**/content-script*.ts,**/content-script*.js,**/*extension*/**"
+description: Chrome extension MV3 standards (permissions, messaging, CSP, service worker)
+alwaysApply: false
+---
+
+# Chrome Extension MV3 Standards
+
+## Architecture split
+
+- Service worker: orchestration, alarms, storage, background coordination.
+- Content scripts: page DOM interaction only.
+- Popup/options pages: user interaction and settings; avoid heavy business logic.
+- Shared utilities: typed message contracts, validation, logging helpers.
+
+## MV3 requirements
+
+- Background must be a service worker.
+- Avoid long-lived in-memory state; persist meaningful state in
+  `chrome.storage`.
+- Prefer alarms/scheduled APIs over interval loops for recurring work.
+
+## Permissions and privacy
+
+- Apply least-privilege host/API permissions.
+- Prefer `activeTab` where viable over broad host permissions.
+- Store minimal sensitive data; encrypt only with an explicit threat model.
+
+## Messaging and validation
+
+- Use typed message contracts with discriminated unions.
+- Validate payload shape and sender origin before acting.
+- Avoid generic "execute arbitrary action" message handlers.
+
+## CSP and resources
+
+- Keep CSP strict (no inline scripts, no remote code execution).
+- Minimize `web_accessible_resources` scope to required assets/routes.
+
+## Reliability
+
+- Handle offline and transient failure scenarios explicitly.
+- Add tests for messaging/storage orchestration and pure utility logic.

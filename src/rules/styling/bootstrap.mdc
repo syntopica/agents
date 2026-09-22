@@ -1,0 +1,30 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: Bootstrap standards (grid, components, utilities, accessibility)
+alwaysApply: false
+---
+
+# Bootstrap Standards
+
+## Layout and components
+
+- Use Bootstrap grid (`container`, `row`, `col-*`) for responsive structure.
+- Prefer Bootstrap components/utilities over large custom CSS overrides.
+- Keep custom CSS minimal and focused on app-specific branding.
+- Use semantic HTML and appropriate ARIA attributes for component accessibility.
+
+## Forms and feedback
+
+- Use Bootstrap validation classes for clear, immediate form feedback.
+- Surface actionable errors with consistent alert/inline patterns.
+- Ensure labels, help text, and error text are programmatically associated.
+
+## Theming and customization
+
+- Prefer Sass variables/mixins for theming instead of ad-hoc overrides.
+- Keep style tokens centralized and consistent across components.
+
+## Performance
+
+- Include only required Bootstrap bundles/components when possible.
+- Optimize assets (images/fonts/scripts) and avoid redundant UI libraries.

@@ -1,0 +1,52 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: State management (Zustand) - when to use stores vs props, modal pattern
+alwaysApply: false
+---
+
+# State Management (Zustand)
+
+Apply when the project uses Zustand (or a similar store) for shared UI state.
+
+## When to Use a Store
+
+- Modal visibility states (settings, dialogs, panels)
+- Global UI state
+- Shared data across unrelated components
+- Cross-component communication without prop drilling
+
+## Avoid Prop Drilling
+
+```tsx
+// BAD: Prop drilling
+;<Parent onOpenModal={setIsOpen}>
+  <Child onOpenModal={onOpenModal} />
+</Parent>
+
+// GOOD: Store access
+const openModal = useUiStore((state) => state.openModal)
+```
+
+## Modal Pattern
+
+Modals should read their visibility state from the store directly, not receive it as props:
+
+```tsx
+export function SettingsModal() {
+  const isOpen = useUiStore((state) => state.isSettingsModalOpen)
+  const closeModal = useUiStore((state) => state.closeSettingsModal)
+  // ...
+}
+```
+
+## Store Organization
+
+- One store per domain (`uiStore`, `workspaceStore`, `statusLogStore`); do not accumulate a single global store.
+- Split a store when it grows past one coherent responsibility.
+- Define actions inside the store, not in the components that call them.
+- Subscribe with selectors (`useUiStore((s) => s.field)`). Subscribing to the whole store re-renders on every unrelated change. This is also why a store beats React Context for frequently-changing shared state: a Context update re-renders every consumer (measured ~45ms across 100 consuming components), while a selector-based store re-renders only the actual subscribers (~2ms for 3 subscribers of the changed field).
+- Do not put server state in a client store; use a query layer (TanStack Query/SWR) for cache and sync.
+
+## Aggregate Hooks
+
+Consider aggregate hooks to reduce store coupling when many components need related state slices.

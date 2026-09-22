@@ -1,0 +1,29 @@
+---
+globs: "**/.github/**,**/*.yml,**/*.yaml,**/*.tf,**/Dockerfile,**/Dockerfile.*"
+description: Agent guidelines for Sonnet + Cursor (codebase search, rules, output)
+alwaysApply: false
+---
+
+# Agent Guidelines (Sonnet / Cursor)
+
+See also `@rules/core/general.mdc` for agent defaults (planning, search).
+
+## Required
+
+1. Use **codebase_search** with `target_directories="."` first to find existing core files.
+2. Check existing system files and their purposes before creating new ones with similar functionality.
+3. List the Cursor rules you are using when asked or when it helps reproducibility.
+
+## Optional (when the prompt specifies)
+
+- Obey specified behaviors, languages, or output formats without deviation.
+- Do not include explanations, reasoning, or filler unless explicitly requested.
+- Address multiple steps in the specified order; use the exact format or sequence requested.
+- Respect all constraints (language, performance, style); do not ignore requirements.
+- Produce only output relevant to the request; avoid adding unrequested features or detail.
+- Deliver minimal yet complete responses; avoid unnecessary verbosity.
+- Follow requested output format (code block, bullets, JSON) exactly.
+- If the prompt includes a pre-seeded structure (e.g. started code block), continue within that structure.
+- If ambiguous and allowed, ask clarifying questions; otherwise state briefly that more information is needed.
+- Follow best practices for clarity, maintainability, and efficiency for the given language or framework.
+- Do not generate or include private data (API keys, secrets) unless explicitly provided; refuse or offer a safe alternative when appropriate.

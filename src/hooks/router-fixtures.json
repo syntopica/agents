@@ -1,0 +1,137 @@
+{
+  "_comment": "Generated from router-expectations.json. Every prompt is copied verbatim from measured transcripts; update the expectation first.",
+  "phraseCount": 107,
+  "sourceAssociationCount": 113,
+  "routes": {
+    "loop": [
+      "avisame cada 5m de como va empezando por ahora",
+      "report cada 10m",
+      "dame un tick cada 5m para ver el progreso",
+      "vale lo que quiero es que compruebes cada rato y miremos que todo va bien, incluido logs y demás",
+      "vale pon un check cada minuto"
+    ],
+    "debug": [
+      "en el otro no sale nada ni al apagar el disco",
+      "tengo 2 cuentas de claude y lanzaba con comando: claude para mi cuenta claudef para la cuenta secundaria pero orca (este terminal) no me deja hacerlo bien, puedes comprobar?",
+      "vale la web ahora mismo no funciona, pone:\n\nThis page couldn’t load\nReload to try again, or go back.\n\nReload\nBack",
+      "Ahora el cohete no funciona en móvil",
+      "ahora no carga ningún archivo en el player",
+      "Vale en la parte de player tengo un problema me marca la misma canción como diferentes buckets por ejemplo titi me preguntó aparece varias veces podrías diagnosticarlo?",
+      "Después de los ultimos cambios cuando pulso en un artista/cancion el programa se queda bloqueado y no se que está haciendo",
+      "hay muchos mensajes que ahora no están linkeados a sender ni a chat ni a nada en el mapa etc, usa agy si hace falta para descubrir el contexto y de donde salen así no valen para nada",
+      "vale esto está todo subido en prod? has actualizado las cosas alli? el dashboard me muestra deuda duplicada creo, y el nombre de rosa sale mal",
+      "tenemos un problema cuando le das a descargar te pone lo de la impresión y no sale ni una sola imagen tengo que checkear incluir graficos de fondo cosa que no sabe la mayoria de usuarios",
+      "sí por favor y revisa los mensajes de alex parece que hemos roto cosas, no se si tenemos la regla que cada cosa que diga alex debe tener un test anti regresiones",
+      "mira el mensaje de alex, no somos capaces de enviar un simple email?",
+      "vale pero hay varias cuentas que no aparece nada, por ejemplo direcciones gmail (en las cuentas de email) que no tienen el favicon de gmail etc",
+      "la app no inicia bien y se rompieron varias cosas\n\nFailed to initialize Consumer-o store: Storage error: NOT NULL constraint failed: messages_new.date_utc",
+      "vale después de los cambios que hicimos, lanza consumer-o y mira los logs de tauri para ver si hay errores que corregir, luego daba un error de sql que no se si estará solucionado",
+      "Vale, solo que pido que hablas la aplicación y mires el log de Tauri, porque estaba dando varios errores y warnings también para solucionarlos.",
+      "sí, arreglalo en ambos (word y PDF) todo debe funcionar, acuerdate de reproducir el error y crear un test para que no se vuelva a repetir"
+    ],
+    "plan": [
+      "vale pero eso ya lo tengo en el ordenador me gustaría algo más guay como ver el bicho ese de claude o que me salga confeti al renovar etc",
+      "vale me gustaría que el bicho este fuera \"autonomo\" porque he visto que tiene wifi y no tenerlo que tener conectado al ordenador siempre",
+      "ok haz un plan con todo esto e implementémoslo",
+      "Vale he enviado un artículo por el móvil pero para los artículos de médium me gustaría más que pillaras automáticamente los que he guardado sería más práctico ya que tienen app propia",
+      "Cómo podría hacer para mandar cosas por el móvil?",
+      "vale el caso es en the invoicing portal luego poder ver las que faltan por casar y las que seguro no son desgravables o no entran para decidir que hacer con ellas",
+      "sí, es decir prepara todos estos planes que los necesitaremos para la nueva web que tenemos que hacer para consumer-i y hazme un plan para los clientes que tienen que pagar",
+      "sí por favor, no se si tenemos que poner GTM para en el futuro poder hacer campañas de ADs de Google Ads, Meta y Tiktok y así lo dejamos todo preparado",
+      "Prefiero que miremos cómo podemos nosotros integrar eso en la herramienta",
+      "me gustaría que hicieramos lo de AI a traves de codex en este ordenador al igual que el claude max lane aqui\n\n$HOME/p/consumer-g",
+      "Ya hemos tenido la reunion mira en el correo la transripción así como el file de slack y los comentarios etc para diseñar el nuevo plan",
+      "Vale como esto está fallando por todos lados ya varias veces puedes ver el flujo completo y repensarlo? Porque si no va a ser ir haciendo fixes de bugs sin parar",
+      "diseña un plan para todo esto con pros contras y como debería funcionar en una app enterprise"
+    ],
+    "continuation": [
+      "Tenemos cosas en Handoff prosigue",
+      "Sigamos de duplicando código como en la sesión anterior",
+      "continuemos la sesión anterior que se cortó por limite de sesion",
+      "continua en la sesion anterior me quedé sin quota",
+      "Sigamos la sesión anterior subagent driven con el plan",
+      "podemos continuar de la sesion anterior?",
+      "continua la sesión anterior"
+    ],
+    "frontend": [
+      "en el live hoja de ruta a ver si podemos cambiar lo de \"Normas\" por algo menos \"autoritario\" y darle una vuelta a la navegación, los chips quedan bien raros",
+      "Si por favor hazlo todo y creo que pasas de mí con lo del diseño horrible y anticuado pero hay que solucionarlo también",
+      "adelante con todo y también ten en cuenta el responsive",
+      "me refiero también a los MONITORES SHOW DJ y los otros, quedan feisimos, podrías hacer algo más bonito?",
+      "vale tenemos una manera de mostrar las transcripciones en la UI? y de que cuando busquemos se muestre etc?",
+      "dame un PDF de contrarider para enviar con lo que ellos mandaron exactamente (si quieres mejorar el diseño hazlo)",
+      "vale lo de delta prepararlo para mañana, un solo contrato como el tenia el diseño 1:1 con todos los cambios que se han hablado",
+      "vale pero no tenemos botón en la UI para hacerlo, por eso, debería estar todo en el .env para cuando lo lance con pnpm tauri dev si funcine"
+    ],
+    "repo-modernization": [
+      "hemos endurecido baseline de busirocket para capturar duplicados y código malo podrías implementarlo y endurecer todo?",
+      "puedes meter baseline busirocket ultima version y ser super estricto y usar modelos baratos para el trabajo duro aparte haz commit y push de todo lo que llevamos",
+      "mira las conversaciones en ~/p para ver lo pendiente, lo primero que quería hacer es meterle busirocket baseline super estricto",
+      "Hemos endurecido baseline BusiRocket puedes actualizar todas las librerías y endurecer todo?"
+    ],
+    "lovable-sync": [
+      "te había dado el repo de lovable lo ibas a renombrar e ibamos a empezar a implementar el diseño"
+    ],
+    "agent-config": [
+      "mira los correos a ver si tenemos más newsletters que ingerir",
+      "vale puedes usar chrome-cli en el perfil de personal@example.com tengo un montón de post de twitter para ingerir, si alguno no sabes como hacerlo me dices, y los vas cerrando",
+      "he metido un clip nuevo pero es un twitter multi-hilo a ver si lo hemos pillado bien",
+      "vale haz push de todo y dime como puedo empezar a usar esto, necesito ingestar contenido ya",
+      "guarda todos los findings de the accounting SaaS en brain para futuras ocasiones"
+    ],
+    "invoice-ops": [
+      "ahora que tenemos todo al día miremos los gastos por empresa e ingresos (sobre todo las SL y plansa) para ver que nos falta meter en the accounting SaaS",
+      "vale con la nueva sección de administración me gustaría que casaramos o conciliaramos las cosas que ya se han pagado a hacienda para ver el overview total, empecemos por cristian/deluxe producciones",
+      "ha presentado marta el modelo de lumenlab pero no tiene mucho que ver el IVA con lo que nosotros calculamos, puedes ver por que?",
+      "si bueno el tema de pagos debería ser algo que $HOME/p/the invoicing portal controlara o estuvieramos en sincronia porque alli tiene los movimientos bancarios etc",
+      "vale revisa todas las recurrentes de the accounting SaaS para ver si están con la plantilla correcta",
+      "adelante con todo, si vas a hacer algo de invoices metete en the accounting SaaS con el browser y ves como los tenemos, si borras backup que lo tengamos en carpeta de descargas",
+      "ok firmada, haz lo de marcar las facturas pagadas (es por la UI en conciliacion) laura cocina central mira mi whatsapp",
+      "mira el whatsapp de carmen, mandó la factura para abonársela, comprueba que esté todo bien por favor",
+      "vale puedes ver el contrato de diego y hugo para ver la fecha y demás para poner detalles en la factura?",
+      "Han firmado el contrato lo tengo en mi WhatsApp escritorio, hay que hacer una factura en the accounting SaaS para montano con vencimiento mañana",
+      "puedes ver lo que necesitamos para que nos haga la factura a nombre de lumen lab?"
+    ]
+  },
+  "silent": {
+    "_comment": "Prompts with an explicit intentional-silence decision.",
+    "prompts": [
+      "Organizate como quieras",
+      "Si y pon tests para no tener regresiones en el futuro",
+      "Si a todo aparte el módulo que te dije de the invoicing portal para controlar todo esto",
+      "$HOME/p/Prompts/todo-workflows/execute-todo.md",
+      "nada, me parece bien, empieza con ello y dejalo todo listo para que lo aplique a consumer-o",
+      "sí todo estricto y empieza ya, que dejemos todo listo y podamos empezar a usarlo en repos ya",
+      "Si de momento así ya lo mejoraremos",
+      "Adelante de momento con eso",
+      "adelante con todo, tienes permiso para crear y hacer todo",
+      "adelante tenemos que tenerlo listo para hacer una propuesta hoy",
+      "Deja todo preparado para que lo hagamos en una sesión limpia",
+      "adelante con ello",
+      "sí, haz lo que mejor veas, prefiero ir gastando lo de codex que no lo uso para nada",
+      "sí deja todo preparado con /brp-todo-create alli y deja todos los todos para empezar a hacerlo",
+      "usa /brp-todo-create aqui y también en el repo o bien creamos otro repo para nuestras pruebas (puede ser local de momento) y empezamos a hacer algo alli",
+      "Vale haz /brp-todo-create en lo del seo y haz un repo en la org de BusiRocket para ir subiendo todo allí",
+      "usa /brp-todo-create y agy o codex para el trabajo sucio (o un modelo barato si nos quedamos sin cuota)",
+      "vale usa /brp-todo-create aqui",
+      "/bro-todo-work",
+      "Vale pues /brp-todo-work",
+      "vale /brp-todo-work",
+      "Ya la postee yo, centrémonos en hacer lo de perolexity y poder dar un reporte créalo todo para tener un ab real y mirar lo que nos aporta",
+      "Vale pero espero que no estés usando api para probar, tienes que tener una regla de solo usar el Max lane ese noses Claude code",
+      "quiero que pruebes la APP como un usuario real porque por ejemplo no puedo ver un chat antiguo etc entonces prueba la funcionalidad de todo y arregla lo que no funcione, usa el navegador de /orca-cli",
+      "Hazlo tienes el navegador de orca",
+      "ya lo he posteado yo, docs/superpowers/plans/2026-07-29-dedup-clusters.md",
+      "vale quiero que implementes esto para que seamos lo más estrictos posibles",
+      "search console lo tienes en el perfil de work@example en chrome lo demás hazlo de la mejor manera, GCP y Redis lo usamos cada dia",
+      "sí a ver si eres capaz, trabaja de manera autonoma porque yo no lo he conseguido, resetea el password y crea uno nuevo no uso nic.es para nada que no sea esto",
+      "está en work@example.com",
+      "aprobado pero si vas a quemar usa codex o agy para no quedarnos sin cuota de fable (por los warn y refactoring)",
+      "adelante con todo quiero el mejor resultado y me da igual si tienes que usar 50 librerias",
+      "vale actualicemos el ticket con todo y haz una monitorización de todas las cosas antes y después (queries, pods, uso, etc...) quiero que todo el mundo en la empresa vea la mejora que hemos hecho",
+      "entonces podemos actualizar el ticket y por fin hacer las graficas y cosas con los antes y despues de todo?",
+      "sí ok a todo\n\n/brp-traffic-client",
+      "he hecho lo de la social-security con el certificado de cristian, acuerdate de /brp-traffic-client"
+    ]
+  }
+}

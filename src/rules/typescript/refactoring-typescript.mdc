@@ -1,0 +1,13 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: When creating or refactoring – follow code quality guidelines
+alwaysApply: false
+---
+
+# Refactoring TypeScript/React Code (strict)
+
+When **creating** new code or **refactoring** existing code, follow the single source of truth:
+
+- **[code-quality-guidelines.mdc](@rules/core/code-quality-guidelines.mdc)** – file size (10–50 target, ~100 max), one export per file, types in `types/`, no helpers inside components/hooks, one `index.ts` per slice/module with explicit re-exports only and no `export *`, constants in dedicated files, when to split, decision rules, checklist, common issues. Full index/barrel policy: see `@rules/core/code-quality-guidelines.mdc`.
+
+For a **one-shot refactor** of the current file, use **@refactor** (see [file-refactor.mdc](@rules/refactor/file-refactor.mdc)).

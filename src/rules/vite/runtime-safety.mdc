@@ -1,0 +1,22 @@
+---
+globs: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.mjs,**/*.cjs"
+description: Vite runtime safety — no Node globals in browser bundles
+alwaysApply: false
+---
+
+# Vite Runtime Safety
+
+## Goal
+
+Prevent runtime crashes when the app or widget runs in the browser (e.g. an embedding host application). Node globals (`process`, `global`, `Buffer`) are often **not defined** in the browser.
+
+## Rules
+
+- **No Node globals at runtime**: Do not reference `process`, `global`, or `Buffer` in code that ships to the browser. Libraries may still pull them in.
+- **If you see** `Uncaught ReferenceError: process is not defined`: add a minimal shim early in the bundle (before other imports), e.g. a small `ensureProcessShim` (or equivalent) imported from entry and dev entry.
+- **Environment variables**: Prefer compile-time replacements via Vite `define` (e.g. `import.meta.env.VITE_*`) for app configuration. Avoid dynamic env access patterns that the bundler cannot statically replace.
+
+## Verification
+
+- Run type-check and build (`yarn type-check`, `yarn build` or project equivalent).
+- Load the built output in the real host and check the browser console for runtime errors.

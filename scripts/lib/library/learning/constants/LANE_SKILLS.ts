@@ -1,0 +1,17 @@
+export const LANE_SKILLS: Record<string, readonly string[] | 'policy-only'> = {
+  'invoice-ops': ['invoice-quarter-close'],
+  frontend: ['frontend-design'],
+  continuation: ['project-continuation'],
+  'stakeholder-recap': ['stakeholder-recap'],
+  'lovable-sync': ['lovable-sync'],
+  'traffic-client': ['brp-traffic-client'],
+  'contract-ops': ['docx', 'pdf'],
+  'agent-config': ['brain'],
+  debug: ['brp', 'superpowers:systematic-debugging'],
+  plan: ['superpowers:brainstorming', 'superpowers:writing-plans'],
+  docs: ['brp-docs'],
+  release: ['brp-release'],
+  'environment-ops': 'policy-only',
+  loop: 'policy-only',
+  'repo-modernization': 'policy-only',
+}

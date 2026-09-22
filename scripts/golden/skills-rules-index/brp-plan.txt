@@ -1,0 +1,4 @@
+@rules/core/project.mdc
+@rules/core/design-pattern-selection.mdc
+@rules/core/vertical-slice-architecture.mdc
+@rules/monorepo/turbo.mdc

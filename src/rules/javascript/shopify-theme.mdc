@@ -1,0 +1,31 @@
+---
+globs: "**/*.liquid"
+description: Shopify theme JavaScript standards (OS 2.0, SSR-first, dependency-light)
+alwaysApply: false
+---
+
+# Shopify Theme JavaScript (OS 2.0)
+
+## Rendering strategy
+
+- Prefer Liquid/server-rendered HTML first.
+- For UI updates, prefer fetching server-rendered fragments over heavy client
+  state where possible.
+
+## Dependency strategy
+
+- Keep dependencies minimal; prefer browser-native primitives first.
+- Introduce dependencies only when complexity justifies long-term maintenance
+  cost.
+
+## Module pattern
+
+- Use module-scoped functions to avoid global leakage.
+- If classes are used for theme modules, keep them small with minimal public
+  API and private internals.
+
+## DOM and security
+
+- Treat theme settings and merchant input as untrusted content.
+- Avoid unsanitized HTML insertion patterns.
+- Preserve focus and keyboard accessibility in interactive components.

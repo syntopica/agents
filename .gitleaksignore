@@ -1,0 +1,7 @@
+# gitleaks findings that are deliberately fake.
+#
+# FIND_CREDENTIAL_LITERALS_TEST.ts is the fixture for this repo's own
+# credential-detection tooling: the literal is there so the detector has
+# something to find. Allowlisted by fingerprint, so any *other* finding in
+# that file still fails the gate.
+58c030ec42481d089fea117fdaa6b0d3f02165e4:scripts/lib/machine/schemas/FIND_CREDENTIAL_LITERALS_TEST.ts:generic-api-key:62

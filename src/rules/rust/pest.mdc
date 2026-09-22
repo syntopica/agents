@@ -1,0 +1,25 @@
+---
+globs: "**/*.rs"
+description: Pest grammar authoring and debugging
+alwaysApply: false
+---
+
+# Pest Grammar Guidance
+
+## Scope
+
+Use when editing `.pest` grammars or Rust parser code based on Pest.
+
+## Rules
+
+- Keep grammar changes small and focused; prefer minimal diffs.
+- When debugging parse issues, point to the exact rule and propose 1-3 fixes.
+- Use silent rules (`_ {}`) to reduce noisy parse trees when needed.
+- Use atomic (`@{}`) or compound-atomic (`${}`) rules for ambiguity/perf hotspots.
+- Keep rule ordering intentional (most-specific first).
+- Add minimal parser tests (`parses_to!` or small `Parser::parse()` assertions).
+
+## Pitfalls
+
+- Missing `WHITESPACE`/`COMMENT` silent rules when grammar expects spacing/comments.
+- Left-recursive or ambiguous patterns causing heavy backtracking.

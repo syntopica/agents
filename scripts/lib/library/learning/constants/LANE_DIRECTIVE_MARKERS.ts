@@ -1,0 +1,17 @@
+export const LANE_DIRECTIVE_MARKERS: Record<string, string> = {
+  'invoice-ops': 'Invoice and tax work',
+  frontend: 'Use the frontend-design skill',
+  continuation: 'project-continuation',
+  'stakeholder-recap': 'stakeholder-recap',
+  'lovable-sync': 'lovable',
+  'traffic-client': 'brp-traffic-client',
+  'contract-ops': 'Contract production',
+  'agent-config': 'durable config',
+  debug: 'systematic-debugging',
+  'environment-ops': 'Environment/host work',
+  'repo-modernization': 'Repo modernization',
+  loop: '/loop',
+  plan: 'superpowers:brainstorming',
+  docs: 'brp-docs',
+  release: 'brp-release',
+}

@@ -1,0 +1,52 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte"
+description: Agent discipline for multi-step work (goals, conflicts, budgets, checkpoints)
+alwaysApply: false
+---
+
+# Agent Discipline (multi-step, long-running work)
+
+Complement to `@rules/core/general.mdc` and `@rules/core/anti-patterns.mdc`.
+These rules target the failure modes that show up in long-running, multi-step
+agent work, not in single-shot code generation.
+
+## Goal-Driven Execution
+
+- State explicit success criteria before starting non-trivial work.
+- Loop on those criteria until verified; do not declare done from intent alone.
+- Strong success criteria are what make autonomous looping safe.
+- "I think this fixes it" is not a verification — running the check is.
+
+## Surface Conflicts, Don't Average Them
+
+- If two existing patterns in the codebase contradict, pick one (more recent /
+  more tested), explain why, and flag the other for cleanup.
+- Never blend conflicting patterns. The blended version is the worst option:
+  twice the surface area, none of the consistency.
+
+## Step / Token Budgets
+
+- Long debugging loops drift; the model gradually loses track of what it has
+  already tried and starts re-suggesting rejected fixes.
+- If a task is sprawling past its natural scope, stop, summarize what is
+  verified, and start a fresh pass.
+- Pushing through a degraded context is worse than restating.
+
+## Checkpoint Multi-Step Tasks
+
+- After each significant step, restate three things:
+  - what was done
+  - what is verified
+  - what remains
+- Do not continue from a state you cannot describe back. If lost, stop and
+  restate, do not guess forward.
+- A wrong step at index 4 of a 6-step task silently corrupts steps 5 and 6.
+
+## Fail Loud, Not Silent
+
+- "Completed" / "tests pass" / "migration successful" are wrong if anything
+  was skipped, suppressed, or unverified.
+- Skipped records, suppressed errors, untested edge cases must be reported,
+  not hidden in success language.
+- Prefer an honest "I did X but did not verify Y" over a confident lie.
+- Default to surfacing uncertainty.

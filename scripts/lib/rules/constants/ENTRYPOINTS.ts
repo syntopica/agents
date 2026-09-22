@@ -1,0 +1,18 @@
+export const ENTRYPOINTS = new Set([
+  'api.mdc',
+  'bash.mdc',
+  'core.mdc',
+  'deploy.mdc',
+  'frontend.mdc',
+  'go.mdc',
+  'javascript.mdc',
+  'monorepo.mdc',
+  'n8n.mdc',
+  'nextjs.mdc',
+  'php.mdc',
+  'python.mdc',
+  'react.mdc',
+  'refactor.mdc',
+  'rust.mdc',
+  'typescript.mdc',
+])

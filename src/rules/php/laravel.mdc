@@ -1,0 +1,68 @@
+---
+globs: "**/*.php"
+description: Laravel standards (validation, authz, queues, API boundaries)
+alwaysApply: false
+---
+
+# Laravel Standards
+
+## Platform constraints
+
+- Prefer current stable Laravel major supported by the project (Laravel 12+ in modern projects).
+- Prefer PHP 8.2+ (8.3+ when compatible with dependencies and hosting).
+
+## Architecture
+
+- Controllers should be thin orchestration layers (validate, call service, return). See `@rules/core/boundaries.mdc`.
+- Keep business logic in services/actions/domain classes.
+- Use constructor DI/method injection over static facades in core business paths.
+- Use repositories only when persistence complexity justifies the extra layer.
+- Keep controllers and services cohesive; split classes that accumulate unrelated responsibilities.
+
+## Framework-native primitives
+
+- Validation: Form Requests.
+- Authorization: Policies/Gates.
+- Background jobs: Queues/Jobs (Horizon when available).
+- Response shaping: API Resources.
+- Decoupling: Events/Listeners where useful.
+
+## Data and persistence
+
+- Use Eloquent for standard CRUD and relationships.
+- Use Query Builder when complex SQL is clearer than Eloquent chains.
+- Use `DB::transaction()` for multi-step data integrity.
+- Keep migrations reversible and indexed intentionally.
+- Use pagination helpers for list endpoints (`paginate`, `cursorPaginate`) instead of ad-hoc paging.
+
+## API and contracts
+
+- Use API Resources/Transformers as the boundary contract; avoid leaking internal model structure.
+- Normalize expected failures to stable response shapes and status codes.
+
+## Performance and operations
+
+- Use caching intentionally (`Cache::remember`, tags/locks where appropriate); document invalidation strategy.
+- Move long-running or retryable work to jobs/queues; keep web requests fast.
+- Use Scheduler for recurring tasks; keep schedule definitions deterministic and observable.
+- Favor eager loading and query profiling to avoid N+1 issues.
+
+## Security and reliability
+
+- Keep CSRF enabled for state-changing web flows.
+- Rate-limit public endpoints where abuse is possible.
+- Never expose secrets in responses/logs.
+- Use signed URLs for sensitive temporary links where appropriate.
+- Prefer built-in auth/authz primitives (Sanctum/Passport/Policies/Gates) over custom security plumbing.
+
+## Conventions
+
+- Follow Laravel naming conventions: singular Models (e.g. `User`), intent-based controllers (e.g. `UserController`).
+- Use `snake_case` for DB columns and config keys; follow project convention for PHP variables/methods.
+- Preserve existing PHPDoc/comments unless they are inaccurate; update instead of deleting by default.
+
+## Testing
+
+- Unit + feature tests with PHPUnit/Pest.
+- Use factories and isolated test databases.
+- Add browser/E2E tests only for critical end-user flows.

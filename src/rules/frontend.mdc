@@ -1,0 +1,11 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: "Next.js, React, hooks, components, Tailwind; Vue/Svelte/HTMX/Shopify see @javascript"
+alwaysApply: false
+---
+
+# Frontend (pointer)
+
+Canonical guidance: `@rules/nextjs.mdc`.
+
+Use **@nextjs** (and referenced rules) for App Router, React, and styling. For non-Next frontends: `@rules/javascript.mdc` (Vue, Svelte, HTMX, Shopify theme). For Bootstrap-based styling: `@rules/styling/bootstrap.mdc`.

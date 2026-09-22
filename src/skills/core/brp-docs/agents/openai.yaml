@@ -1,0 +1,15 @@
+interface:
+  display_name: BRP Docs
+  short_description: Generate technical documentation, specs, and ADRs from code context.
+  default_prompt:
+    Write documentation for future maintainers with explicit scope, interfaces, examples, and
+    terminology consistency.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to a planning pass (the brp orchestrator's brp-plan reference) when the documentation
+    request depends on unresolved product or architecture decisions.

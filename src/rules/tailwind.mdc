@@ -1,0 +1,25 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: "Tailwind CSS v4 standards (tokens, authoring, states, responsive, hygiene)"
+alwaysApply: false
+---
+
+# Tailwind Rules
+
+Use **@tailwind** when working on Tailwind styles, component variants, or theme tokens. Legacy entrypoint: `@rules/styling/tailwindcss.mdc`.
+
+This rule references:
+
+- **Baseline**: `@rules/styling/tailwind/baseline.mdc`
+- **Tokens/theming**: `@rules/styling/tailwind/tokens-theming.mdc`
+- **Class authoring**: `@rules/styling/tailwind/class-authoring.mdc`
+- **State/a11y**: `@rules/styling/tailwind/state-accessibility.mdc`
+- **Responsive**: `@rules/styling/tailwind/responsive.mdc`
+- **Performance/hygiene**: `@rules/styling/tailwind/performance-hygiene.mdc`
+- **Stack specifics**: `@rules/styling/tailwind/stack-notes.mdc`
+
+## Short summary
+
+- Utility-first, token-driven, accessible Tailwind v4.
+- Predictable class authoring and responsive behavior.
+- Variant-based reuse without creating a parallel CSS system.

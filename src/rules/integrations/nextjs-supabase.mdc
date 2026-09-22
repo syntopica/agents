@@ -1,0 +1,30 @@
+---
+globs: "**/supabase/**,**/*supabase*.ts,**/*supabase*.tsx"
+description: Next.js + Supabase integration standards (auth, RLS, typed boundaries)
+alwaysApply: false
+---
+
+# Next.js + Supabase Standards
+
+## Security and auth
+
+- Keep service-role keys server-side only; never expose them to client bundles.
+- Enforce Row Level Security (RLS) for user-scoped data access.
+- Keep authorization checks server-side even if client guards exist.
+
+## Data boundaries
+
+- Encapsulate Supabase queries in service modules; keep UI/routes thin.
+- Validate external input before writes/updates.
+- Prefer typed query helpers/contracts to reduce runtime shape drift.
+
+## Reliability and performance
+
+- Keep auth/session flows explicit and resilient across SSR/client transitions.
+- Use pagination and selective fields for large datasets.
+- Add clear error mapping and user-friendly failure messages at boundaries.
+
+## Realtime and storage
+
+- Use realtime subscriptions intentionally; unsubscribe/cleanup to avoid leaks.
+- Validate uploads and enforce storage access policies.

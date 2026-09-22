@@ -1,0 +1,19 @@
+---
+globs: "**/*.sh,**/*.bash"
+description: "Bash/Shell standards and refactor workflow"
+alwaysApply: false
+---
+
+# Bash Rules
+
+Use **@bash** when working on Bash or shell scripts.
+
+This rule references:
+
+- **Bash standards**: `@rules/bash/bash.mdc` — language, structure, functions, IO, layout, validation
+- **Bash refactor**: `@rules/bash/refactor.mdc` — @file refactor workflow for .sh files
+
+## Short summary
+
+- One responsibility per script; entry scripts thin (parse + call helpers); helpers in `scripts/bash/utils/` or area subfolders.
+- Validation: run `bash -n` and `shellcheck` where available; see `@rules/bash/refactor.mdc` for script refactor checks.

@@ -1,0 +1,39 @@
+---
+description: "Verify progress, not liveness"
+alwaysApply: true
+---
+
+# Long-running jobs: verify progress, not liveness
+
+Unscoped on purpose: long jobs get launched from any session. The procedure —
+guards, thresholds, worker pools, termination, restart cleanup — is in the
+`long-job-safety` skill; below is what must be in mind before it loads, each
+line a judgment already made wrongly with the full procedure available.
+
+**A background job is not launched until its guard is launched**, in the same
+turn, and the guard is part of the report: name the artifact it watches and the
+threshold that kills the job, or do not claim the job is running.
+
+**Liveness is not progress.** A running process can be fully deadlocked, and a
+tight loop pegs `%CPU` like real work. Before calling a job healthy, name the
+artifact that MOVED since the last check, and compare its mtime against now, not
+zero: a job that did most of its work and then stopped looks nothing like a hang.
+
+**Nothing arbitrates between the sessions sharing a machine.** Several run at
+once, each able to launch hours of disk-bound work against the same volumes.
+Before launching one, name what already holds the target volume and either queue
+behind it or take the contention deliberately, rather than meeting it later as
+load 200 and an OOM kill in another session.
+
+**Never pause another session's job.** A progress guard cannot tell a paused
+process from a hung one — both are alive with a frozen artifact — so `SIGSTOP`
+on a guarded job is a delayed `SIGKILL`: one stopped job was killed by its own
+guard half an hour later. Yield CPU with `renice` and leave the decision to the owner.
+
+**Before signalling anything, prove ownership and recoverability.** Ask what is
+lost if this dies half-way, not only what it frees; signal the process group,
+never a pid matched by name; and confirm the workers are gone before relaunching.
+
+Invoke `long-job-safety` before launching, backgrounding, supervising,
+restarting or stopping such a job. If it cannot load, do not launch unguarded
+and do not report health without evidence.

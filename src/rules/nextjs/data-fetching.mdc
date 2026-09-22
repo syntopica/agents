@@ -1,0 +1,33 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Next.js data fetching (RSC-first, caching intent, waterfall prevention)
+alwaysApply: false
+---
+
+# Data Fetching Strategy
+
+## Defaults
+
+- Prefer server-side fetching in Server Components, route handlers, or server
+  actions.
+- Avoid client-side fetching for data that can be rendered on the server.
+
+## Waterfall prevention
+
+- Start independent async work early and resolve in parallel with
+  `Promise.all`.
+- Avoid sequential awaits when data sources do not depend on each other.
+- Consider preload patterns only when they clearly reduce latency.
+
+## Caching intent
+
+- Decide caching behavior intentionally for each flow.
+- Avoid accidental stale UI by documenting if a route is dynamic, revalidated,
+  or fully static.
+- Keep cache logic out of UI components when possible.
+
+## Client cache usage
+
+- Use TanStack Query only when client cache/sync/optimistic updates are
+  required.
+- Do not add query state layers to simple server-rendered flows.

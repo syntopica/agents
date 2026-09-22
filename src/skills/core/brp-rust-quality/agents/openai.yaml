@@ -1,0 +1,15 @@
+interface:
+  display_name: BRP Rust Quality
+  short_description: Audit and harden Rust/Tauri quality gates (clippy, rustfmt, unsafe, IPC).
+  default_prompt:
+    Audit the Rust or Tauri project's quality gates and report findings first, then harden clippy,
+    rustfmt, unsafe hygiene, and Tauri IPC boundaries incrementally.
+  brand_color: '#CA8A04'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to a planning pass (the brp orchestrator's brp-plan reference) when hardening requires
+    architectural changes beyond config and lint settings.

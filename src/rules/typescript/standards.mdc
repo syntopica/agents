@@ -1,0 +1,49 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: TypeScript + React standards (strict one-thing-per-file)
+alwaysApply: false
+---
+
+# TypeScript + React Standards (strict)
+
+## Goal
+
+Optimize the codebase for agent context and long-term maintainability by enforcing **many small, focused files**.
+
+## Language & Style
+
+- Use `interface` for exported object contracts/props.
+- Use `type` for unions and utility/mapped/conditional types.
+- Prefer const objects or union types over enums.
+- Prefer `function` keyword for exported functions; use arrow functions for short local callbacks.
+- Import React members selectively (e.g. `import { useEffect } from 'react'`) rather than `import * as React`.
+- Use `import type` for type-only imports.
+- `const` by default; `let` only when necessary.
+- Avoid `any`; prefer `unknown` at boundaries and narrow with type guards.
+- English-only code, comments, and identifiers.
+- Sort props alphabetically when feasible for consistency.
+- Add brief comments for non-obvious variables; use JSDoc for exported functions (parameters and return type) when it improves discoverability.
+- Use explicit return types for exported functions and public APIs.
+- Prefer immutable data (`readonly`, `as const`) when values should not change.
+
+## Next.js Special-file Exceptions
+
+Some Next.js files require additional exports by convention. Allowed exceptions:
+
+- `app/**/layout.tsx`, `app/**/page.tsx`: `default export` + `metadata` / `generateMetadata` / `viewport` (etc.).
+- `app/api/**/route.ts`: multiple HTTP method exports and route config exports.
+
+## Type naming and Result Shape
+
+Type naming (XxxParams, XxxResult, XxxProps) and Result Shape (`{ ok, value }` / `{ ok, error }`). Full policy: see `@rules/typescript/types-conventions.mdc`.
+
+## Next.js TS Hygiene (docs-aligned)
+
+- Do not edit `next-env.d.ts` (it is generated).
+- If you need custom `.d.ts`, create a new file and include it in `tsconfig.json`.
+
+## Structure
+
+File layout, one-unit-per-file, type placement and helper extraction are
+enforced by the repository's lint configuration, which states them exactly.
+Read it before writing: `@rules/core/code-structure.mdc`.

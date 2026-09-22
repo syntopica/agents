@@ -1,0 +1,13 @@
+interface:
+  display_name: BRP Todo Work
+  short_description: Execute an existing TODO backlog under an approved plan and hard run caps.
+  default_prompt:
+    Reconstruct the backlog, present the execution plan for approval, then advance every safe
+    actionable item with evidence and keep TODO.md and TODO_LOG.md truthful.
+  brand_color: '#1D4ED8'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: true
+  failure_mode: Escalate to brp-todo-create when the repository has no project-owned backlog to execute.

@@ -1,0 +1,30 @@
+---
+globs: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.mjs,**/*.cjs"
+description: Modern web app JS/TS rules (React/Next-agnostic additions)
+alwaysApply: false
+---
+
+# Modern Web Apps
+
+## Component behavior
+
+- Prefer function components and declarative UI patterns.
+- Keep side effects minimal and justified.
+- Avoid inline handlers only when they reduce readability or create measurable
+  rerender churn.
+
+## Data boundaries
+
+- Validate boundary input with schema/type guards.
+- Normalize API errors into stable, typed shapes before UI consumption.
+
+## Accessibility baseline
+
+- Use semantic HTML first.
+- Ensure keyboard operation and visible focus states for interactive elements.
+- Add ARIA only where semantics are insufficient.
+
+## Performance baseline
+
+- Measure before tuning.
+- Use memoization (`useMemo`/`useCallback`) only when beneficial.

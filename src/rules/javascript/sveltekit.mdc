@@ -1,0 +1,25 @@
+---
+globs: "**/*.svelte"
+description: SvelteKit standards (SSR-first, server boundaries, progressive enhancement)
+alwaysApply: false
+---
+
+# SvelteKit Standards
+
+## Rendering and routing
+
+- Prefer SSR/server load functions by default; opt into client behavior intentionally.
+- Keep route-level loading and error states explicit.
+- Use semantic HTML and progressive enhancement for forms/interactions.
+
+## Data boundaries
+
+- Keep sensitive logic and secrets in server-only modules/routes.
+- Validate external input at endpoint/action boundaries.
+- Keep client payloads minimal and avoid over-fetching.
+
+## State and structure
+
+- Use stores for shared cross-route state; keep local state local.
+- Keep components small and focused; extract reusable logic to utilities.
+- Keep file/folder naming consistent and predictable across routes/components.

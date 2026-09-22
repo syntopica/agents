@@ -1,0 +1,51 @@
+---
+globs: "**/*.php"
+description: Drupal standards (services, entities, Form API, cache metadata, and DI)
+alwaysApply: false
+---
+
+# Drupal Standards
+
+## Platform constraints
+
+- Target the project's Drupal major/minor support (Drupal 10/11 era projects).
+- Follow project PHP constraints from `composer.json`.
+- Keep dependencies Composer-managed.
+
+## Drupal-native APIs first
+
+- Prefer Entity API and Field API for content/domain data.
+- Use Config API for configuration (avoid ad-hoc config stores).
+- Use Cache API and cache metadata correctly (tags, contexts, max-age).
+- Use Queue API for deferred/background work.
+- Use logger channel services (`logger.factory`) for logs.
+
+## Architecture
+
+- Keep controllers/forms/plugins thin and focused.
+- Move business and integration logic to services.
+- Use plugin system for extensibility points.
+- Prefix service/plugin IDs with module namespace.
+
+## Dependency injection
+
+- Register services in `MODULE.services.yml`.
+- Prefer constructor injection.
+- Avoid `\Drupal::service()` in new code except legacy glue boundaries.
+
+## Data and schema
+
+- Use Entity API when possible.
+- For custom tables, define schema (`hook_schema`) and evolve with update hooks.
+- Use Database API query builders/parameterized queries.
+
+## Forms and security
+
+- Use Form API validation/submit handlers.
+- Keep state-changing operations permission-checked.
+- Escape/sanitize output appropriately for render context.
+
+## Testing
+
+- Use Drupal testing layers (unit/kernel/functional) based on scope.
+- Cover service logic and module integration boundaries.

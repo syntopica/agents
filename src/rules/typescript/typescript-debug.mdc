@@ -1,0 +1,28 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Post creating and refactoring checks (run after every meaningful change)
+alwaysApply: false
+---
+
+# Post Creating and Refactoring Checks
+
+## Golden path
+
+Run this after every meaningful change:
+
+- The project's check script (e.g. `pnpm run check`, `npm run check`).
+- If the project has separate steps: run type-check first, then format (format can fix some lint issues), then lint.
+
+## If something fails
+
+- Type errors: fix types first (do not format/lint until types are clean).
+- Lint errors: prefer refactoring into smaller files instead of adding ignores.
+- Formatting churn: keep diffs small; avoid unrelated reformatting.
+
+## Frontend / Vite
+
+- In frontend bundles, **never reference Node globals** (e.g. `process`) at runtime; they can ship to the bundle and cause "process is not defined" in browsers or mobile webviews. Prefer `import.meta.env` (Vite) or equivalent for env vars.
+
+## Checklist and common issues
+
+- For the full checklist (file size, one per file, types in `types/`, etc.) and common issues/fixes, see [code-quality-guidelines.mdc](@rules/core/code-quality-guidelines.mdc).

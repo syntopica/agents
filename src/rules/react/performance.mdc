@@ -1,0 +1,27 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: React rendering performance rules (pragmatic, measure-first)
+alwaysApply: false
+---
+
+# React Performance
+
+## Core approach
+
+- Optimize for readability first; measure before tuning.
+- Avoid premature memoization and abstraction.
+
+## Memoization
+
+- Use `useMemo` for expensive derived values.
+- Use `useCallback` when stable function identity matters.
+- Use `React.memo` only for components with stable props and demonstrated rerender pressure.
+
+## JSX patterns
+
+- Avoid inline handlers only when they cause meaningful rerender churn or break memoization.
+- Prefer clarity when performance impact is negligible.
+
+## Lists and keys
+
+- Never use array index as key unless the list is static and order never changes.

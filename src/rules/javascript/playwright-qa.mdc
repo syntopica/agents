@@ -1,0 +1,30 @@
+---
+globs: "**/*.spec.ts,**/*.spec.tsx,**/*.test.ts,**/*.test.tsx,**/e2e/**,**/playwright.config.*"
+description: Playwright QA standards (locator strategy, determinism, maintainability)
+alwaysApply: false
+---
+
+# Playwright QA
+
+## Test design
+
+- Use isolated tests and deterministic fixtures.
+- Prefer semantic locators: `getByRole`, `getByLabel`, `getByText`,
+  `getByTestId`.
+- Prefer `getBy*` and role-based locators over generic `page.locator(...)` selectors.
+- Avoid fixed sleeps/timeouts; wait on explicit conditions.
+- Prefer web-first assertions (`toBeVisible`, `toHaveText`, etc.) over manual waits.
+
+## Maintainability
+
+- Use helper utilities for repeated setup/flows.
+- Use `test.beforeEach`/`test.afterEach` to enforce clean setup/teardown.
+- Follow Arrange-Act-Assert structure.
+- Prioritize critical user journeys for coverage.
+- Keep tests parallel-safe (no shared mutable test state).
+
+## Reliability
+
+- Keep assertions explicit and user-visible.
+- Avoid brittle selectors tied to implementation details.
+- Keep config concerns in `playwright.config.*` (projects/devices/baseURL/retries).

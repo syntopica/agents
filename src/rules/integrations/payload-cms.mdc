@@ -1,0 +1,32 @@
+---
+globs: "**/payload.config.*,**/collections/**,**/*payload*.ts"
+description: Payload CMS + MongoDB standards (collections, hooks, access, integrations)
+alwaysApply: false
+---
+
+# Payload CMS + MongoDB Standards
+
+## Content modeling
+
+- Model collections/globals by domain with explicit field validation and relationships.
+- Reuse field groups/blocks for repeated content structures.
+- Prefer schema/migration-driven changes over ad-hoc data shape drift.
+
+## Access and hooks
+
+- Keep access control explicit (collection and field-level where needed).
+- Use hooks for extension points; keep hooks small and side-effect aware.
+- Prefer custom endpoints for integration-specific logic instead of overriding core behavior.
+
+## MongoDB usage
+
+- Design indexes intentionally for common query patterns.
+- Use aggregation pipelines for heavy read transformations when justified.
+- Use pagination for large datasets and avoid unbounded queries.
+- Use transactions for multi-document invariants when needed.
+
+## Integration and security
+
+- Validate/sanitize external input from webhooks/APIs before persistence.
+- Keep secrets in env vars and follow least-privilege access for integrations.
+- Add clear error mapping/logging without exposing sensitive internals.

@@ -1,0 +1,54 @@
+{
+  "servers": {
+    "serena": {
+      "targets": ["claude-personal", "claude-secondary", "codex"],
+      "transport": "stdio",
+      "command": "serena",
+      "args": ["start-mcp-server"],
+      "startup_timeout_sec": 15,
+      "required": true,
+      "target_overrides": {
+        "codex": {
+          "args_append": ["--project-from-cwd", "--context=codex"]
+        },
+        "claude-personal": {
+          "args_append": ["--context", "claude-code"]
+        },
+        "claude-secondary": {
+          "args_append": ["--context", "claude-code"]
+        }
+      }
+    },
+    "context7": {
+      "targets": ["claude-personal", "claude-secondary", "codex"],
+      "transport": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": {
+          "from_env": "CONTEXT7_API_KEY"
+        }
+      }
+    },
+    "codegraph": {
+      "targets": ["claude-personal", "claude-secondary", "codex"],
+      "transport": "stdio",
+      "command": "codegraph",
+      "args": ["serve", "--mcp"]
+    },
+    "atrium": {
+      "targets": ["claude-personal", "claude-secondary", "codex"],
+      "transport": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--extra",
+        "mcp",
+        "--directory",
+        "$HOME/p/atrium",
+        "atrium-mcp"
+      ],
+      "required": true,
+      "default_tools_approval_mode": "writes"
+    }
+  }
+}

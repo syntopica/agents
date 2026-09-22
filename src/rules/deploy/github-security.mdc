@@ -1,0 +1,27 @@
+---
+globs: "**/.github/**,**/*.yml,**/*.yaml,**/*.tf,**/Dockerfile,**/Dockerfile.*"
+description: GitHub secret-handling and workflow hardening
+alwaysApply: false
+---
+
+# GitHub Security and Secrets
+
+## Non-negotiable
+
+- Never hardcode secrets in code, docs, workflows, or examples.
+- Never commit real `.env` files; keep placeholders in `.env.example`.
+- Assume leaked credentials are compromised and must be rotated.
+
+## CI/workflow rules
+
+- Use least-privilege workflow `permissions:` and elevate only when needed.
+- Prefer `GITHUB_TOKEN` when sufficient; avoid long-lived PATs.
+- Treat forked PR input as untrusted; avoid unsafe interpolation in scripts.
+- Pin third-party GitHub Actions to immutable versions (prefer full SHA).
+- Avoid printing secrets in logs; mask sensitive runtime values before output.
+
+## Incident baseline
+
+1. Rotate/revoke exposed credentials first.
+2. Remove/replace usage in code/config and redeploy.
+3. Add prevention (ignore rules + secret scanning in dev/CI).

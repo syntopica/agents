@@ -1,0 +1,29 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: React naming conventions for handlers, booleans, and hooks
+alwaysApply: false
+---
+
+# React Naming
+
+## Handlers
+
+- Event handlers must start with `handle`:
+  - `handleClick`
+  - `handleSubmit`
+  - `handleKeyDown`
+
+## Booleans
+
+- Use auxiliary-verb names:
+  - `isLoading`
+  - `hasError`
+  - `canSubmit`
+  - `shouldRetry`
+
+## Hooks
+
+- Hooks must start with `use`:
+  - `useAuth`
+  - `useFormState`
+  - `useUserSettings`

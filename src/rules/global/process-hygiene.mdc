@@ -1,0 +1,33 @@
+---
+description: "Reap what you spawn; never kill by size"
+alwaysApply: true
+---
+
+# Process hygiene: never kill by size
+
+Unscoped on purpose: every session spawns processes, and this machine is shared
+by a dozen of them at once. How to find and reap orphaned servers, and how to
+read memory pressure, are in the `orphan-process-cleanup` skill. The judgment
+below stays here because it has to be in mind before anything is proposed for
+killing — that is the moment the damage happens.
+
+**`ps | sort -rn | head` answers "what is large", not "what is safe to kill".**
+Reading the first as the second is how a backup dies to reclaim a gigabyte: the
+largest process on this machine was mid-upload, holding the only live copy of
+~1.4 TB of data after a disk failure. Before proposing to kill anything, answer
+**what is lost if this dies half-way**, not only how much memory it frees. A
+large resident set is usually the signal that a process is doing the work it
+exists for.
+
+**Measure twice before believing a snapshot.** That same process had already
+exited and been replaced between two readings, and the replacement oscillated
+3.2-4.6 GB rather than growing — so "RSS is climbing" was neither a leak nor
+progress. Check the pid is even the same one.
+
+**A session's leftovers are identified by `ppid == 1`, not by name.** Walking
+the ancestor chain for a process named `claude` marks Claude Desktop's own
+servers as garbage while they are in use.
+
+Invoke `orphan-process-cleanup` when the machine is short of memory, when a
+suite or a browser fails in a way that smells of resources rather than code, or
+before reaping anything.
