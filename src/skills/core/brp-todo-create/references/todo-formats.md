@@ -62,6 +62,23 @@ mistakes with an explicit amendment rather than rewriting past evidence. Archive
 only complete old years under `docs/todo-log/YYYY.md` if the file becomes
 unwieldy, and never split more granularly than one file per year.
 
+## When a backlog moves to the repository that owns it
+
+The log follows the backlog. A backlog that moves out of a meta repository into
+the repository that owns the work leaves its closed history behind, and a
+pointer in the old log is not enough: the next reader of the owning repository
+searches its own `TODO_LOG.md` before asking, finds nothing, and reopens work
+that was closed months ago. Move the history too, verbatim, in one pass, and
+leave a dated note in the old log saying where it went.
+
+Verbatim means verbatim. Past entries are evidence, so a migration re-homes them
+and adjusts nothing else: heading levels shift to fit the new file's structure
+and the prose stays as it was written, even where older entries are prose
+sections and newer ones are `- [x]` bullets. Say so in the new log's header
+rather than rewriting them into one shape. Measured 2026-09-22 moving 841 lines
+of DMX history out of `~/p/TODO_LOG.md` into `DMX-Fixtures/`, a month after that
+backlog had moved.
+
 ## Prettier will not converge on a nested list inside an indented item
 
 A repository whose format gate runs Prettier over Markdown can enter a loop that
