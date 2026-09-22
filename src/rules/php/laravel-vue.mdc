@@ -1,0 +1,30 @@
+---
+globs: "**/*.php"
+description: Laravel + Vue standards (API boundaries, SPA contracts, and state)
+alwaysApply: false
+---
+
+# Laravel + Vue
+
+## Boundary design
+
+- Keep backend/frontend boundary explicit: controllers/resources define stable contracts.
+- Prefer API Resources (or Inertia props contracts) over ad-hoc array payloads.
+
+## Frontend integration
+
+- Keep Vue components presentational when possible; move data orchestration to composables/stores.
+- Avoid duplicating validation rules inconsistently between frontend and backend.
+- Use route-level code splitting and lazy loading for heavy pages/features.
+
+## Security and auth
+
+- Keep sensitive checks on server-side policies/gates.
+- Use Laravel auth stack consistently (Sanctum/Passport/session) and avoid custom token flows unless justified.
+- Keep CSRF protection enabled for state-changing flows.
+
+## Data and performance
+
+- Prevent N+1 on backend and over-fetching on frontend.
+- Cache expensive backend queries intentionally and document invalidation.
+- Paginate large collections and stream/chunk heavy exports/jobs.

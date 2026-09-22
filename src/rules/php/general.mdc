@@ -1,0 +1,46 @@
+---
+globs: "**/*.php"
+description: General PHP standards (security-first, typed code, thin entry layers)
+alwaysApply: false
+---
+
+# General PHP Standards
+
+## Baseline
+
+- Prefer PHP 8.3+ when stack constraints allow.
+- Match project/platform constraints when a framework requires lower versions.
+- Use PSR-12 unless the framework enforces a stricter variant.
+
+## Language rules
+
+- Use `declare(strict_types=1);` in owned PHP files where compatibility allows.
+- Prefer typed properties, parameter/return types, readonly constructs, and `match` where appropriate.
+- Prefer composition over inheritance.
+- Avoid shared mutable static state.
+
+## Architecture
+
+- Keep controllers/endpoints/entrypoints thin.
+- Place business rules in services/use-cases.
+- Isolate infrastructure concerns (DB/HTTP/filesystem) behind explicit adapters/services.
+- Use DI/service containers where available.
+
+## Errors and logging
+
+- Model expected failures as typed results or domain-level exceptions.
+- Use `try/catch` only to recover, translate, or add context.
+- Log actionable context (request/entity/user identifiers) without secrets.
+
+## Security (mandatory)
+
+- Validate external input first, sanitize/normalize where needed, escape at output.
+- Use parameterized queries and framework DB abstractions.
+- Treat HTTP, CLI args, webhook payloads, and imported data as untrusted.
+- Avoid unsafe unserialize, dynamic includes, and shell execution without strict controls.
+
+## Testing
+
+- Unit tests for business logic/services.
+- Integration tests for DB/HTTP/framework boundaries.
+- Prefer fixtures/factories over coupling to production-like data dumps.

@@ -1,0 +1,32 @@
+---
+globs: "**/*.html,**/*.htm"
+description: HTMX standards (server-driven interactivity with minimal JS)
+alwaysApply: false
+---
+
+# HTMX Standards
+
+## Interaction model
+
+- Prefer declarative HTMX attributes (`hx-get`, `hx-post`, `hx-put`, `hx-delete`) over custom JS when sufficient.
+- Return minimal HTML fragments from server endpoints for targeted updates.
+- Use `hx-target` and `hx-swap` intentionally to control DOM replacement semantics.
+- Use `hx-trigger` explicitly for non-default interaction timing.
+
+## UX and safety
+
+- Keep server-side validation authoritative; client feedback should mirror server truth.
+- Return proper HTTP status codes and clear error fragments for failed interactions.
+- Use `hx-confirm` for destructive operations.
+- Use `hx-push-url` only when the interaction meaningfully changes navigation state.
+
+## Maintainability
+
+- Keep fragment templates modular and reusable.
+- Avoid coupling HTMX endpoints to full-page templates when fragment endpoints are sufficient.
+- Document endpoint contract expectations (input, fragment output, error shape).
+
+## Performance
+
+- Keep fragment payloads small and cache where it helps.
+- Avoid unnecessary full-region swaps when targeted updates are possible.

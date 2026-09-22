@@ -1,0 +1,124 @@
+---
+globs: "**/*.rs"
+description: Rust + Tauri standards (strict one-thing-per-file)
+alwaysApply: false
+---
+
+# Rust + Tauri Standards (strict)
+
+## Goal
+
+Optimize for long-term maintainability with **many small, focused files** and explicit boundaries.
+
+## Language & Style
+
+- English-only code, comments, and identifiers.
+- Prefer `struct`/`enum` definitions in dedicated files.
+- Use explicit error types or result enums for expected failures.
+
+## Async & Concurrency (when applicable)
+
+- Prefer a single async runtime per app. If the project uses **Tokio**, follow the practices below.
+- Use `async fn` and `.await` with clear cancellation paths; avoid detached tasks without an owner.
+- Do not block inside async tasks; offload blocking work to a blocking pool.
+- Use `tokio::select!` (or equivalent) to compose cancellation, timeouts, and concurrent work.
+- Prefer **bounded channels** for backpressure; choose the channel type by intent (mpsc/oneshot/broadcast/watch).
+- Avoid holding locks across `.await`; use async-aware primitives for shared state.
+
+## One Thing Per File (STRICT)
+
+- **Exactly one exported symbol per file** for your own Rust modules:
+  - One public function **or** one public type **or** one public trait per file.
+- No helpers inside the same file. Extract helpers to `utils/`-style modules.
+- Files should do one thing: data model, boundary call, or pure logic.
+- **Single-purpose functions only**: if a function mixes multiple tasks, split into smaller functions and keep a thin orchestrator.
+
+## Module Manifests (Exception)
+
+- `mod.rs` files may declare multiple `mod` entries.
+- No logic, constants, or functions inside `mod.rs`.
+
+## Module Layout (STRICT)
+
+- `src-tauri/src/` is for Rust code only.
+- `src-tauri/src/services/`: external boundaries (IO, DB, network).
+- `src-tauri/src/utils/`: pure logic (no IO).
+- `src-tauri/src/models/`: domain types (one type per file).
+- No "misc" modules like `helpers.rs` or `common.rs`.
+
+## SQL Separation (STRICT)
+
+- **No inline SQL strings** inside `.rs` files.
+- Put each query in its own file under `src-tauri/sql/<area>/Xxx.sql`.
+- Load with `include_str!()` in Rust code.
+
+## Prompt Separation (STRICT)
+
+- **No inline LLM or AI prompts** inside `.rs` files.
+- Put each prompt in its own file under `src-tauri/prompts/<area>/Xxx.prompt`.
+- Load with `include_str!()` in Rust code.
+
+## Boundaries
+
+- Route handlers or command handlers should be thin (validate, call service, return). Canonical: `@rules/core/boundaries.mdc`.
+
+## Tauri Commands Checklist (MANDATORY)
+
+When creating a new Tauri command, **all three steps are required**:
+
+1. Create the command file: `src-tauri/src/commands/<command_name>.rs`
+2. Register in invoke handler: add to `tauri::generate_handler![]` in `src-tauri/src/lib.rs`
+3. **Add to permissions**: add command name to `commands.allow` in `src-tauri/permissions/<app-name>-default.toml`
+
+**CRITICAL**: Without step 3, the command will fail at runtime with "not allowed. Command not found" error.
+
+## Module Conflict (STRICT)
+
+Rust allows **only one** definition per module name. You cannot have both:
+
+- `foo.rs` (single file that defines the module)
+- `foo/mod.rs` (directory that defines the module)
+
+If both exist, the compiler fails with: `failed to resolve mod 'foo': file for module found at both "…/foo.rs" and "…/foo/mod.rs"`.
+
+**Resolution:**
+
+1. **Keep the directory** (`foo/` with `mod.rs` and submodules); **delete** the standalone `foo.rs`.
+2. If the deleted `foo.rs` contained **impl blocks** (methods on a type) that call sites use, add a thin **delegation impl** inside the directory:
+   - Create `foo/impl_session.rs` (or a name that matches the type, e.g. `impl_session` for `ImapSession`).
+   - In it, `impl Type { pub async fn method(&mut self, …) { free_function(self, …).await } }` for each method that was in the old `foo.rs`.
+   - In `foo/mod.rs`, add `mod impl_session;` (no `pub use` needed).
+3. If the deleted file only re-exported or duplicated logic that already lives in the directory’s submodules, no extra impl file is needed; ensure the directory’s `mod.rs` re-exports what the rest of the crate needs.
+
+## Testing (async)
+
+- Use `#[tokio::test]` for async unit tests.
+- Use `tokio::time::pause()` for time-dependent tests to avoid real delays.
+
+## Dead Code
+
+- Remove unused functions and methods, or they will trigger `dead_code` / `unused` warnings.
+- For enums where all variants share the same suffix (e.g. `*Error`), Clippy may suggest `enum_variant_names`. You can either rename variants or add `#[allow(clippy::enum_variant_names)]` on the enum if the naming is intentional.
+
+## Clippy
+
+- Prefer **`map.contains_key("key")`** over **`map.get("key").is_some()`**.
+- For stripping a prefix and then searching, use **`s.strip_prefix('x')`** and work on the returned slice instead of **`s[1..].find(...)`** (satisfies `manual_strip`).
+
+## Verifying the UI as an agent (macOS)
+
+An agent cannot drive a Tauri window from outside on macOS: without an
+Accessibility grant AppleScript sees zero windows and a synthetic `CGEventPost`
+click is swallowed silently, and that grant cannot be given non-interactively.
+The route that works is an in-process WebDriver server over the real
+`WKWebView`, which needs no TCC permission at all.
+
+Invoke the `tauri-ui-automation` skill before adding any automation surface to a
+Tauri app, and before spending time on `tauri-driver` (no macOS backend),
+`isInspectable` (no CDP port), an iOS inspector proxy, or `tccutil`. It carries
+the wiring, the four gates that keep an unauthenticated `/wdio/eval` out of a
+release build, and what DOM-level input does not prove.
+
+## Validation
+
+After meaningful changes, run the project's check script (e.g. `pnpm run check`, `npm run check`).

@@ -1,0 +1,8 @@
+import path from 'node:path'
+import { ROOT } from './ROOT'
+
+export const DIST_SKILLS_PORTABLE_DIR = path.join(
+  ROOT,
+  'dist',
+  'skills-portable',
+)

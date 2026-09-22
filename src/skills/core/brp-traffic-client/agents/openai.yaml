@@ -1,0 +1,16 @@
+interface:
+  display_name: BRP Traffic Client
+  short_description: Turn captured web traffic into a maintainable, direct HTTP client.
+  default_prompt:
+    Derive the protocol from the capture, then build the smallest reliable client for the target
+    operation and report what was verified versus inferred.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: true
+  failure_mode:
+    Keep a browser or CDP bridge for the steps that genuinely require page execution, and escalate
+    to a planning pass (the brp orchestrator's brp-plan reference) when the integration turns into a
+    broader service design.

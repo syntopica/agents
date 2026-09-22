@@ -1,0 +1,37 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Next.js server actions standards (validation, response shape, expected errors)
+alwaysApply: false
+---
+
+# Server Actions Standards
+
+## Goal
+
+Keep server actions predictable, typed, and safe at boundaries.
+
+## Validation
+
+- Validate external input before business logic.
+- If the repo already uses Zod, prefer Zod schemas + inferred types.
+- Keep validation at the boundary; services enforce domain invariants.
+
+## Expected vs unexpected failures
+
+- Expected failures: return typed result objects.
+- Unexpected failures: throw and let boundaries/error handling capture context.
+- Do not rely on exception strings for control flow.
+
+## Response shape (recommended)
+
+Use a consistent action result shape:
+
+- Success: `{ ok: true, data }`
+- Failure: `{ ok: false, error: { code, message } }`
+
+Use this `{ ok: true/false }` shape only for Server Actions; Route Handlers use `{ data }` / `{ error }` (see `@rules/nextjs/api-response-shapes.mdc`).
+
+## next-safe-action (optional)
+
+- If `next-safe-action` is already in the project, prefer it for typed server actions.
+- Do not add it for trivial flows that are already safe and simple.

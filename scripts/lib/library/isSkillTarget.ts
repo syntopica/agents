@@ -1,0 +1,31 @@
+import type { SkillTarget } from './types/SkillTarget'
+
+export const isSkillTarget = (value: string): value is SkillTarget =>
+  [
+    'amp',
+    'cursor',
+    'claude',
+    'codex',
+    'copilot',
+    'continue',
+    'cline',
+    'windsurf',
+    'antigravity',
+    'augment',
+    'gemini-cli',
+    'goose',
+    'openclaw',
+    'opencode',
+    'roo',
+    'crush',
+    'kiro',
+    'junie',
+    'kilo',
+    'openhands',
+    'zencoder',
+    'adal',
+    'qoder',
+    'qwen-code',
+    'trae',
+    'portable',
+  ].includes(value)

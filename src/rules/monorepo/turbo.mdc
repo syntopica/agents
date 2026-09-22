@@ -1,0 +1,25 @@
+---
+globs: "**/turbo.json,**/pnpm-workspace.yaml,**/package.json"
+description: Turbo monorepo standards (apps/packages boundaries and pipeline discipline)
+alwaysApply: false
+---
+
+# Turbo Monorepo Standards
+
+## Boundaries
+
+- Keep app-specific code in `apps/*`; move reusable code to `packages/*`.
+- Avoid importing app internals from other apps directly.
+- Publish shared contracts/types from packages instead of duplicating.
+
+## Pipeline and tasks
+
+- Keep Turbo tasks deterministic and side-effect aware for caching.
+- Ensure task inputs/outputs are declared correctly for reliable remote/local cache hits.
+- Prefer shared scripts/config at workspace root when behavior is common.
+
+## Dependency hygiene
+
+- Keep package dependencies explicit; avoid hidden transitive reliance.
+- Version-lock critical toolchain dependencies for reproducible CI.
+- Add lightweight package-level checks/tests where they prevent regressions early.

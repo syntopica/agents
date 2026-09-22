@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": ["requests"],
+  "properties": {
+    "requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["procedure"],
+        "properties": {
+          "procedure": {
+            "type": "string",
+            "description": "The repeatable procedure this request asks for, under ten words, worded so identical asks collapse. Empty string for a one-off."
+          }
+        }
+      }
+    }
+  }
+}

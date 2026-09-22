@@ -1,0 +1,87 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: One symbol per file, one purpose per symbol; source of truth for code quality
+alwaysApply: false
+priority: high
+---
+
+# Code Quality Guidelines
+
+**Apply these guidelines when creating new code and when refactoring.** They are the single source of truth; other rules (e.g. @refactor, post-refactor checks) reference this file.
+
+## Golden rule (high priority)
+
+- **One function or type per file** — exactly one exported symbol per file.
+- **One purpose per function or type** — single responsibility; no multi-step or multi-concern symbols.
+- **Very small files** — prefer 100 files of 10 lines over 1 file of 1000 lines.
+
+## File size
+
+- **Target**: 10–50 lines per file.
+- **Max**: ~100 lines; beyond that, split.
+
+## Hard constraints
+
+- Exactly one exported symbol per file.
+- No inline `interface`/`type` in non-type files; put types in `types/<area>/` (one type per file).
+- No helper functions inside components/hooks; extract to `utils/<area>/`.
+- **Index/barrel policy (canonical):** Import from module entrypoints (`index.ts`) when a module/feature exposes a **single public API**. (1) One `index.ts` per module/vertical slice with **explicit named re-exports only**. (2) No `export * from`. (3) No generic barrel files aggregating unrelated exports. (4) Consumers import only from the entrypoint. Vertical-slice folder layout: see vertical-slice-architecture.mdc.
+- **Single-purpose functions only**: each function does one task. If a function contains multiple steps (fetch/read/parse/transform/branching), split into smaller functions and orchestrate them from a parent function.
+
+## Framework-specific exceptions
+
+Any framework-specific exceptions to "one export per file" live in the framework rule files (e.g. Next.js).
+
+## Constants and large data
+
+- Do not keep large literal collections (arrays/maps of many entries) inside logic files.
+- Extract keyword lists, lookup maps, and config tables to dedicated constant files (e.g. `utils/<area>/constants/xxxConstants.ts`); logic files import them.
+
+## When to split (fast heuristics)
+
+Split immediately if any is true:
+
+- More than one exported symbol.
+- More than one responsibility (UI + state + helpers).
+- Any helper function inside a component/hook.
+- Inline `type`/`interface` outside `types/`.
+- File > ~80 lines and still growing.
+- Cognitive complexity above ~15 in a single function or hook.
+- A literal collection past ~10-15 entries sitting inside a logic file.
+
+## Extraction decision tree
+
+- File > ~80 lines → must extract (multiple functions → one per file; inline types → `types/<area>/`; complex logic → hook or util; repeated JSX → child components).
+- Large constant collections → dedicated files under `utils/<area>/constants/` or similar.
+
+## Decision rules (creating and refactoring)
+
+- Apply SOLID principles: single responsibility per file; depend on abstractions where it helps.
+- If a file has multiple responsibilities, split immediately.
+- If a hook/component contains helpers, extract them to `utils/`.
+- If a file declares types inline, move them to `types/<area>/`.
+- Limit logic in TSX to presentational concerns; move complex logic to hooks or `utils/`.
+- Pass full props into components; avoid computing derived data during prop passing; keep logic inside the component or its hooks.
+- If a function reads like a checklist of steps, split it into small single-purpose functions and keep a thin orchestrator.
+
+## Checklist (after creating or refactoring)
+
+- [ ] All type errors resolved.
+- [ ] All lint errors resolved.
+- [ ] No unused imports.
+- [ ] No circular dependencies.
+- [ ] File size 10–50 lines (max ~100).
+- [ ] One exported symbol per file, and the file name matches it exactly.
+- [ ] No helper, private, or internal functions defined alongside it.
+- [ ] Types in `types/<area>/`; no inline type aliases.
+- [ ] Every dependency is an explicit import; imports per index/barrel policy in this file (no wildcard barrels).
+
+## Common issues and fixes
+
+| Issue               | Fix                                        |
+| ------------------- | ------------------------------------------ |
+| Type error: `any`   | Use `unknown` and narrow with type guards. |
+| Unused import       | Remove or use the import.                  |
+| Missing return type | Add explicit return type.                  |
+| Circular dependency | Move shared types to `types/`.             |
+| File too large      | Split into smaller focused files.          |

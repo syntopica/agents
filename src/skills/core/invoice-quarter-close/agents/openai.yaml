@@ -1,0 +1,15 @@
+interface:
+  display_name: Invoice Quarter Close
+  short_description: Close a VAT quarter from live accounting-platform, bank, and filed-model evidence.
+  default_prompt:
+    Close the quarter for the named company following the brain playbook, verifying every amount
+    against the live source and reporting each figure with its provenance.
+  brand_color: '#B45309'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to the user when the bank, the accounting platform, and filed models disagree in a way the playbook does
+    not already resolve, or when a needed credential or export is missing.

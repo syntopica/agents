@@ -1,0 +1,15 @@
+export const ANTHROPIC_ONLY_FRONTMATTER_FIELDS = [
+  'allowed-tools',
+  'context',
+  'agent',
+  'hooks',
+  'paths',
+  'model',
+  'effort',
+  'shell',
+  'user-invocable',
+  'disable-model-invocation',
+  'disallowed-tools',
+  'argument-hint',
+  'arguments',
+] as const

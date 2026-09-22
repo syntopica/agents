@@ -1,0 +1,54 @@
+---
+globs: "**/*.sh,**/*.bash"
+description: Bash/Shell script standards for server and automation
+alwaysApply: false
+---
+
+# Bash/Shell Standards
+
+## Language & Style
+
+- Use `#!/usr/bin/env -S bash` or `#!/bin/bash` consistently at the top of executables.
+- Enable strict mode in non-trivial scripts: `set -euo pipefail`; use `IFS=$'\n\t'` when safe.
+- Use lowercase snake_case for function names; UPPER_CASE for constants and env vars.
+- Prefer long flags (`--help`) over short ones when available.
+- Comments focused on "why" more than "what".
+
+## Modules & Structure
+
+- Keep files **single-responsibility and small**; extract helpers proactively.
+- **One responsibility per script file**: CLI entry scripts parse args/env and call helpers; helpers live in `utils/` or area subfolders.
+- Do not rename entry scripts invoked from server/cron; move logic into `scripts/<area>/utils/*.sh` and have the entry script `source` and call one entry function.
+- Use `source "$(dirname "$0")/relative/path/to/helper.sh"` so paths work regardless of CWD.
+
+## Functions
+
+- Prefer small, focused functions; avoid multiple unrelated functions in the same file.
+- Reuse existing helpers; extend with parameters rather than duplicating.
+- Validate input parameters early; exit with a clear message on invalid input.
+
+## IO & Errors
+
+- Use explicit non-zero exit codes on failure (`exit 1`, `exit 2`, etc. with meaning).
+- Print machine-friendly logs by default; avoid excessive noise in cron jobs.
+- Send errors to stderr (`echo "message" >&2`). Never echo secrets to output.
+
+## Layout (suggested)
+
+- Top-level executable scripts (names unchanged for compatibility).
+- `scripts/bash/utils/*.sh` — shared helpers (logging, color output, common helpers).
+- `scripts/bash/<area>/*.sh` — area-specific helpers when needed.
+
+## Validation
+
+- Prefer running `shellcheck` on new or modified scripts where possible.
+- Keep POSIX vs bash-specific constructs consistent with the shebang.
+
+## Naming (DevOps / automation)
+
+- Use `snake_case` for variables and functions; use `snake_case` for file and directory names.
+- UPPER_CASE for environment variables.
+- Avoid hard-coded values; use environment variables or config files.
+- Principle of least privilege for access and permissions.
+- Use `trap` for error handling and cleaning up temporary files.
+- Redirect output to log files where appropriate; separate stdout and stderr.

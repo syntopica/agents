@@ -1,0 +1,27 @@
+---
+globs: "**/*.vue"
+description: Vue + Vite standards (Composition API, routing/state boundaries, perf)
+alwaysApply: false
+---
+
+# Vue + Vite Standards
+
+## Component and state model
+
+- Use Composition API with `<script setup lang=\"ts\">` for Vue components.
+- Keep components focused; move shared logic to composables/utilities.
+- Use Pinia for shared client state; keep local state local.
+- Prefer explicit typed props/emits and avoid implicit `any` data flow.
+
+## Routing and data
+
+- Keep route modules organized and lazy-load heavy route chunks.
+- Keep data-fetching concerns separate from presentational components.
+- Use validation at boundaries and normalize API errors before UI consumption.
+
+## UI and performance
+
+- Use utility-first styling consistently (Tailwind + chosen component libs).
+- Use async components/Suspense for non-critical UI sections when beneficial.
+- Optimize Vite chunking/code-splitting intentionally; avoid giant vendor bundles.
+- Prefer semantic HTML and keyboard-accessible interactions.

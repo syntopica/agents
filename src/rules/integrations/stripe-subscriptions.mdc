@@ -1,0 +1,30 @@
+---
+globs: "**/stripe/**,**/*stripe*.ts,**/*stripe*.tsx,**/webhooks/**"
+description: Stripe subscription integration standards (webhooks, portal, sync)
+alwaysApply: false
+---
+
+# Stripe Subscriptions Standards
+
+## Core flows
+
+- Keep checkout/subscription creation server-side.
+- Use Stripe Customer Portal for subscription self-management when suitable.
+- Keep subscription state synchronized with application user/account records.
+
+## Webhooks
+
+- Verify webhook signatures before processing events.
+- Make webhook handlers idempotent and retry-safe.
+- Handle key subscription events (`created`, `updated`, `deleted`, invoice outcomes).
+
+## Security and reliability
+
+- Store Stripe secrets in secure env vars only.
+- Never trust client-reported payment state; trust Stripe events/server checks.
+- Log actionable billing context without leaking sensitive payment data.
+
+## Data consistency
+
+- Use transactions/locking where needed to prevent duplicate or conflicting updates.
+- Keep a clear mapping model: app user <-> Stripe customer <-> active subscriptions.

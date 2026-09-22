@@ -1,0 +1,40 @@
+---
+globs: "**/*.py"
+description: Django standards (modular apps, ORM-first, security and performance)
+alwaysApply: false
+---
+
+# Django Standards
+
+## Architecture
+
+- Organize code by Django apps with clear boundaries and reusable modules.
+- Keep views thin; move business logic to models/managers/services.
+- Use MVT boundaries consistently (Model-View-Template).
+- Prefer CBVs for complex flows and FBVs for small/simple endpoints.
+
+## Data and ORM
+
+- Prefer Django ORM over raw SQL; use raw SQL only for proven performance cases.
+- Prevent N+1 queries with `select_related` and `prefetch_related`.
+- Add explicit DB indexes for high-frequency query/filter fields.
+- Use `transaction.atomic()` for multi-step data integrity operations.
+
+## Validation and forms
+
+- Use Django forms/model forms for form workflows and validation.
+- Keep validation close to boundaries (forms/serializers/model validation).
+- Return actionable validation errors for users and clients.
+
+## Security and reliability
+
+- Keep CSRF/XSS/SQL injection protections enabled and verify template escaping.
+- Use Django auth framework and permission checks instead of custom auth plumbing.
+- Handle expected failures explicitly and log context without secrets.
+- Provide custom 404/500 error pages with safe, useful UX.
+
+## Performance
+
+- Use caching intentionally for frequently accessed data/views.
+- Offload long-running I/O tasks to async workers (Celery or equivalent).
+- Keep static/media handling production-ready (e.g., WhiteNoise/CDN strategy).

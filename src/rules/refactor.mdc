@@ -1,0 +1,20 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte"
+description: "Refactor workflow — @refactor, TypeScript refactoring"
+alwaysApply: false
+---
+
+# Refactor Rules
+
+Use **@refactor** when refactoring a file or splitting code.
+
+This rule references:
+
+- **Refactor current file**: `@rules/refactor/file-refactor.mdc` — one symbol per file, no inline types/helpers; run check after
+- **TypeScript refactoring**: `@rules/typescript/refactoring-typescript.mdc` — move types to `types/`, helpers to `utils/`; index.ts and barrels: see `@rules/core/code-quality-guidelines.mdc`
+
+## Short summary
+
+- One exported symbol per file; extract types to `types/`, helpers to `utils/`.
+- `index.ts` is allowed **only** as a single public entrypoint for a vertical slice/feature (explicit named re-exports, no `export *`). Avoid generic barrel files.
+- Mandatory: run project check script after refactor.

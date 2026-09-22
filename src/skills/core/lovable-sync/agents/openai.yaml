@@ -1,0 +1,15 @@
+interface:
+  display_name: Lovable Sync
+  short_description: Two-way design parity between a Lovable project and the real app.
+  default_prompt:
+    Pull the latest source state, map the differences per screen, and port the design slice by slice
+    while wiring real data and preserving existing functionality.
+  brand_color: '#DB2777'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to the user when the Lovable source cannot be pulled, when parity would require
+    deleting working functionality, or when the design and the app's needs genuinely conflict.

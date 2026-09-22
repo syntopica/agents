@@ -1,0 +1,32 @@
+---
+globs: "**/rules/**/*.mdc,**/rules/**/*.md,**/skills/**/SKILL.md,**/CLAUDE.md,**/AGENTS.md,**/GEMINI.md,**/*.prompt.md"
+description: "Measure an instruction change; do not argue it"
+alwaysApply: false
+---
+
+# Instructions are changed on evidence, not on argument
+
+Scoped to instruction files, because that is the moment the damage happens: a
+rule rewritten on taste ships an unmeasured change to every future session.
+
+**Rewriting, shortening, merging or deleting an instruction is a behavioural
+change.** Run the current text and the proposed text over the same tasks, score
+both with the checker that will judge real work, and keep whichever wins. Then
+re-measure the text as it will actually ship, and have an adversarial pass try
+to break the conclusion before it is committed.
+
+Measured on 2026-09-18, the same question gave three different right answers on
+the same day. TypeScript's structural prose had drifted from its linter and
+caused the very errors it existed to prevent, so it was replaced. Rust's had
+not drifted, both arms scored 0, and reading the config was slower, so it was
+left alone. Python's contradicted the checker in one line, and correcting that
+line beat replacing the rule. **Never carry a result to a second rule by
+analogy.**
+
+The adversarial pass is not a formality. On its first use it showed that one of
+these results had been scored against empty crates and had already been
+committed to a rule.
+
+The procedure, the harness traps and the scoring controls are in
+`instruction-ab-test`. Invoke it before changing an instruction file. If a
+change cannot be measured, say so and leave the text alone.

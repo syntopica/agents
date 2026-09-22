@@ -1,0 +1,14 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: Project guidelines (strict one-thing-per-file, many small files)
+alwaysApply: false
+---
+
+# Project Guidelines (pointer)
+
+Canonical guidance: `@rules/core/code-quality-guidelines.mdc`.
+
+**Project-specific:**
+
+- App Router: Server Components by default; `'use client'` only when needed. Route handlers must be thin (validate, call service, return). See `@rules/core/boundaries.mdc`.
+- Quality gate: run the project check script after meaningful changes (e.g. `pnpm run check`, `npm run check`).

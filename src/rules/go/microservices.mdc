@@ -1,0 +1,47 @@
+---
+globs: "**/*.go"
+description: Go microservices standards (clean architecture, resilience, observability)
+alwaysApply: false
+---
+
+# Go Microservices Standards
+
+## Architecture
+
+- Prefer clean architecture boundaries: transport -> use case -> repository -> domain.
+- Keep framework details at the edges; keep domain logic framework-agnostic.
+- Program to interfaces for dependencies and external boundaries.
+- Prefer small, purpose-specific interfaces and explicit constructor injection.
+
+## Code quality
+
+- Keep functions short and single-purpose.
+- Handle errors explicitly and wrap with context (`fmt.Errorf("...: %w", err)`).
+- Avoid global mutable state; use dependency injection and config structs.
+- Prefer composition over inheritance-style abstractions.
+
+## Concurrency and context
+
+- Propagate `context.Context` through request and downstream calls.
+- Honor cancellation/timeouts on I/O boundaries.
+- Use goroutines safely; protect shared state with channels or sync primitives.
+- Ensure resources are closed deterministically (`defer`).
+
+## Resilience and security
+
+- Validate/sanitize external input at boundaries.
+- Use timeouts, retries, and bounded backoff for external calls where safe.
+- Add rate limiting/circuit breaking on abuse-prone or fragile boundaries.
+- Keep authn/authz explicit and least-privilege by default.
+
+## Observability
+
+- Add structured logs with request/trace correlation ids.
+- Instrument critical paths (HTTP/gRPC, DB, external APIs) with metrics/traces.
+- Track core signals: latency, throughput, error rate, saturation.
+
+## Testing and tooling
+
+- Use table-driven unit tests and isolate external dependencies with mocks/fakes.
+- Separate fast unit tests from integration/E2E suites.
+- Enforce `go test`, `go fmt`, `goimports`, and `golangci-lint` in CI.

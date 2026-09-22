@@ -1,0 +1,115 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: Vertical-slice folders, strict public API, refactor stewardship
+alwaysApply: false
+---
+
+# Vertical-Slice Architecture and Refactor Stewardship
+
+Refactor React + TypeScript modules into scalable vertical-slice folders with a strict public API and enforceable boundaries. Use when creating new feature modules or refactoring existing ones into this structure.
+
+## Context and non-negotiables
+
+- **Preserve runtime behavior exactly** — no UX regressions.
+- **Keep exports stable** unless explicitly approved.
+- **Code and comments in English.**
+- **Co-location** — prefer feature folders over type-based folders (e.g. `components/orders/` not `components/` + `hooks/` scattered).
+- **Single public entrypoint per folder** — one `index.ts` per vertical-slice folder; all external consumers import only from that entrypoint.
+- **No internal imports from outside** — code outside a slice must not import internal files (e.g. hooks, subcomponents, utils) of the slice; only the public API via `index.ts`.
+
+**Public API standard:** Each feature/module folder exposes one `index.ts` with explicit named re-exports as its public API. Do not use `export * from` in entrypoints. Cross-module imports must go through the entrypoint, never into internal files. Index/barrel policy (project-wide): see `@rules/core/code-quality-guidelines.mdc`.
+
+## Objective
+
+Refactor the target into a folder-based component module with:
+
+- A clear internal structure (component, hooks, types, constants, subcomponents).
+- A single public API (`index.ts`).
+- Enforced boundaries via lint rules (or equivalent).
+- Tests added/updated for extracted pure logic.
+
+## Proposed target structure
+
+Use this tree as a template for a vertical slice. Each file has a one-line responsibility.
+
+```
+components/<FeatureName>/
+  index.ts              # Public API: re-exports only what consumers may use
+  <FeatureName>.tsx     # Main component; composes subcomponents and hooks
+  Header.tsx            # Subcomponent (if needed)
+  Footer.tsx            # Subcomponent (if needed)
+  useFeatureName.ts     # Feature-specific hook (state/effects)
+  types/
+    FeatureNameProps.ts # Props and public types for the slice
+  constants/
+    featureNameConstants.ts  # Domain constants (no generic "utils" name)
+  utils/
+    formatFeatureData.ts     # Pure helpers used only inside this slice
+```
+
+- **index.ts**: Re-export component, public types, and any public hooks; do not export internal utils or subcomponents unless they are part of the public contract.
+- **Component .tsx**: Presentational and composition only; delegate logic to hooks and utils.
+- **hooks/**: One hook per file; orchestrate state/effects and call utils.
+- **types/**: One type per file; public types can be re-exported from index.
+- **constants/**: Domain-named constant files (e.g. `orderStatusConstants.ts` not `constants.ts`).
+- **utils/**: Pure, single-purpose functions; domain-named (e.g. `formatOrderDate.ts` not `utils.ts`).
+
+## Migration plan (minimal risk)
+
+Execute as small PR-sized commits (3–8 steps). For each step: list files touched, state intended behavior impact (should be "none"), and rollback strategy.
+
+1. **Extract types** — Move inline types to `types/<area>/` (one per file). No behavior change. Rollback: revert commit.
+2. **Extract constants** — Move literals/maps to `constants/<name>.ts`. No behavior change. Rollback: revert commit.
+3. **Extract pure helpers** — Move pure logic to `utils/<area>/<name>.ts`. No behavior change. Rollback: revert commit.
+4. **Extract hook** — Move state/effects to `hooks/<area>/useXxx.ts`. No behavior change. Rollback: revert commit.
+5. **Split subcomponents** — Extract repeated or logical UI blocks to child components. No behavior change. Rollback: revert commit.
+6. **Add index.ts** — Create `index.ts` that re-exports only the public API. Update external imports to use the slice folder path. No behavior change. Rollback: revert commit and restore direct imports.
+7. **Add/update tests** — Unit tests for extracted pure logic and hook edge cases. No behavior change. Rollback: revert commit.
+8. **Add guardrails** — ESLint/Biome rules to forbid internal imports from outside the folder (see Guardrails). No behavior change. Rollback: revert config.
+
+## Implementation
+
+- Extract pure logic into a hook or pure function; keep components thin.
+- Naming: use explicit domain names (e.g. `formatOrderDate`, `orderStatusConstants`); avoid generic "utils" or "helpers" when a domain name exists.
+- Add or adjust unit tests for edge cases (e.g. sentinel values, preload, windowing, or equivalent domain logic).
+
+## Guardrails (ESLint or Biome)
+
+Add or extend lint rules to enforce:
+
+1. **No internal-module imports from outside a folder** — Code outside `components/<FeatureName>/` must not import from paths like `components/<FeatureName>/utils/...` or `components/<FeatureName>/Header`. Only `from '@/components/<FeatureName>'` (or the slice index) is allowed.
+2. **Layering boundaries** — Optional: enforce shared -> feature -> view (or equivalent); adapt to the repo. If the repo already has a boundary plugin, extend it instead of adding a new one.
+
+**How to implement:** Use `no-restricted-imports` with patterns that block internal paths, or an eslint-plugin-boundaries (or equivalent). Document the exact rule in this file or in a dedicated lint doc. If the repo has no boundary plugin, add the recommended rules in a follow-up task.
+
+## Verification
+
+After the refactor:
+
+- Run **type-check** (e.g. `pnpm run type-check` or `tsc --noEmit`).
+- Run **lint** (e.g. `pnpm run lint` or `eslint .`).
+- Run **tests** (e.g. `pnpm run test` or `pnpm run check`).
+
+Checklist:
+
+- [ ] All external imports of the module now use the slice folder (index) only.
+- [ ] No internal file of the slice is imported from outside the slice.
+- [ ] Runtime behavior unchanged (no UX regressions).
+- [ ] New/updated tests cover extracted pure logic and critical paths.
+
+## Constraints
+
+- Do not rewrite unrelated files.
+- Do not change formatting beyond touched files.
+- Avoid new dependencies unless necessary; justify if added.
+- Ambiguous ownership (e.g. global type vs slice-specific type): default to **local** (inside the slice) and document why.
+
+## Start: scan before refactoring
+
+Before executing the deliverables:
+
+1. **Identify mixed responsibilities** — Same file doing UI + state + helpers + types.
+2. **Classify pure vs UI** — Which parts are pure logic (move to utils/hooks) vs composition (stay in components).
+3. **Identify public API candidates** — What should be re-exported from `index.ts` (component, public types, maybe one main hook); everything else stays internal.
+
+Then execute: target structure -> migration plan -> implementation -> guardrails -> verification.

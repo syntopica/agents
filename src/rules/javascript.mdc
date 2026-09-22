@@ -1,0 +1,29 @@
+---
+globs: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.mjs,**/*.cjs"
+description: "JavaScript/TypeScript domain rules (web, extensions, RN, QA, Shopify)"
+alwaysApply: false
+---
+
+# JavaScript Rules
+
+Use **@javascript** when working outside strictly Next.js/React app rules or
+when the project includes multiple JS/TS runtimes. For Next.js/React the main entry point is `@rules/frontend.mdc` and `@rules/nextjs.mdc`.
+
+This rule references:
+
+- **General JS/TS**: `@rules/javascript/general.mdc`
+- **HTMX**: `@rules/javascript/htmx.mdc`
+- **Chrome Extensions MV3**: `@rules/javascript/chrome-extension-mv3.mdc`
+- **Modern web apps**: `@rules/javascript/web-apps.mdc`
+- **Vue + Vite** (optional): `@rules/javascript/vue-vite.mdc`
+- **SvelteKit** (optional): `@rules/javascript/sveltekit.mdc`
+- **Payload CMS + Node** (optional): `@rules/integrations/payload-cms.mdc`
+- **React Native/Expo**: `@rules/javascript/react-native-expo.mdc`
+- **Playwright QA**: `@rules/javascript/playwright-qa.mdc`
+- **Shopify theme JS**: `@rules/javascript/shopify-theme.mdc`
+
+## Short summary
+
+- Security-first input handling and least privilege.
+- Prefer TypeScript and explicit boundaries.
+- Apply stack-specific rules only when that stack is present.

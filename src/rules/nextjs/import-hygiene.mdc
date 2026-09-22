@@ -1,0 +1,38 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Public API imports, type import consistency, and dead import removal
+alwaysApply: false
+---
+
+# Import Hygiene
+
+Rules for clean, stable, and enforceable import graphs in TypeScript/Next.js projects.
+
+## Public API only
+
+One `index.ts` per slice/module, explicit re-exports only, no `export *`. Full policy: see `@rules/core/code-quality-guidelines.mdc`.
+
+- Allowed: `import { LoginForm } from '@/features/auth'`
+- Forbidden: `import { LoginForm } from '@/features/auth/ui/LoginForm'`
+
+Enforce with `import/no-internal-modules` in ESLint.
+
+## Consistent type imports
+
+Use `import type` for type-only imports. Enforce with `@typescript-eslint/consistent-type-imports` set to `type-imports` with `separate-type-imports` fix style.
+
+## No unused imports
+
+Hard-fail on unused imports and variables. Enforce with `eslint-plugin-unused-imports`.
+
+## No circular imports
+
+Enforce with `import/no-cycle` (recommend `maxDepth: 1` for performance).
+
+## Stable import ordering
+
+Enforce with `import/first` and `import/newline-after-import`. Consider `import/order` for grouped sorting if the team prefers it.
+
+## ESLint enforcement
+
+See `/brp-code-quality` for the full ESLint flat config with all import hygiene rules pre-configured.

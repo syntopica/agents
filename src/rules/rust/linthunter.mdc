@@ -1,0 +1,27 @@
+---
+globs: "**/*.rs"
+description: Rust lint triage and false-positive analysis
+alwaysApply: false
+---
+
+# Rust Lint Triage
+
+## Goal
+
+Decide whether a lint is valid, likely false-positive, or uncertain.
+
+## Workflow
+
+1. Capture lint name, location, message, and local snippet.
+2. Trace related moves/borrows/clones across nearby scopes.
+3. Check missing imports/traits and macro expansion context.
+4. Classify: valid, likely false-positive, or uncertain.
+5. Recommend action:
+   - refactor to satisfy lint
+   - local `#[allow(...)]` with justification
+   - global allow only with strong project-level reason
+
+## Notes
+
+- Prefer fixing root causes over suppressing lints.
+- Keep suppressions narrow and documented.

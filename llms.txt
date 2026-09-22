@@ -1,0 +1,82 @@
+# BusiRocket Agent Skills
+
+A collection of reusable Agent Skills for TypeScript/React/Next.js/Rust/Tauri projects. Skills follow the Agent Skills format (https://agentskills.io/specification).
+
+## Skills
+
+- brain: Retrieves Syntopica context from project history and curated wiki notes, ingests sources, and audits the configured instance. Trigger when a task needs durable context that sounds previously established (a project's setup, a client, a past decision, infra, a credential), when new material has to be folded into the wiki, or when the wiki's health is in question. Triggers (ES) are ingerir, ingestar contenido, guarda en brain, mete en brain. Do not use for a repository that merely contains markdown, for code changes to the brain's own engine code. Context retrieval uses Atrium; it does not require a separate manual wiki search.
+  dist/skills/core/brain/SKILL.md
+
+- browser-session-safety: Driving or troubleshooting a real browser — chrome-cli, Playwright MCP, Chrome profiles and identities, and reading or clicking a logged-in page. Trigger when a task is about to issue its first browser command, when a browser action fails for want of an identity or a login, and when a window or tab that is not certainly yours is about to be closed. Do not use for fetching a public URL or for headless test runs of your own app.
+  dist/skills/core/browser-session-safety/SKILL.md
+
+- brp: Routes BRP requests to the right workflow chain by detecting project context and selecting the minimal rule set before work starts. Trigger when the task needs BRP command routing, protocol enforcement, or workflow selection across planning, implementation, testing, and review. Do not use for stack-specific coding guidance, single-purpose workflows that already have a precise BRP skill, or direct code generation without orchestration.
+  dist/skills/orchestrator/brp/SKILL.md
+
+- brp-code-quality: Audits and hardens a TypeScript or Next.js repo up to the BusiRocket baseline (strict typing, lint, architectural boundaries, agent-ready docs). Trigger when the task is to bootstrap or improve repo-wide quality gates or bring a repo up to the baseline, and a `tsconfig.json` or `next.config.*` is present. Triggers (ES) are sé super estricto, mete la baseline busirocket. Do not use for Python, Go, Rust, PHP, or any non-TypeScript project, isolated bug fixes, feature delivery, or behavior-preserving refactors inside a single module.
+  dist/skills/core/brp-code-quality/SKILL.md
+
+- brp-docs: Generates or updates technical documentation, specs, and ADRs that explain the codebase, interfaces, or design decisions for future readers. Trigger when the task is to write README content, API docs, architecture overviews, or technical specs from code context with strong text hygiene and consistent engineering terminology. Do not use for implementing features, debugging runtime issues, or performing findings-first code review.
+  dist/skills/core/brp-docs/SKILL.md
+
+- brp-release: Cuts a versioned release from trunk with the commits since the last tag, the semver bump, the changelog, a green check gate, and the tag. Trigger when the task is to ship a release, bump a version, or generate release notes/changelog for a repo. Do not use for writing the feature itself, debugging, or general code review unrelated to shipping.
+  dist/skills/core/brp-release/SKILL.md
+
+- brp-rust-quality: Audits and hardens a Rust or Tauri project's quality gates (clippy lint level, rustfmt, deny- warnings, unsafe hygiene, Tauri IPC boundaries). Trigger when the task is to bootstrap or improve repo-wide quality gates for a Rust or Tauri codebase and a `Cargo.toml` is present. Do not use for TypeScript, JavaScript, Python, Go, or PHP projects, isolated bug fixes, feature delivery, or behavior-preserving refactors inside a single module.
+  dist/skills/core/brp-rust-quality/SKILL.md
+
+- brp-todo-create: Builds a project backlog from accessible Claude, Codex, Cursor and Antigravity history into TODO.md, TODO_LOG.md, and the history index. Trigger when a repository has no usable backlog and the work is to audit past conversations, recovering every unfinished task, blocker, decision and milestone they contain. Do not use for implementing the recovered work, for executing an existing backlog, or for summarizing a single conversation.
+  dist/skills/core/brp-todo-create/SKILL.md
+
+- brp-todo-work: Executes a project's existing TODO backlog end to end until every safe item is verified complete, blocked with evidence, or superseded. Trigger when the task is to work through TODO.md, clear the backlog, or resume autonomous TODO execution in the current repository, recording closed work in TODO_LOG.md. Do not use for building a backlog from conversation history, for a single named bug fix or feature, or for review of already-finished work.
+  dist/skills/core/brp-todo-work/SKILL.md
+
+- brp-traffic-client: Turns observed application traffic into the smallest reliable programmatic client, replacing browser automation with direct HTTP calls. Trigger when the task involves HAR files, DevTools or CDP network exports, cURL or "Copy as fetch" output, proxy captures, or an existing Playwright/Puppeteer/browser-agent flow that is slow, brittle, or token-expensive. Do not use for documented public APIs with an official SDK, for UI testing where the browser is the subject under test, or for bypassing access controls.
+  dist/skills/core/brp-traffic-client/SKILL.md
+
+- claude-profile-safety: Debugs and updates the two Claude Code account profiles on this machine. Trigger when a session is about to start under a different account, when shared global configuration is being edited or linked, and when MCP tools or an identity are missing for reasons that are not obvious. Covers how each profile is started, what is shared by symlink, what must stay per-profile, and how to verify a profile actually loaded new configuration. Do not use for ordinary work inside one profile.
+  dist/skills/core/claude-profile-safety/SKILL.md
+
+- daily-tasks: Updates both Macs, syncs their repositories, upgrades dependencies and audits Atrium in one round. Trigger when the ask is the daily tasks, the daily round, updating the system and dependencies, syncing repos between the two Macs, or checking that Atrium is healthy and synced. Triggers (ES) are tareas diarias, rutina diaria, actualiza todo, sincroniza con el mini, revisa atrium. Do not use for one named repository's dependency upgrade, for a single git push, or for debugging Atrium's index (that is its own repository).
+  dist/skills/core/daily-tasks/SKILL.md
+
+- handoff: Generates a handoff document that serializes the current working state so another session or agent can resume from it without re-deriving anything. Trigger when the task is to hand off, pause, or transfer in-progress work, when context is running out mid-task, or when the user asks for a handoff, checkpoint, or session summary to continue elsewhere. Do not use for final delivery reports of finished work or for routine progress updates inside one session.
+  dist/skills/core/handoff/SKILL.md
+
+- invoice-quarter-close: Closes a VAT quarter per company, chasing missing invoices, reconciling bank movements with the accounting platform, classifying expenses, verifying filed models. Trigger when the context contains the accounting platform, the invoicing portal, bank CSV exports, modelo 303/111/115, or a quarter-close ask. Triggers (ES) are trimestre, IVA, facturas que faltan, movimientos, cerrar el trimestre, gastos deducibles, Hacienda. Do not use for drafting contracts, payroll, or building invoicing software features.
+  dist/skills/core/invoice-quarter-close/SKILL.md
+
+- long-job-safety: Launching, backgrounding, supervising, restarting or killing a long-running job, and deciding whether one is actually progressing. Trigger when a job expected to run for minutes or hours is about to start, when one is about to be reported healthy or relaunched after a stall, and before any process group is signalled. Do not use for short foreground commands or for ordinary test runs.
+  dist/skills/core/long-job-safety/SKILL.md
+
+- lovable-sync: Implements design parity between a Lovable project and the real app repo, in either direction, wiring real data behind the ported UI. Trigger when the ask involves a Lovable repo or design, porting a Lovable design into the app, or pushing the app's design to Lovable. Triggers (ES) are paridad lovable, diseño de lovable, migrar el diseño, que se vea como en lovable. Do not use for writing Lovable prompts, general frontend styling without a Lovable source, or debugging unrelated UI bugs.
+  dist/skills/core/lovable-sync/SKILL.md
+
+- orphan-process-cleanup: Audits what a machine's memory is actually spent on and reaps the MCP servers, watchers and helpers that killed sessions leave behind. Trigger when the machine is short of memory or swap, when processes from finished sessions may still be running, and when a suite or a browser fails in a way that looks like a resource problem rather than a code one. Do not use for stopping a job that is currently doing work.
+  dist/skills/core/orphan-process-cleanup/SKILL.md
+
+- project-continuation: Resumes interrupted project work by reconstructing the real state from git, TODO backlogs, plan and handoff files before touching code. Trigger when a prompt continues earlier work ("sigue", "continúa", "donde lo dejamos", "termina lo que falta"), when a session starts mid-task, or when the continuation router lane fires. Do not use for brand-new tasks with fresh scope, a single named bug fix, or review of already-finished work.
+  dist/skills/core/project-continuation/SKILL.md
+
+- reference-coverage: Audits every caller of a symbol before it changes, and picks between codegraph, a language server and text search. Trigger when a rename, a signature change, a deletion or any edit whose correctness depends on having found every reference is about to be made, when a repository has no index, or when compiler diagnostics are needed without running a build. Do not use for reading code you already located or for finding a string or a filename.
+  dist/skills/core/reference-coverage/SKILL.md
+
+- repo-onboarding-map: Maps an unfamiliar repository and writes the AGENTS.md a new contributor needs to start without re-deriving its infrastructure. Trigger when a repo has just been cloned, when a ticket lands in a codebase nobody here has touched, when onboarding notes are asked for, or when an existing AGENTS.md has gone stale against the code. Do not use for feature documentation, API references, or ADRs (that is brp-docs), and do not use to audit a ticket's completion.
+  dist/skills/core/repo-onboarding-map/SKILL.md
+
+- stakeholder-recap: Produces a stakeholder status recap from the channel history, cross-checking every claim against commits and deploys before drafting. Trigger when the ask involves Discord or Slack messages, a status update for a stakeholder, or answering what happened in a channel. Triggers (ES) are resumen, recap, mira los mensajes, responder a, qué ha dicho. Do not use for invoice reconciliation, contract drafting, or reading channels without a recap or reply deliverable.
+  dist/skills/core/stakeholder-recap/SKILL.md
+
+- syntopica: Retrieves established context from a Syntopica wiki and its conversation history, writes pages, ingests captured sources, and audits the instance. Trigger when a task needs knowledge that sounds previously established (a project's setup, a decision, a person, an environment), when new material has to be folded into the wiki, or when the wiki's health is in question. Do not use for a repository that merely contains Markdown, or for changes to the engine code itself.
+  dist/skills/core/syntopica/SKILL.md
+
+- tauri-ui-automation: Inspecting, clicking or screenshotting a Tauri v2 desktop app's own window from an agent on macOS. Trigger when a UI change in a Tauri app needs visual or DOM verification, when AppleScript or a synthetic click has just failed silently, and before adding any automation surface to a desktop app. Do not use for web pages in a browser, for headless Playwright runs against a dev server, or for native hit-testing, IME or drag-and-drop, which this cannot test.
+  dist/skills/core/tauri-ui-automation/SKILL.md
+
+- ui-verification-loop: Drives a running UI to find what is broken, slow or empty, asserts what actually paints, times the calls behind each screen, and lands the fix. Trigger when asked to test an app through its UI, to keep testing until nothing is left, to check a screen really renders what it should, or to explain why a screen takes seconds. Covers any UI with a JavaScript eval channel (web app, Electron, Tauri). Do not use for writing a test suite from scratch, for a one-off screenshot, or for reviewing code that is not running.
+  dist/skills/core/ui-verification-loop/SKILL.md
+
+## Links
+
+- [Agent Skills specification](https://agentskills.io/specification)
+- [Integrate skills into your agent](https://agentskills.io/integrate-skills)

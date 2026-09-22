@@ -1,0 +1,31 @@
+---
+globs: "**/*.php"
+description: WooCommerce standards (hooks, CRUD/data stores, sessions, notices)
+alwaysApply: false
+---
+
+# WooCommerce Standards
+
+## WooCommerce-native APIs first
+
+- Prefer WooCommerce hooks/actions/filters over template/core modifications.
+- Use WooCommerce helpers (`wc_get_product`, order/customer APIs) instead of generic WP access when domain-specific.
+- Use WooCommerce CRUD/data-store patterns for custom commerce data behavior.
+
+## Security and integrity
+
+- Keep nonce/capability checks for admin and state-changing flows.
+- Validate/sanitize all external input and escape output by context.
+- Verify webhook or callback authenticity where applicable.
+
+## UX and operations
+
+- Use WooCommerce notice system (`wc_add_notice`) for user-facing feedback.
+- Use WooCommerce logging APIs for operational diagnostics.
+- Keep session usage minimal and explicit (`WC()->session`) for temporary cart/checkout state only.
+
+## Extensibility and compatibility
+
+- Check WooCommerce activation/version compatibility before enabling integration features.
+- Keep customizations update-safe (plugin hooks/template override conventions).
+- Keep i18n and RTL support aligned with WooCommerce/WordPress practices.

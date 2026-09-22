@@ -1,0 +1,141 @@
+---
+name: browser-session-safety
+description:
+  Driving or troubleshooting a real browser — chrome-cli, Playwright MCP, Chrome
+  profiles and identities, and reading or clicking a logged-in page. Trigger
+  when a task is about to issue its first browser command, when a browser action
+  fails for want of an identity or a login, and when a window or tab that is not
+  certainly yours is about to be closed. Do not use for fetching a public URL or
+  for headless test runs of your own app.
+allowed-tools: Read, Grep, Glob, Bash
+---
+
+# Browser control: the real Chrome, never a fresh profile
+
+Owner preference. The user's real Chrome carries what an automation browser
+cannot reproduce: many authenticated profiles, the password manager extension in
+each, and the trusted-device state banks demand. A browser launched with a
+temporary or isolated profile has none of it and is unusable for any logged-in
+site, so do not launch one for that.
+
+0. **Before any of this, ask whether the site has an API key here.** Discord is
+   the measured case: an instance that already owns a bot token (recorded in its
+   wiki under the API page) reads and posts through the API, so
+   `GET /channels/<id>/messages?limit=N` with `curl` returns a channel's
+   messages as clean JSON — author, timestamp, embeds — with no tab, no focus
+   and no profile question. On 2026-09-16 a session opened Discord in Chrome and
+   scraped the rendered DOM instead, because it never consulted the wiki. Check
+   the instance's access map first; drive the browser only for what has no API.
+
+1. **chrome-cli first** (`/opt/homebrew/bin/chrome-cli`) for anything it
+   answers: list, open, close and activate tabs and windows across every
+   profile, navigate, reload, `source`, `execute <js>`. One Bash call, no MCP
+   session. Wrap `execute` in `timeout 25`.
+
+   **Never pass `-t <tab-id>` to `execute`.** It fails with "No matching handler
+   found" every time; without the flag the identical script on the identical tab
+   returns its value (measured 2026-09-08). The error names nothing real, so it
+   reads like a permissions or multi-instance problem and sends you chasing
+   "Permitir JavaScript desde Eventos de Apple", stray Chrome processes and CDP
+   ports - a whole session was lost to that once. `execute` runs against the
+   **active tab of the frontmost window**, so the working shape is: open the URL
+   in the right identity, raise that window, then call `execute` bare.
+
+   **Always return a string from `execute`.** A script whose last expression is
+   a number or `undefined` crashes chrome-cli with
+   `-[__NSCFNumber UTF8String]: unrecognized selector` and a full Objective-C
+   stack — the JavaScript already ran, so the work is done and only the reply is
+   lost, but the trace reads like a broken browser. Wrap the result in
+   `String()` or end with a literal (measured 2026-09-11).
+
+**To READ a tab, never take the focus: `chrome-cli source -t <tab-id>`.** This
+is the answer to sessions fighting over tabs, and it is the one route that does
+not compete at all — it returns that tab's hydrated DOM wherever the tab sits,
+in any window, on any profile, with nothing raised and nothing stolen from
+whoever is working in the front window. Pair it with
+`chrome-cli info -t <tab-id>`, which prints that tab's title and URL, so you can
+confirm you have the right tab before reading it and map ids to URLs afterwards.
+Measured 2026-09-11 on a Medium article behind a paid membership: 296 KB of
+rendered DOM, no focus change.
+
+Everything else tried that day failed, and each failure is silent or expensive:
+
+- **`execute` read someone else's page.** It acts on the active tab of the
+  frontmost window, which was a password-manager service-account wizard, and it
+  returned that page's text as though it were the article. Nothing errors. You
+  get a plausible answer about the wrong page, which is the worst shape a
+  failure can take.
+- **Raising a chosen window failed twice** — an AppleScript
+  `set index of (first window whose id is N) to 1` followed by `activate`, and
+  `chrome-cli activate -t <tab-id>`. The password manager window kept the front
+  in both cases. Do not build a read on top of a raise, and if you do raise,
+  verify with `chrome-cli info` before acting rather than assuming it took.
+- **The Playwright extension MCP hung on `browser_tabs list`**, past 120 s, on a
+  Chrome holding hundreds of tabs. Same shape as the `chrome-devtools`
+  `--autoConnect` trap: tab enumeration is what does not scale here.
+
+The division to keep in mind: **reading a page that has already rendered needs
+no focus, and interacting with one does.** Scroll-driven capture, clicking and
+form-filling still go through `execute` and therefore still need the front
+window, which is exactly when to confirm whose window it is. A read has no such
+excuse.
+
+To find the tabs you opened without touching anyone else's, diff
+`chrome-cli list tabs` before and after your `open -na`, then close only the ids
+that appeared.
+
+**`open -na` does not open a new window.** It reuses an existing window of that
+profile and adds a tab to it, so the window you think you created is the user's,
+with their tabs in it. Never close a Chrome window by id to tidy up after
+yourself: count its tabs first, and prefer leaving it open.
+
+```bash
+open -na "Google Chrome" --args --profile-directory="Profile 2" "<url>"
+osascript -e 'tell application "Google Chrome"
+  activate
+  repeat with i from 1 to count of windows
+    if id of window i is <WINDOW-ID> then set index of window i to 1
+  end repeat
+end tell'
+timeout 25 chrome-cli execute 'document.body.innerText.slice(0,2000)'
+```
+
+This reads and drives **SPAs**, which is what makes it worth preferring:
+`source` returns the served shell, `execute` sees the rendered DOM, so an
+Angular console like Google Play answers the second and not the first. Read with
+`innerText`, find controls by their text, and click them with `.click()` rather
+than coordinates. Three routes that look plausible for SPA work and are not:
+Chrome does not expose its accessibility tree unless an assistive technology is
+attached, no CDP port listens by default, and copying a profile's cookies into
+another Chrome profile does not carry a Google session - those are bound to the
+device and profile on purpose, and moving them around is session handling you
+should not be doing anyway. With two Chrome instances running (a
+Playwright-launched one beside the real one) AppleScript may resolve "Google
+Chrome" to the wrong process; chrome-cli still hits the real one.
+
+2. **Playwright `--extension` MCP for the rest**: DOM snapshots and element
+   interaction, screenshots, network, console on a real tab, connected through
+   the Playwright Extension installed in three Chrome profiles. Each server's
+   env carries one profile's connection token, so it attaches with no dialog,
+   and the server name says which Chrome profile it reaches: under each Claude
+   profile, `playwright-chrome` is that account's own Chrome profile, and the
+   named servers reach the others. The three tokens are recorded in the brain's
+   access map (`business/access-map.md`, Chrome profiles section). Each server
+   works on one selected tab at a time: `browser_tabs` lists what is reachable,
+   and other tabs join by being dragged into its tab group. The
+   `chrome-devtools` MCP launches its own persistent profile instead; keep it
+   for our own apps and for traces, not for logged-in sites. Do not attach it to
+   the real Chrome with `--autoConnect`: it auto-attaches to every one of the
+   hundreds of open tabs and never answers. Claude in Chrome only acts inside
+   its own tab group and needs a manual Connect per profile, so it is the last
+   of these.
+3. **A separate browser only when unavoidable** (parallel runs, tests of our own
+   app that must not touch real sessions), and then always a persistent profile
+   on the real Google Chrome binary with the password manager extension
+   installed there once: the `chrome-devtools` MCP's own profile, or
+   `~/.agent-chrome/<identity>`. Never `--isolated`, a tmp user-data-dir, or
+   bundled Chromium for a logged-in site. CDP on the default user-data-dir needs
+   the `chrome://inspect/#remote-debugging` toggle and a permission dialog per
+   client; on any other directory it needs `--user-data-dir` (Chrome 136+).
+4. Orca's embedded browser is driven through the `orca-cli` skill, and desktop
+   app windows or webviews outside Chrome through `computer-use`.

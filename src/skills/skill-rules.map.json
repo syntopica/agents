@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "skills": {
+    "brain": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/git-workflow.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/text-hygiene.mdc"
+      ]
+    },
+    "browser-session-safety": {
+      "rules": ["@rules/core/security-baseline.mdc"]
+    },
+    "brp": {
+      "rules": [
+        "@rules/core/general.mdc",
+        "@rules/core/boundaries.mdc",
+        "@rules/monorepo/turbo.mdc",
+        "@rules/nextjs/nextjs.mdc",
+        "@rules/typescript/standards.mdc"
+      ]
+    },
+    "brp-code-quality": {
+      "rules": [
+        "@rules/core/code-quality-guidelines.mdc",
+        "@rules/core/boundaries.mdc",
+        "@rules/typescript/strict-hardening.mdc",
+        "@rules/nextjs/import-hygiene.mdc",
+        "@rules/react/performance.mdc"
+      ]
+    },
+    "brp-docs": {
+      "rules": [
+        "@rules/core/text-hygiene.mdc",
+        "@rules/core/general.mdc",
+        "@rules/deploy/sonnet.mdc"
+      ]
+    },
+    "brp-release": {
+      "rules": [
+        "@rules/core/git-workflow.mdc",
+        "@rules/deploy/github-security.mdc",
+        "@rules/core/text-hygiene.mdc",
+        "@rules/core/general.mdc"
+      ]
+    },
+    "brp-rust-quality": {
+      "rules": [
+        "@rules/rust.mdc",
+        "@rules/rust/rust-tauri.mdc",
+        "@rules/rust/async-concurrency.mdc",
+        "@rules/core/code-quality-guidelines.mdc",
+        "@rules/core/boundaries.mdc"
+      ]
+    },
+    "brp-todo-create": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/text-hygiene.mdc",
+        "@rules/core/general.mdc"
+      ]
+    },
+    "brp-todo-work": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/general.mdc",
+        "@rules/core/git-workflow.mdc",
+        "@rules/core/boundaries.mdc",
+        "@rules/core/security-baseline.mdc"
+      ]
+    },
+    "brp-traffic-client": {
+      "rules": [
+        "@rules/core/security-baseline.mdc",
+        "@rules/api/validation.mdc",
+        "@rules/core/general.mdc",
+        "@rules/core/boundaries.mdc"
+      ]
+    },
+    "claude-profile-safety": {
+      "rules": ["@rules/core/security-baseline.mdc"]
+    },
+    "handoff": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/git-workflow.mdc",
+        "@rules/core/text-hygiene.mdc"
+      ]
+    },
+    "instruction-ab-test": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/code-structure.mdc",
+        "@rules/core/general.mdc"
+      ]
+    },
+    "invoice-quarter-close": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/general.mdc"
+      ]
+    },
+    "long-job-safety": {
+      "rules": ["@rules/core/agent-discipline.mdc"]
+    },
+    "lovable-sync": {
+      "rules": [
+        "@rules/core/code-quality-guidelines.mdc",
+        "@rules/react/performance.mdc",
+        "@rules/core/boundaries.mdc"
+      ]
+    },
+    "orphan-process-cleanup": {
+      "rules": ["@rules/core/security-baseline.mdc"]
+    },
+    "project-continuation": {
+      "rules": [
+        "@rules/core/general.mdc",
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/git-workflow.mdc"
+      ]
+    },
+    "reference-coverage": {
+      "rules": ["@rules/core/agent-discipline.mdc"]
+    },
+    "repo-onboarding-map": {
+      "rules": [
+        "@rules/core/text-hygiene.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/interactive-auth-secrets.mdc",
+        "@rules/core/general.mdc"
+      ]
+    },
+    "stakeholder-recap": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/text-hygiene.mdc"
+      ]
+    },
+    "syntopica": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/text-hygiene.mdc"
+      ]
+    },
+    "tauri-ui-automation": {
+      "rules": [
+        "@rules/rust/rust-tauri.mdc",
+        "@rules/core/security-baseline.mdc"
+      ]
+    },
+    "ui-verification-loop": {
+      "rules": [
+        "@rules/core/agent-discipline.mdc",
+        "@rules/core/security-baseline.mdc"
+      ]
+    }
+  }
+}

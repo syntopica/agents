@@ -1,0 +1,661 @@
+{
+  "version": 1,
+  "phraseCount": 107,
+  "sourceAssociationCount": 113,
+  "expectations": [
+    {
+      "phrase": "en el otro no sale nada ni al apagar el disco",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "tengo 2 cuentas de claude y lanzaba con comando: claude para mi cuenta claudef para la cuenta secundaria pero orca (este terminal) no me deja hacerlo bien, puedes comprobar?",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "vale la web ahora mismo no funciona, pone:\n\nThis page couldn’t load\nReload to try again, or go back.\n\nReload\nBack",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "Ahora el cohete no funciona en móvil",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "ahora no carga ningún archivo en el player",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "Vale en la parte de player tengo un problema me marca la misma canción como diferentes buckets por ejemplo titi me preguntó aparece varias veces podrías diagnosticarlo?",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "Después de los ultimos cambios cuando pulso en un artista/cancion el programa se queda bloqueado y no se que está haciendo",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "hay muchos mensajes que ahora no están linkeados a sender ni a chat ni a nada en el mapa etc, usa agy si hace falta para descubrir el contexto y de donde salen así no valen para nada",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "vale esto está todo subido en prod? has actualizado las cosas alli? el dashboard me muestra deuda duplicada creo, y el nombre de rosa sale mal",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "tenemos un problema cuando le das a descargar te pone lo de la impresión y no sale ni una sola imagen tengo que checkear incluir graficos de fondo cosa que no sabe la mayoria de usuarios",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "sí por favor y revisa los mensajes de alex parece que hemos roto cosas, no se si tenemos la regla que cada cosa que diga alex debe tener un test anti regresiones",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "Organizate como quieras",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "Si y pon tests para no tener regresiones en el futuro",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "mira el mensaje de alex, no somos capaces de enviar un simple email?",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "vale pero hay varias cuentas que no aparece nada, por ejemplo direcciones gmail (en las cuentas de email) que no tienen el favicon de gmail etc",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "la app no inicia bien y se rompieron varias cosas\n\nFailed to initialize Consumer-o store: Storage error: NOT NULL constraint failed: messages_new.date_utc",
+      "sourceSkills": ["superpowers:systematic-debugging"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "vale pero eso ya lo tengo en el ordenador me gustaría algo más guay como ver el bicho ese de claude o que me salga confeti al renovar etc",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "vale me gustaría que el bicho este fuera \"autonomo\" porque he visto que tiene wifi y no tenerlo que tener conectado al ordenador siempre",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "ok haz un plan con todo esto e implementémoslo",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "Vale he enviado un artículo por el móvil pero para los artículos de médium me gustaría más que pillaras automáticamente los que he guardado sería más práctico ya que tienen app propia",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "Cómo podría hacer para mandar cosas por el móvil?",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "vale el caso es en the invoicing portal luego poder ver las que faltan por casar y las que seguro no son desgravables o no entran para decidir que hacer con ellas",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "Si a todo aparte el módulo que te dije de the invoicing portal para controlar todo esto",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "Tenemos cosas en Handoff prosigue",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "sí, es decir prepara todos estos planes que los necesitaremos para la nueva web que tenemos que hacer para consumer-i y hazme un plan para los clientes que tienen que pagar",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "en el live hoja de ruta a ver si podemos cambiar lo de \"Normas\" por algo menos \"autoritario\" y darle una vuelta a la navegación, los chips quedan bien raros",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "sí por favor, no se si tenemos que poner GTM para en el futuro poder hacer campañas de ADs de Google Ads, Meta y Tiktok y así lo dejamos todo preparado",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "Sigamos de duplicando código como en la sesión anterior",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "hemos endurecido baseline de busirocket para capturar duplicados y código malo podrías implementarlo y endurecer todo?",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "repo-modernization",
+      "reason": "Measured prompt should activate the repo-modernization workflow."
+    },
+    {
+      "phrase": "Prefiero que miremos cómo podemos nosotros integrar eso en la herramienta",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "$HOME/p/Prompts/todo-workflows/execute-todo.md",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "me gustaría que hicieramos lo de AI a traves de codex en este ordenador al igual que el claude max lane aqui\n\n$HOME/p/consumer-g",
+      "sourceSkills": ["superpowers:brainstorming"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "nada, me parece bien, empieza con ello y dejalo todo listo para que lo aplique a consumer-o",
+      "sourceSkills": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "sí todo estricto y empieza ya, que dejemos todo listo y podamos empezar a usarlo en repos ya",
+      "sourceSkills": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "Si de momento así ya lo mejoraremos",
+      "sourceSkills": ["superpowers:writing-plans"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "Adelante de momento con eso",
+      "sourceSkills": ["superpowers:writing-plans"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "adelante con todo, tienes permiso para crear y hacer todo",
+      "sourceSkills": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "adelante tenemos que tenerlo listo para hacer una propuesta hoy",
+      "sourceSkills": ["superpowers:writing-plans"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "Deja todo preparado para que lo hagamos en una sesión limpia",
+      "sourceSkills": ["superpowers:writing-plans"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "adelante con ello",
+      "sourceSkills": ["superpowers:writing-plans"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "sí, haz lo que mejor veas, prefiero ir gastando lo de codex que no lo uso para nada",
+      "sourceSkills": [
+        "superpowers:writing-plans",
+        "superpowers:subagent-driven-development"
+      ],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "sí deja todo preparado con /brp-todo-create alli y deja todos los todos para empezar a hacerlo",
+      "sourceSkills": ["brp-todo-create"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "usa /brp-todo-create aqui y también en el repo o bien creamos otro repo para nuestras pruebas (puede ser local de momento) y empezamos a hacer algo alli",
+      "sourceSkills": ["brp-todo-create"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "Vale haz /brp-todo-create en lo del seo y haz un repo en la org de BusiRocket para ir subiendo todo allí",
+      "sourceSkills": ["brp-todo-create"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "usa /brp-todo-create y agy o codex para el trabajo sucio (o un modelo barato si nos quedamos sin cuota)",
+      "sourceSkills": ["brp-todo-create"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "vale usa /brp-todo-create aqui",
+      "sourceSkills": ["brp-todo-create"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "/bro-todo-work",
+      "sourceSkills": ["brp-todo-work"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "Vale pues /brp-todo-work",
+      "sourceSkills": ["brp-todo-work"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "vale /brp-todo-work",
+      "sourceSkills": ["brp-todo-work"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "Ya la postee yo, centrémonos en hacer lo de perolexity y poder dar un reporte créalo todo para tener un ab real y mirar lo que nos aporta",
+      "sourceSkills": ["claude-api"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "Vale pero espero que no estés usando api para probar, tienes que tener una regla de solo usar el Max lane ese noses Claude code",
+      "sourceSkills": ["claude-api"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "quiero que pruebes la APP como un usuario real porque por ejemplo no puedo ver un chat antiguo etc entonces prueba la funcionalidad de todo y arregla lo que no funcione, usa el navegador de /orca-cli",
+      "sourceSkills": ["orca-cli"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "Hazlo tienes el navegador de orca",
+      "sourceSkills": ["orca-cli"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "Si por favor hazlo todo y creo que pasas de mí con lo del diseño horrible y anticuado pero hay que solucionarlo también",
+      "sourceSkills": ["frontend-design:frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "adelante con todo y también ten en cuenta el responsive",
+      "sourceSkills": ["frontend-design:frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "me refiero también a los MONITORES SHOW DJ y los otros, quedan feisimos, podrías hacer algo más bonito?",
+      "sourceSkills": ["frontend-design:frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "Ya hemos tenido la reunion mira en el correo la transripción así como el file de slack y los comentarios etc para diseñar el nuevo plan",
+      "sourceSkills": ["brp-plan"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "Vale como esto está fallando por todos lados ya varias veces puedes ver el flujo completo y repensarlo? Porque si no va a ser ir haciendo fixes de bugs sin parar",
+      "sourceSkills": ["brp-plan"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "diseña un plan para todo esto con pros contras y como debería funcionar en una app enterprise",
+      "sourceSkills": ["brp-plan"],
+      "expectedLane": "plan",
+      "reason": "Measured prompt should activate the plan workflow."
+    },
+    {
+      "phrase": "te había dado el repo de lovable lo ibas a renombrar e ibamos a empezar a implementar el diseño",
+      "sourceSkills": ["frontend-design"],
+      "expectedLane": "lovable-sync",
+      "reason": "Measured prompt should activate the lovable-sync workflow."
+    },
+    {
+      "phrase": "vale tenemos una manera de mostrar las transcripciones en la UI? y de que cuando busquemos se muestre etc?",
+      "sourceSkills": ["frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "dame un PDF de contrarider para enviar con lo que ellos mandaron exactamente (si quieres mejorar el diseño hazlo)",
+      "sourceSkills": ["frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "vale lo de delta prepararlo para mañana, un solo contrato como el tenia el diseño 1:1 con todos los cambios que se han hablado",
+      "sourceSkills": ["frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "vale pero no tenemos botón en la UI para hacerlo, por eso, debería estar todo en el .env para cuando lo lance con pnpm tauri dev si funcine",
+      "sourceSkills": ["frontend-design"],
+      "expectedLane": "frontend",
+      "reason": "Measured prompt should activate the frontend workflow."
+    },
+    {
+      "phrase": "continuemos la sesión anterior que se cortó por limite de sesion",
+      "sourceSkills": ["superpowers:subagent-driven-development"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "continua en la sesion anterior me quedé sin quota",
+      "sourceSkills": ["superpowers:subagent-driven-development"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "Sigamos la sesión anterior subagent driven con el plan",
+      "sourceSkills": ["superpowers:subagent-driven-development"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "ya lo he posteado yo, docs/superpowers/plans/2026-07-29-dedup-clusters.md",
+      "sourceSkills": ["superpowers:subagent-driven-development"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "mira los correos a ver si tenemos más newsletters que ingerir",
+      "sourceSkills": ["brain"],
+      "expectedLane": "agent-config",
+      "reason": "Measured prompt should activate the agent-config workflow."
+    },
+    {
+      "phrase": "vale puedes usar chrome-cli en el perfil de personal@example.com tengo un montón de post de twitter para ingerir, si alguno no sabes como hacerlo me dices, y los vas cerrando",
+      "sourceSkills": ["brain"],
+      "expectedLane": "agent-config",
+      "reason": "Measured prompt should activate the agent-config workflow."
+    },
+    {
+      "phrase": "podemos continuar de la sesion anterior?",
+      "sourceSkills": ["brain"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "continua la sesión anterior",
+      "sourceSkills": ["brain"],
+      "expectedLane": "continuation",
+      "reason": "Measured prompt should activate the continuation workflow."
+    },
+    {
+      "phrase": "he metido un clip nuevo pero es un twitter multi-hilo a ver si lo hemos pillado bien",
+      "sourceSkills": ["brain"],
+      "expectedLane": "agent-config",
+      "reason": "Measured prompt should activate the agent-config workflow."
+    },
+    {
+      "phrase": "vale haz push de todo y dime como puedo empezar a usar esto, necesito ingestar contenido ya",
+      "sourceSkills": ["brain"],
+      "expectedLane": "agent-config",
+      "reason": "Measured prompt should activate the agent-config workflow."
+    },
+    {
+      "phrase": "guarda todos los findings de the accounting SaaS en brain para futuras ocasiones",
+      "sourceSkills": ["brain"],
+      "expectedLane": "agent-config",
+      "reason": "Measured prompt should activate the agent-config workflow."
+    },
+    {
+      "phrase": "avisame cada 5m de como va empezando por ahora",
+      "sourceSkills": ["loop"],
+      "expectedLane": "loop",
+      "reason": "Measured recurring-check request; the loop lane routes it to the /loop skill (added 2026-08-24)."
+    },
+    {
+      "phrase": "report cada 10m",
+      "sourceSkills": ["loop"],
+      "expectedLane": "loop",
+      "reason": "Measured recurring-check request; the loop lane routes it to the /loop skill (added 2026-08-24)."
+    },
+    {
+      "phrase": "dame un tick cada 5m para ver el progreso",
+      "sourceSkills": ["loop"],
+      "expectedLane": "loop",
+      "reason": "Measured recurring-check request; the loop lane routes it to the /loop skill (added 2026-08-24)."
+    },
+    {
+      "phrase": "vale lo que quiero es que compruebes cada rato y miremos que todo va bien, incluido logs y demás",
+      "sourceSkills": ["loop"],
+      "expectedLane": "loop",
+      "reason": "Measured recurring-check request; the loop lane routes it to the /loop skill (added 2026-08-24)."
+    },
+    {
+      "phrase": "vale pon un check cada minuto",
+      "sourceSkills": ["loop"],
+      "expectedLane": "loop",
+      "reason": "Measured recurring-check request; the loop lane routes it to the /loop skill (added 2026-08-24)."
+    },
+    {
+      "phrase": "vale quiero que implementes esto para que seamos lo más estrictos posibles",
+      "sourceSkills": ["brp-code-quality"],
+      "intentionalSilence": true,
+      "reason": "Without a baseline or migration noun, the established project context should decide the workflow."
+    },
+    {
+      "phrase": "puedes meter baseline busirocket ultima version y ser super estricto y usar modelos baratos para el trabajo duro aparte haz commit y push de todo lo que llevamos",
+      "sourceSkills": ["brp-code-quality"],
+      "expectedLane": "repo-modernization",
+      "reason": "Measured prompt should activate the repo-modernization workflow."
+    },
+    {
+      "phrase": "mira las conversaciones en ~/p para ver lo pendiente, lo primero que quería hacer es meterle busirocket baseline super estricto",
+      "sourceSkills": ["brp-code-quality"],
+      "expectedLane": "repo-modernization",
+      "reason": "Measured prompt should activate the repo-modernization workflow."
+    },
+    {
+      "phrase": "Hemos endurecido baseline BusiRocket puedes actualizar todas las librerías y endurecer todo?",
+      "sourceSkills": ["brp-code-quality"],
+      "expectedLane": "repo-modernization",
+      "reason": "Measured prompt should activate the repo-modernization workflow."
+    },
+    {
+      "phrase": "search console lo tienes en el perfil de work@example en chrome lo demás hazlo de la mejor manera, GCP y Redis lo usamos cada dia",
+      "sourceSkills": ["claude-in-chrome"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "sí a ver si eres capaz, trabaja de manera autonoma porque yo no lo he conseguido, resetea el password y crea uno nuevo no uso nic.es para nada que no sea esto",
+      "sourceSkills": ["claude-in-chrome"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "está en work@example.com",
+      "sourceSkills": ["claude-in-chrome"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "aprobado pero si vas a quemar usa codex o agy para no quedarnos sin cuota de fable (por los warn y refactoring)",
+      "sourceSkills": ["codex"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "adelante con todo quiero el mejor resultado y me da igual si tienes que usar 50 librerias",
+      "sourceSkills": ["dataviz"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "vale actualicemos el ticket con todo y haz una monitorización de todas las cosas antes y después (queries, pods, uso, etc...) quiero que todo el mundo en la empresa vea la mejora que hemos hecho",
+      "sourceSkills": ["dataviz", "artifact-design"],
+      "intentionalSilence": true,
+      "reason": "This is an acknowledgement or execution approval whose context was already established."
+    },
+    {
+      "phrase": "entonces podemos actualizar el ticket y por fin hacer las graficas y cosas con los antes y despues de todo?",
+      "sourceSkills": ["dataviz", "artifact-design"],
+      "intentionalSilence": true,
+      "reason": "No global workflow lane is justified by this measured prompt."
+    },
+    {
+      "phrase": "ahora que tenemos todo al día miremos los gastos por empresa e ingresos (sobre todo las SL y plansa) para ver que nos falta meter en the accounting SaaS",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "vale con la nueva sección de administración me gustaría que casaramos o conciliaramos las cosas que ya se han pagado a hacienda para ver el overview total, empecemos por cristian/deluxe producciones",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "ha presentado marta el modelo de lumenlab pero no tiene mucho que ver el IVA con lo que nosotros calculamos, puedes ver por que?",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "si bueno el tema de pagos debería ser algo que $HOME/p/the invoicing portal controlara o estuvieramos en sincronia porque alli tiene los movimientos bancarios etc",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "vale revisa todas las recurrentes de the accounting SaaS para ver si están con la plantilla correcta",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "adelante con todo, si vas a hacer algo de invoices metete en the accounting SaaS con el browser y ves como los tenemos, si borras backup que lo tengamos en carpeta de descargas",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "ok firmada, haz lo de marcar las facturas pagadas (es por la UI en conciliacion) laura cocina central mira mi whatsapp",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "mira el whatsapp de carmen, mandó la factura para abonársela, comprueba que esté todo bien por favor",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "vale puedes ver el contrato de diego y hugo para ver la fecha y demás para poner detalles en la factura?",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "Han firmado el contrato lo tengo en mi WhatsApp escritorio, hay que hacer una factura en the accounting SaaS para montano con vencimiento mañana",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "puedes ver lo que necesitamos para que nos haga la factura a nombre de lumen lab?",
+      "sourceSkills": ["invoice-quarter-close"],
+      "expectedLane": "invoice-ops",
+      "reason": "Measured prompt should activate the invoice-ops workflow."
+    },
+    {
+      "phrase": "sí ok a todo\n\n/brp-traffic-client",
+      "sourceSkills": ["brp-traffic-client"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "he hecho lo de la social-security con el certificado de cristian, acuerdate de /brp-traffic-client",
+      "sourceSkills": ["brp-traffic-client"],
+      "intentionalSilence": true,
+      "reason": "The prompt invokes a workflow directly, so router injection would duplicate it."
+    },
+    {
+      "phrase": "vale después de los cambios que hicimos, lanza consumer-o y mira los logs de tauri para ver si hay errores que corregir, luego daba un error de sql que no se si estará solucionado",
+      "sourceSkills": ["run"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "Vale, solo que pido que hablas la aplicación y mires el log de Tauri, porque estaba dando varios errores y warnings también para solucionarlos.",
+      "sourceSkills": ["run"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    },
+    {
+      "phrase": "sí, arreglalo en ambos (word y PDF) todo debe funcionar, acuerdate de reproducir el error y crear un test para que no se vuelva a repetir",
+      "sourceSkills": ["superpowers:test-driven-development"],
+      "expectedLane": "debug",
+      "reason": "Measured prompt should activate the debug workflow."
+    }
+  ]
+}

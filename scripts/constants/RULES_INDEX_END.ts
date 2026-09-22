@@ -1,0 +1,1 @@
+export const RULES_INDEX_END = '<!-- GENERATED-RULES-INDEX:END -->'

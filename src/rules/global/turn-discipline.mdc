@@ -1,0 +1,26 @@
+---
+description: "End a turn when the work ends"
+alwaysApply: true
+---
+
+# Turn discipline in long autonomous runs
+
+Unscoped on purpose: this has to be loaded in the sessions it governs, which are
+ordinary working sessions, not prompt-authoring ones.
+
+Measured over a month of transcripts: 102 turns ended by announcing a
+continuation and then stopping, and 19 more ended asking about a `git push`
+already authorized.
+
+A turn ends when the work does, not when a report is ready. Never close a turn
+on "next I will" or by naming the remaining item: if the next action is known
+and safe, take it in the same turn. Report status in a brief note between tool
+calls, and when you checkpoint, say what happened and continue rather than
+offering a menu.
+
+Reuse an authorization already on record - in instructions, project files, or
+memory - when its recorded scope covers what you are about to do: same
+repository, same kind of action, same branch or target. A one-off approval, or a
+record whose scope is unclear, has expired. Do not re-ask for permission whose
+scope plainly still applies, and do not stretch one grant to cover a different
+target.

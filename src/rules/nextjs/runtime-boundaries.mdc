@@ -1,0 +1,33 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Server/client/public folder conventions and runtime boundary enforcement
+alwaysApply: false
+---
+
+# Runtime Boundaries
+
+Folder conventions and import restrictions that prevent server-only code from leaking into client bundles (and vice versa).
+
+## Folder convention
+
+- `src/server/**`: Server-only code (DB clients, secrets, `fs`, `crypto`, privileged services). The only place for `process.env` beyond `NEXT_PUBLIC_*`.
+- `src/public/**`: Browser-only code (`window`, `document`, `localStorage`). No Node APIs.
+- `src/shared/**`: Runtime-neutral utilities and components. Must not depend on server or browser globals.
+- `src/shared/ui/**`: Client-safe UI primitives (safe for `'use client'` components).
+
+## Import restrictions
+
+- Client/public code must never import from `src/server/*`.
+- Server code must never import from `src/public/*` or `src/shared/ui/*` (except types).
+- `src/shared/*` may only import from `src/shared/*` and `src/public/*`.
+
+## ESLint enforcement
+
+Use `import/no-restricted-paths` to create zone-based restrictions and `eslint-plugin-boundaries` for element-type governance. See `/brp-code-quality` for the full ESLint config.
+
+## Preferred Next.js patterns
+
+- Server Actions (`'use server'`) for mutations.
+- Route handlers (`app/api/**/route.ts`) for API boundaries. If using a `src/` layout, use `src/app/api/**/route.ts`.
+- RSC (default server components) for server-only data fetching.
+- Client components labeled with `'use client'`, importing only from `public/*` or `shared/ui/*`.

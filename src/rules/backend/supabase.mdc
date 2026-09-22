@@ -1,0 +1,18 @@
+---
+globs: "**/supabase/**,**/*supabase*.ts,**/*supabase*.tsx"
+description: Supabase access rule (only if Supabase is added)
+alwaysApply: false
+---
+
+# Supabase Access Rule
+
+## Scope
+
+This rule only applies if/when this repository adds Supabase. Prefer service wrappers in `services/supabase/*`.
+
+## Guideline
+
+- Isolate Supabase access in `services/supabase/*` wrappers.
+- Do not call Supabase client methods directly from components, hooks, utils, or route handlers.
+- Do not import `@supabase/supabase-js` outside the single client module (e.g. `lib/supabase.ts`). The import itself is the boundary, not just the call.
+- Keep wrappers small, focused, and typed.

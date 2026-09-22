@@ -1,0 +1,46 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Contracts and naming for services/ vs utils/ (agent-optimized)
+alwaysApply: false
+---
+
+# services/ vs utils/ (contracts)
+
+## utils/ (pure logic)
+
+Use `utils/<area>/xxx.ts` when code is:
+
+- Pure (no IO, no DB, no network, no cookies/headers)
+- Deterministic (same input -> same output)
+- Easy to unit test
+
+**Naming:** verb-noun, focused
+
+- `utils/ids/formatDisplayId.ts`
+- `utils/dates/parseIsoDate.ts`
+
+**API:** single exported function; throw only for programmer errors; return explicit values.
+
+## services/ (external boundary)
+
+Use `services/<area>/xxx.ts` when code:
+
+- Talks to network/DB/auth/storage
+- Reads cookies/headers or environment
+- Enforces domain policies at a boundary
+
+**Naming:** verb-noun, intent-first
+
+- `services/resources/createResource.ts`
+- `services/auth/getSession.ts`
+
+**API guidance:**
+
+- Do not return framework response primitives from services (e.g. Response/NextResponse). Services return domain data or typed results; map to `{ data }/{ error }` in route handlers and `{ ok }` in server actions.
+- Prefer explicit error shapes over throwing for expected failures.
+
+**Result shape by layer:** Route handlers: `{ data }` / `{ error }`. Server actions: `{ ok, data }` / `{ ok, error }`. Services: `{ ok, value }` / `{ ok, error }` — use `value` in services to avoid confusion with HTTP `data`.
+
+## app route handlers
+
+Route handlers must be thin (validate, call service, return response). See `@rules/core/boundaries.mdc`. No business logic; no data mapping beyond request/response translation.

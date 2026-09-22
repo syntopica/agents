@@ -1,0 +1,52 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte"
+description: Git workflow defaults, solo projects (trunk-based, no speculative branches)
+alwaysApply: false
+---
+
+# Git Workflow (solo-first, trunk-based)
+
+Default assumption: a single-maintainer repo where the author both writes and
+merges the change. Speculative branches add integration cost with no review
+benefit here.
+
+## Branching
+
+- Commit directly to the current working branch (usually `main`). Do NOT create
+  a feature branch or git worktree by default.
+- Create a branch ONLY when one of these is true: a real collaborator/PR is in
+  the loop, the change is a long-lived experiment that must not touch `main`, or
+  the user explicitly asks for a branch.
+- Never create a branch "just in case". A branch only the author will merge back
+  is pure integration overhead.
+- Leave the repo on the branch you started on. Do not end a task on a detached
+  HEAD or an orphaned worktree.
+
+## Safety without branches
+
+- Replace the branch-as-safety-net habit with the executable check: run
+  lint + build (and tests if present) before committing to `main`.
+- If there is no runnable check and the change is risky, say so and propose the
+  smallest check to add, rather than hiding the work on a branch.
+
+## Commits
+
+- One logical change per commit. Do not bundle unrelated edits.
+- Conventional, imperative commit subjects in English (e.g. `fix: guard null
+  session before render`).
+- Do not commit secrets, `.env` files, or generated artifacts. If they are
+  already tracked, flag it instead of committing more.
+
+## GitHub CLI (gh) quota hygiene
+
+API quota burns fastest on unshaped reads and per-item loops; shape every read.
+
+- Always pass `--json <fields>` on `gh` reads (`pr view`, `run list`, `issue
+  list`, ...). Never parse default human output, and never fetch fields you do
+  not use.
+- Avoid `gh api --paginate` on large collections; bound the read (`--limit`,
+  explicit page) instead.
+- Fetch a failed run's logs once (`gh run view <id> --log-failed`), save to a
+  file, and reuse the file; do not re-download per retry or per question.
+- Prefer one `gh search` or one `list --json` over a loop of per-item `view`
+  calls.

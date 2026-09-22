@@ -1,0 +1,71 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: >-
+  Read the checks that will judge the code before writing it. They fail CI;
+  prose does not.
+alwaysApply: false
+priority: critical
+---
+
+# Code structure: read what will judge the code, before writing it
+
+Measured on this repository, 2026-09-18: seven identical TypeScript tasks
+written against 6409 characters of structural prose produced 13 ESLint errors
+across 44 files, and the same tasks written against the instruction below
+produced 0 across 33, at the same token cost. Eight of the thirteen were
+`code-policy/file-kind-placement` — the prose that existed to teach the file
+policy is what broke it, because it never mentioned the `formatters/` and
+`validators/` folders that the config requires.
+
+**Before writing or editing code, read the checks that will judge it and write
+code that already satisfies them.** The ESLint flat config, `tsconfig.json`, and
+the `check`, `lint` and `test` scripts state the policy exactly; prose restates
+it approximately and goes stale. Read them before the first line: a refactor to
+satisfy a check you could have read costs more than the read. When a requirement
+is unclear, run the check on the file rather than guessing.
+
+Name a few of those files, but do not hand over a checklist. Measured on four
+matched tasks, all three variants produced 0 errors and the cost was not
+monotonic: naming three files cost 45488 tokens per task, an ordered list of
+four cost 54670, and naming none at all cost 56018. Under-specifying is as
+expensive as over-specifying -- the model spends the difference searching for
+what to read. An earlier version of this paragraph claimed the opposite, on a
+comparison where both arms named files and one task was omitted.
+
+## Where this does not pay
+
+For Rust, judged by `cargo baseline check` against consumer-o's `baseline.toml`, the
+prose in `rust/rust-tauri.mdc` and the read-the-config instruction both produced
+0 errors over 55 scored files, so replacing it would have bought nothing.
+Reading was also materially slower there: one task exceeded a six-minute budget
+twice under read-the-config and finished in under four minutes under the prose.
+
+Two conditions plausibly separate that case from the TypeScript one. Whether the
+prose has drifted from the checker: the TypeScript prose had, naming no
+`formatters/` folder, and the Rust prose had not, because it states the same
+limits `baseline.toml` sets. And how expensive the thing to read is: a crate of
+1103 files is not a small package. This is a hypothesis fitted to three
+languages, not a demonstrated cause -- treat it as a reason to measure each
+case, never as licence to skip the measurement.
+
+So this rule replaces prose that restates a checker approximately. Prose that
+states the checker's own thresholds is earning its place: keep it, and keep it
+in step with the config. Before replacing any of it, measure -- the procedure
+and its traps are in the `instruction-ab-test` skill.
+
+## The two things no config states
+
+**Write the extension the checks actually cover.** A config that scopes typed
+linting to `**/*.{ts,tsx}` does not lint `.mts`, and ESLint reports only "all of
+the files matching the glob pattern are ignored" — which is not an error, so the
+code ships unexamined. Match the extension the neighbouring files use.
+
+**Where a project enforces nothing, adopt the shared toolchain rather than
+inventing a local standard.** `codeality` publishes the same policy for each
+language, so the fallback is to install it and then read it like any other
+config: `@codeality/eslint-config` with `@codeality/tsconfig` for TypeScript,
+`cargo baseline init` for Rust (it scaffolds `baseline.toml`, `clippy.toml`,
+`rustfmt.toml` and `deny.toml`, and `cargo baseline check` becomes the judge),
+and `codeality-py` for Python. Until one is in place the house default stands:
+one file, one exported unit, one responsibility, with helpers, private
+functions, inline utilities and secondary types each in their own file.

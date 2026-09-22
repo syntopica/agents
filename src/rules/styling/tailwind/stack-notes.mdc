@@ -1,0 +1,22 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: Tailwind stack-specific notes (React/Next, Blade/Livewire, Ghost/Alpine)
+alwaysApply: false
+---
+
+# Tailwind Stack Notes
+
+## React / Next
+
+- Prefer utility composition in components and variant maps for reusable primitives.
+- Use state variants (`aria-*`, `data-*`) for UI libraries that expose state attributes.
+
+## Blade / Livewire
+
+- Keep Tailwind in Blade/Livewire components; avoid inline style attributes.
+- Prefer token utilities over ad-hoc colors.
+
+## Ghost / Handlebars / Alpine
+
+- Use utilities directly in templates and partial composition for reuse.
+- Keep Alpine state small; avoid complex JS when semantic HTML can solve the interaction.

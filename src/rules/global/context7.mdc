@@ -1,0 +1,14 @@
+---
+description: "Library docs through Context7"
+alwaysApply: true
+---
+
+# Context7: the two calls
+
+The policy — fetch current docs rather than relying on memory, resolve the exact
+library and version first — is in `CLAUDE.md` and is not repeated here.
+
+What is not there: `resolve-library-id` takes the library name AND the user's
+question, and prefers an exact, version-specific id; `query-docs` then takes
+that id and the same question. Answer from what comes back, with code examples,
+and cite the version you were given.

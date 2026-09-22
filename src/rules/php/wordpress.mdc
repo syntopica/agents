@@ -1,0 +1,49 @@
+---
+globs: "**/*.php"
+description: WordPress standards (WPCS, hooks/APIs, nonces, escaping, persistence)
+alwaysApply: false
+---
+
+# WordPress Standards
+
+## Platform constraints
+
+- Follow project WordPress/PHP compatibility matrix first.
+- Prefer modern PHP targets where hosting and plugin ecosystem permit.
+
+## WordPress-native APIs first
+
+- Use actions/filters for extensibility.
+- Prefer REST API for modern integrations over legacy AJAX patterns.
+- Use Options API / Transients API / metadata APIs where appropriate.
+- Prefer `WP_Query` and core query helpers over direct SQL when possible.
+
+## Architecture
+
+- Never modify WordPress core.
+- Keep business logic in plugin modules/classes; keep templates focused on presentation.
+- Use child themes for theme-level customization.
+
+## Security
+
+- Sanitize/validate all input with WP helpers (`sanitize_*` and dedicated validators).
+- Escape all output (`esc_html`, `esc_attr`, `esc_url`, etc.).
+- Use nonces for state-changing requests and verify them server-side.
+- Check capabilities (`current_user_can`) before mutations.
+
+## Database
+
+- If using `$wpdb`, always use `$wpdb->prepare()` for dynamic values.
+- Avoid direct string interpolation in SQL.
+- Version schema changes and apply via upgrade routines (`dbDelta` when suitable).
+
+## Assets and performance
+
+- Enqueue assets via `wp_enqueue_script` / `wp_enqueue_style`.
+- Version assets intentionally for cache busting.
+- Cache expensive operations with transients/object cache when available.
+
+## i18n and testing
+
+- Use WP i18n functions (`__`, `_e`, `esc_html__`, etc.) and load text domains correctly.
+- Test hooks and REST endpoints with WordPress test tooling where available.

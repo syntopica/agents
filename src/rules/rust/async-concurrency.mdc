@@ -1,0 +1,32 @@
+---
+globs: "**/*.rs"
+description: Rust async and concurrency standards (Tokio, channels, cancellation)
+alwaysApply: false
+---
+
+# Rust Async and Concurrency
+
+## Runtime and task model
+
+- Prefer `tokio` runtime for async I/O and structured task orchestration.
+- Use `async fn` for async boundaries and explicit return types.
+- Use `tokio::spawn` for concurrent units with clear ownership and cancellation paths.
+- Use `tokio::select!` to coordinate cancellation, timeout, and competing async branches.
+
+## Channels and synchronization
+
+- Prefer bounded channels for backpressure (`mpsc`, `broadcast`, `oneshot` as needed).
+- Handle full-channel/drop scenarios explicitly; do not ignore send failures.
+- Use `tokio::sync::Mutex`/`RwLock` sparingly; keep lock scopes short and never hold across expensive `.await` sections.
+
+## Reliability
+
+- Add timeouts for external calls and long-running async operations.
+- Use retries with bounded backoff for transient failures only.
+- Avoid blocking inside async tasks; offload blocking work via `spawn_blocking`.
+
+## Errors and testing
+
+- Use `Result`/`Option` idiomatically and propagate context-rich errors.
+- Prefer typed errors (`thiserror`) or contextual wrappers (`anyhow`) based on layer boundaries.
+- Use `#[tokio::test]` for async tests and `tokio::time::pause` for deterministic time-based tests.

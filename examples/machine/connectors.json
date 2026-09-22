@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "connectors": [
+    {
+      "id": "codegraph",
+      "match": "codegraph",
+      "profiles": ["claude-personal", "claude-secondary", "codex"],
+      "ownership": "machine",
+      "probe": "native-cli",
+      "criticality": "required"
+    },
+    {
+      "id": "context7",
+      "match": "context7",
+      "profiles": ["claude-personal", "claude-secondary", "codex"],
+      "ownership": "machine",
+      "probe": "native-cli",
+      "criticality": "optional"
+    },
+    {
+      "id": "cloudflare",
+      "match": "plugin:cloudflare:",
+      "profiles": ["claude-personal", "claude-secondary"],
+      "ownership": "account",
+      "probe": "claude-cli-prefix",
+      "criticality": "optional"
+    },
+    {
+      "id": "gateway-example",
+      "match": "gateway-example",
+      "profiles": ["claude-personal"],
+      "ownership": "account",
+      "probe": "native-cli",
+      "criticality": "optional",
+      "boundary": "access-gateway"
+    }
+  ]
+}

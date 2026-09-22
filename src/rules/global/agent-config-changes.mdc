@@ -1,0 +1,46 @@
+---
+globs: "**/settings.json,**/settings.local.json,**/.claude.json,**/config.toml,**/*.mcp.json,**/mcp.json"
+description: "Editing agent config: autoMode defaults, model-id changes, loop budgets"
+alwaysApply: false
+---
+
+# Changing agent configuration
+
+Three rules that only fire when someone edits agent configuration, which is why
+they lived uselessly in a backlog file until 2026-09-01: a conditional reminder
+in a TODO list is read on the day someone greps for it, never on the day it
+matters.
+
+## `autoMode`: never omit `"$defaults"`
+
+If `autoMode` is ever configured, its `allow` and `soft_deny` lists **must**
+include `"$defaults"`. Omitting it does not add permissions on top of the
+built-in safety blocks — it silently **replaces** them, so the blocks disappear
+with no error and no log line.
+
+## A model-id change is a dependency upgrade, not a string edit
+
+Changing a model id — in a wrapper, a pinned config, the codex or agy offload —
+changes behaviour in three ways that do not announce themselves:
+
+- **Parameter support moves.** `temperature` and `top_p` are accepted by some
+  models and rejected or ignored by others; a wrapper that always sends them can
+  start erroring, or worse, start being ignored.
+- **The tokenizer moves.** Token budgets calibrated on one model are wrong on
+  the next; inflation of 1.0-1.35x was reported moving to Sonnet 5, so a prompt
+  that fitted a window may no longer fit.
+- **Cost and latency move**, which is the part everyone does check.
+
+So pin deliberately, verify the wrapper's parameters against the new model, and
+shadow the change before routing real traffic to it. Source:
+the instance's wiki.
+
+## Budgets worth copying into any custom agent loop
+
+Two defaults measured by Deep Agents, both cheap to implement and both about the
+same failure — a context window filling with material nobody will read again:
+
+- **Offload a tool result over ~20k tokens to a file**, and keep only the path
+  plus a short preview in context.
+- **Summarize at ~85% of the window**, not at the wall, so the summarization
+  itself has room to run.

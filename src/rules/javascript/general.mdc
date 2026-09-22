@@ -1,0 +1,41 @@
+---
+globs: "**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.mjs,**/*.cjs"
+description: General JavaScript/TypeScript standards (security, structure, error handling)
+alwaysApply: false
+---
+
+# General JavaScript / TypeScript Standards
+
+## Language defaults
+
+- Prefer TypeScript for non-trivial changes.
+- Prefer ES2022+ syntax and modern runtime APIs.
+- Use `const` by default, `let` only when mutation is required.
+- Prefer named exports over default exports unless framework conventions require
+  otherwise.
+
+## Style and naming
+
+- Prefer guard clauses and early returns.
+- Use descriptive names with auxiliary verbs (`isLoading`, `hasPermission`,
+  `shouldRetry`).
+- Keep modules small and focused.
+
+## Architecture
+
+- Prefer functional and declarative patterns.
+- Avoid classes unless the runtime pattern strongly benefits from them.
+- If classes are used, keep them small with narrow public APIs.
+
+## Errors and logging
+
+- Model expected failures as explicit result values where reasonable.
+- Use `try/catch` for exceptional control flow and recovery boundaries.
+- Log with actionable context, never secrets/tokens/PII.
+
+## Security baseline
+
+- Treat all external input as untrusted.
+- Avoid unsafe execution APIs (`eval`, `new Function`) and unsanitized HTML
+  rendering.
+- Apply least privilege for permissions, data exposure, and API surface.

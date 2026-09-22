@@ -1,0 +1,30 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: TypeScript correctness flags beyond strict mode
+alwaysApply: false
+---
+
+# TypeScript Strict Hardening
+
+Additional correctness flags recommended on top of `strict: true` for production TypeScript projects.
+
+## Recommended flags
+
+Enable these in `compilerOptions`:
+
+- `noUncheckedIndexedAccess`: Forces `T | undefined` on index signatures. Prevents "undefined at runtime" from bracket access on arrays and records.
+- `exactOptionalPropertyTypes`: Distinguishes `{ x?: string }` from `{ x: string | undefined }`. Catches misuse of optional properties vs explicit undefined assignment.
+- `noImplicitOverride`: Requires the `override` keyword when overriding base class methods. Prevents silent breakage when a base class changes signatures.
+- `useUnknownInCatchVariables`: Types `catch(e)` as `unknown` instead of `any`. Forces explicit narrowing in error handlers.
+
+## Recommended target and lib
+
+- `target`: `ES2024` (or latest stable supported by the runtime).
+- `lib`: `["DOM", "DOM.Iterable", "ES2024"]`.
+- `module`: `ESNext` with `moduleResolution`: `Bundler` for Next.js / Vite projects.
+
+## Operational notes
+
+- `skipLibCheck: true` stays on for productivity; it does not reduce safety in your own code.
+- `incremental: true` for faster rebuilds.
+- Run `/brp-code-quality` for the full `tsconfig.json` template.

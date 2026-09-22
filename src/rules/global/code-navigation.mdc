@@ -1,0 +1,28 @@
+---
+description: "codegraph vs serena vs grep; verify first"
+alwaysApply: true
+---
+
+# Code navigation: no single tool's reference list is complete
+
+Always on: this governs ordinary working sessions in any language, so it cannot
+be scoped to a file glob. Tool choice, index coverage and the measured
+comparison are in the `reference-coverage` skill. One thing has to be known
+before that skill is reached, because it is what makes the skill worth invoking:
+
+**Neither codegraph nor a language server is complete on "who references this",
+and both fail silently.** A language server inherits every exclusion in the
+project's tsconfig, so a repo excluding tests answers without them; it cannot
+see across packages in a monorepo, and once found 1 of 5 referencing files while
+reporting nothing wrong. codegraph merges same-named symbols across packages and
+attributes callers to the wrong one. A partial answer is indistinguishable from
+a complete one.
+
+So before a rename, a deletion, a signature change, or any edit whose
+correctness depends on having found every caller, invoke `reference-coverage`
+and confirm the list against a second independent source. Treat any single
+tool's answer as a lower bound. A false positive costs one look; a false
+negative ships a broken build.
+
+State which tool produced a claim when it matters: "codegraph reports 5 callers,
+grep confirms" is checkable, "there are 5 callers" is not.

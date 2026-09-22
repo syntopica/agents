@@ -1,0 +1,21 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+blockExoticSubdeps: true
+autoInstallPeers: false
+
+overrides:
+  'brace-expansion@<2.0.0': ^1.1.18 # GHSA-mh99-v99m-4gvg and GHSA-rgw5-rvv9-x895
+  'brace-expansion@>=4.0.0 <5.0.9': ^5.0.9 # GHSA-mh99-v99m-4gvg and GHSA-rgw5-rvv9-x895
+
+allowBuilds:
+  esbuild: true
+  # Installs the git hooks in lefthook.yml on `pnpm install`.
+  lefthook: true
+  unrs-resolver: true
+
+# The three packages below were published on 2026-09-14 from syntopica/codeality
+# through npm trusted publishing, and this repository needs them before the
+# 1440-minute cooldown above expires. Each entry pins one exact version, so
+# every other release of the same package still waits. Remove these entries
+# after 2026-09-15 and verify with `pnpm install --frozen-lockfile`.

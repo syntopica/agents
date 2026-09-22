@@ -1,0 +1,33 @@
+---
+globs: "**/*.sh,**/*.bash"
+description: One-shot refactor of a Bash file (@file, .sh)
+alwaysApply: false
+---
+
+# @file Bash Refactor Workflow
+
+Use this rule by referencing **@file** on a Bash script. Apply the following steps to the selected file.
+
+## Goals
+
+- Make the script small, readable, and single-responsibility.
+- Keep the **entry script filename unchanged** so external/server calls keep working.
+- Move reusable logic into `utils/` (and area subfolders) as separate `.sh` files.
+- Prefer one logical entry function per file; extract additional helpers to dedicated files.
+- After edits, validate with `bash -n` and, when possible, `shellcheck`.
+
+## Algorithm
+
+1. **Scan** — Identify responsibilities: CLI entry (args/env + usage), I/O boundaries (fs, network, DB), pure helpers.
+2. **Decide** — Keep CLI parsing + top-level orchestration in the entry script; move shared helpers to `scripts/bash/utils/*.sh` or `scripts/bash/<area>/utils/*.sh`; keep files small.
+3. **Wire** — Add `source "$(dirname "$0")/relative/path/to/helper.sh"` at the top; replace inlined functions with calls to imported helpers.
+4. **Safety** — Preserve script interface (arguments, env vars, exit codes). Do not change entry script filename or shebang.
+5. **Validate** — Run `bash -n <script>`; prefer existing integration flows (cron/CI) where feasible.
+
+## Acceptance Criteria
+
+- File responsibilities are clear and minimal.
+- Entry scripts are thin: mostly argument parsing + one main function call.
+- Shared helpers live in `scripts/bash/utils/` (and area subfolders when needed).
+- No changes to entry script filenames; paths compatible with existing server calls.
+- No syntax errors (`bash -n` clean) and no new `shellcheck` warnings where used.

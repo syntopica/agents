@@ -1,0 +1,34 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: "Core project rules (file discipline, boundaries, naming, anti-patterns)"
+alwaysApply: false
+---
+
+# Core Rules
+
+Use **@core** when you need the full set of core project rules in one go.
+
+**Convention**: `@rules/` denotes the rules root (e.g. workspace rules folder or `.cursor/rules`). Resolve relative to your project root.
+
+This rule references the following; for full detail open each:
+
+- **Code structure** *(critical)*: `@rules/core/code-structure.mdc` — read the ESLint config, tsconfig and check scripts before writing; they fail CI and prose does not
+- **Project & quality**: `@rules/core/project.mdc` — one-thing-per-file, check script
+- **General**: `@rules/core/general.mdc` — agent defaults, code style, repo hygiene
+- **Pattern selection**: `@rules/core/design-pattern-selection.mdc` — choose Builder/Factory/Adapter/Strategy from real pain points
+- **Text hygiene**: `@rules/core/text-hygiene.mdc` — ASCII punctuation and no invisible chars in docs/config
+- **JavaScript** (optional): `@rules/javascript.mdc` — cross-runtime JS/TS domain rules
+- **Boundaries**: `@rules/core/boundaries.mdc` — where to put routes, components, hooks, utils, services, types
+- **Naming & layout**: `@rules/core/naming-and-layout.mdc` — folder layout, file naming, exports
+- **Anti-patterns**: `@rules/core/anti-patterns.mdc` — what to avoid (wildcard re-export barrels, inline types, fat handlers)
+- **Agent discipline**: `@rules/core/agent-discipline.mdc` — multi-step/long-running work: goal-driven execution, surface conflicts, step/token budgets, checkpoints, fail loud
+- **Vertical-slice architecture**: `@rules/core/vertical-slice-architecture.mdc` — refactor module into vertical slice, public API, migration plan, guardrails (use for "vertical slice", "public API", "refactor module")
+- **Security baseline**: `@rules/core/security-baseline.mdc` — XSS/secrets/least-privilege defaults
+
+## Short summary
+
+- Many small files; one exported symbol per file; no inline types; no helpers inside components/hooks.
+- Choose patterns by pain source: creation, structure, or behavior.
+- Route handlers thin: validate → call service → return response.
+- Run the project check script after meaningful changes.
+- For non-JS/TS stacks, use stack rules directly (`@php`, `@rust`, `@bash`).

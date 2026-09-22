@@ -1,0 +1,29 @@
+---
+globs: "**/*.rs"
+description: "Rust + Tauri (layout, SQL/prompt separation, commands checklist)"
+alwaysApply: false
+---
+
+# Rust / Tauri Rules
+
+Use **@rust** when working on Rust or Tauri code.
+
+This rule references:
+
+- **Rust + Tauri**: `@rules/rust/rust-tauri.mdc` — one-thing-per-file, module layout, SQL/prompt in separate files, Tauri command checklist (command file + lib.rs + permissions)
+- **Async concurrency**: `@rules/rust/async-concurrency.mdc` — tokio tasks/channels, cancellation, timeouts, retries
+- **Cross-platform**: `@rules/rust/crossplatform.mdc` — correct `#[cfg]` usage, platform imports, target-specific deps
+- **Pest grammars**: `@rules/rust/pest.mdc` — `.pest` authoring/debugging and atomic/silent rule guidance
+- **RON usage**: `@rules/rust/ron.mdc` — readable `.ron` and serde-based (de)serialization
+- **Lint triage**: `@rules/rust/linthunter.mdc` — classify clippy/compiler lint issues and false positives
+
+## Short summary
+
+- One public function/type/trait per file; no inline SQL or prompts (use `include_str!()`).
+- New Tauri command: (1) command file, (2) register in `lib.rs`, (3) add to `commands.allow` in permissions.
+- Use `#[cfg]` (not `cfg!`) for platform-specific APIs and imports.
+- Prefer bounded async channels and explicit cancellation/timeout paths.
+- Validate with `cargo check` then `cargo clippy` after meaningful changes; a Rust-only crate has no
+  `pnpm run check` to fall back on.
+- Outside Tauri (crates, CLIs, backend services) the same layout applies under plain `src/`, not
+  `src-tauri/src/`.

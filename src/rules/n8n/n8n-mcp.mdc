@@ -1,0 +1,36 @@
+---
+globs: "**/*.n8n.json,**/n8n/**"
+description: n8n workflow design and validation with n8n-MCP tools
+alwaysApply: false
+---
+
+# n8n Workflow Rules (MCP)
+
+When using n8n-MCP tools to design, build, or validate n8n workflows:
+
+## Core Behavior
+
+1. **Silent execution** — Run tools without commentary; respond after all tools complete.
+2. **Parallel execution** — Call independent operations (e.g. search_nodes, get_node, search_templates) in parallel.
+3. **Templates first** — Check templates before building from scratch.
+4. **Multi-level validation** — Use `validate_node(mode='minimal')` → `validate_node(mode='full')` → `validate_workflow`.
+5. **Never trust defaults** — Explicitly configure ALL parameters that control node behavior; default values are a common source of runtime failures.
+
+## Process
+
+1. **Discovery** — Use `tools_documentation()`; search_templates (by_metadata, by_task, by_nodes) and search_nodes in parallel when needed.
+2. **Configuration** — get_node with detail level and includeExamples when useful; show workflow architecture for approval before building.
+3. **Validation** — validate_node (minimal then full, profile 'runtime'); fix all errors before proceeding.
+4. **Building** — If using a template, get_template and **mandatory attribution** (author name, username, n8n.io link). Set ALL parameters explicitly; connect nodes; add error handling; use n8n expressions ($json, $node["NodeName"].json).
+5. **Workflow validation** — validate_workflow, validate_workflow_connections, validate_workflow_expressions before deployment.
+6. **Deployment** — n8n_create_workflow; n8n_validate_workflow; n8n_update_partial_workflow for batch updates; n8n_test_workflow.
+
+## Critical Syntax
+
+- **addConnection** (partial workflow updates): use four **separate string** parameters — `source`, `target`, `sourcePort`, `targetPort` (not an object, not combined strings).
+- **IF node routing**: use the `branch` parameter (`"true"` or `"false"`) to route to the correct output.
+- **Batch updates**: use one `n8n_update_partial_workflow` call with an `operations` array for multiple changes.
+
+## Response
+
+- No commentary between tool runs; after tools complete, summarize what was created or updated and validation result.

@@ -1,0 +1,130 @@
+---
+globs: "**/skills/**,**/agents/**,**/commands/**,**/rules/**,**/prompts/**,**/CLAUDE.md,**/AGENTS.md,**/GEMINI.md,**/*.prompt.md"
+description: "Prompting frontier models: delete more"
+alwaysApply: false
+---
+
+# Model Prompting (Opus 5, Fable 5, GPT-5.6 Sol)
+
+Applies when writing or revising a system prompt, a skill, an agent harness, or
+a rule file for a current frontier model. Sources: Anthropic's per-model
+prompting guides and OpenAI's GPT-5.6 prompt guidance, read 2026-07-26.
+
+## The shared finding
+
+All three vendors now say the same thing: prompts written for older models
+**reduce** output quality on current ones. Most of the work is deletion.
+
+OpenAI measured it — replacing verbose system prompts with lean ones improved
+eval scores 10-15% while cutting tokens 41-66% and cost 33-67%.
+
+## Delete on sight
+
+| Pattern | Why it hurts now |
+| --- | --- |
+| "Double-check your answer", "verify before responding", "add a final verification step", "use a subagent to verify" | Opus 5 self-verifies. Instructing it compounds and burns tokens for no quality gain. |
+| Repeated rules across sections or files | Each rule once. Repetition and contradiction cost reasoning tokens to reconcile. |
+| Absolute steering everywhere ("ALWAYS", "NEVER", "no exceptions") | Reserve for real constraints. Used as emphasis it flattens the signal and overtriggers. |
+| Enumerated do/don't lists | Strong instruction following means one sentence replaces the list. |
+| Step-by-step process scripts | State the outcome and the stopping condition; let the model route. |
+| Generic "be concise" | Does nothing. Ask for the specific shape you want instead. |
+| "Explain your reasoning", "show your thinking" | On Fable 5 this can trigger the `reasoning_extraction` refusal and fall back to Opus 4.8. Read the `thinking` blocks instead. |
+| Tools unrelated to the task | Trim the tool list; simplify tool descriptions. |
+
+Keep: hard constraints, approval boundaries, success criteria, domain context,
+output format, and examples that encode a product requirement. The deletion rule
+is about redundant guidance, not about ordered procedure: keep the steps that
+carry authorization, CLI correctness, recovery, or validation, where the order
+itself is the content and getting it wrong costs more than the tokens saved.
+
+## Effort, per model
+
+- **Opus 5** — default `high`. Use `low`/`medium` liberally as the main cost
+  and latency lever; `xhigh` for demanding coding and agentic work. Re-sweep if
+  the setting was inherited from another model. Effort controls *thinking*, not
+  visible response length.
+- **Fable 5** — `high` default, `xhigh` for the most capability-sensitive work,
+  `low`/`medium` for routine (they often beat prior models at `xhigh`).
+- **GPT-5.6 Sol** — `none|low|medium|high|xhigh|max`. When migrating, keep the
+  current level as baseline and test one level lower. `medium` is the balanced
+  start. `text.verbosity` sets answer length, separately from reasoning.
+
+## Behaviors that need a counter-instruction
+
+Opus 5 and Fable 5 both run longer and do more than asked unless told otherwise.
+Use the snippets below verbatim; they are Anthropic's own wording.
+
+**Conciseness (Opus 5 answers run long, and effort will not shorten them):**
+
+```text
+Keep responses focused, brief, and concise. Keep disclaimers and caveats short,
+and spend most of the response on the main answer. When asked to explain
+something, give a high-level summary unless an in-depth explanation is
+specifically requested.
+```
+
+**Scope discipline (both models expand tasks):**
+
+```text
+Deliver what was asked, at the scope intended. Make routine judgment calls
+yourself, and check in only when different readings of the request would lead to
+materially different work. If the request seems mistaken or a better approach
+exists, say so in a sentence and continue with the task as asked rather than
+quietly narrowing, widening, or transforming it. Finish the whole task, and stop
+short of actions that are clearly beyond what was asked.
+```
+
+**Subagent caps (Opus 5 delegates too readily; Fable 5 delegates well):**
+
+```text
+Delegate to a subagent only for large tasks that are genuinely independent and
+parallelizable, such as a wide multi-file investigation. Do not delegate work you
+can finish yourself in a handful of tool calls, and do not use subagents to
+verify or double-check your own work. If one subagent can complete the task, use
+one rather than several, and keep spawn counts low.
+```
+
+For Fable 5 the guidance inverts: delegate often, asynchronously, with
+long-lived subagents that keep their context.
+
+**Grounding progress claims (Fable 5, long autonomous runs):**
+
+```text
+Before reporting progress, audit each claim against a tool result from this
+session. Only report work you can point to evidence for; if something is not yet
+verified, say so explicitly. Report outcomes faithfully: if tests fail, say so
+with the output; if a step was skipped, say that; when something is done and
+verified, state it plainly without hedging.
+```
+
+**No unrequested action (Fable 5 drafts emails, creates backup branches):**
+
+```text
+When the user is describing a problem, asking a question, or thinking out loud
+rather than requesting a change, the deliverable is your assessment. Report your
+findings and stop. Don't apply a fix until they ask for one.
+```
+
+**No gold-plating at high effort (Fable 5):**
+
+```text
+Don't add features, refactor, or introduce abstractions beyond what the task
+requires. Don't design for hypothetical future requirements: do the simplest
+thing that works well. Don't add error handling, fallbacks, or validation for
+scenarios that cannot happen. Only validate at system boundaries.
+```
+
+## Harness-level notes
+
+- **Fable 5 turns run minutes to hours.** Size client timeouts, stream, and
+  check on runs asynchronously rather than blocking.
+- **Opus 5 with thinking disabled** occasionally writes a tool call as plain
+  text (it never runs) and leaks `<thinking>` tags. Keep thinking on at low
+  effort instead; a rule telling the model not to think makes leakage worse.
+- **Code review harnesses:** "only report high-severity issues" is now followed
+  literally and depresses recall. Ask for everything with confidence and
+  severity, then filter in a second pass.
+- **GPT-5.6 tool calls:** direct calls when one suffices or approval is needed;
+  Programmatic Tool Calling for filtering, aggregation, and deduplication.
+- **Give the reason, not only the request** — all three models use intent to
+  connect the task to relevant context.

@@ -1,0 +1,50 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.mjs,**/*.cjs,**/*.py,**/*.php,**/*.rs,**/*.go,**/*.vue,**/*.svelte,**/*.astro,**/*.java,**/*.kt,**/*.rb"
+description: Naming & layout conventions (agent-optimized)
+alwaysApply: false
+---
+
+# Naming & Layout Conventions
+
+## Folder layout (Next.js App Router)
+
+- `app/`: routing, layouts, route handlers
+- `components/<area>/...`: reusable UI
+- `hooks/<area>/useXxx.ts`: one hook per file
+- `utils/<area>/xxx.ts`: one pure helper function per file (single-purpose)
+- `services/<area>/xxx.ts`: one boundary function per file (single-purpose; network/DB/integrations)
+- `types/<area>/Xxx.ts`: one type/interface per file
+- `stores/<storeName>.ts`: Zustand (or similar) stores, when used
+
+## File naming
+
+- Directories: kebab-case.
+- Components: PascalCase filenames, folder-namespaced when complex:
+  - `components/orders/OrderCard/OrderCard.tsx`
+  - `components/orders/OrderCard/Header.tsx`
+- Hooks: `useXxx.ts`
+- Utils/services: verb-noun, lower camel or lower kebab; pick one and stay consistent within a folder.
+- Types: PascalCase, match the exported symbol name.
+
+## Identifier naming
+
+- Framework-agnostic naming rules stay here.
+- React-specific handler/boolean/hook naming lives in `@rules/react/naming.mdc`.
+
+## Exports
+
+- Next.js route components (`app/**/page.tsx`, `layout.tsx`): **default export** (required by conventions).
+- Reusable components/hooks/utils/services/types: **single export per file**.
+
+## Imports
+
+- One `index.ts` per slice/module, explicit re-exports only, no `export *`. Full policy: see `@rules/core/code-quality-guidelines.mdc`.
+- Prefer relative imports within a domain folder; use aliases only when they reduce churn.
+
+## Alternative: Frontend/backend split
+
+When the repo has a separate frontend app (e.g. Vite) and backend:
+
+- `frontend/src/components/` for UI; `frontend/src/hooks/`, `frontend/src/utils/`, `frontend/src/types/` for the rest.
+- `backend/` (or equivalent) for server-only code.
+- Same one-export-per-file and boundaries apply within each tree.

@@ -1,0 +1,61 @@
+---
+globs: "**/SKILL.md,**/skill-rules.map.json"
+description: "Authoring skills: self-healing contract, ship sequence, gates"
+alwaysApply: false
+---
+
+# Skills heal themselves or they rot
+
+A skill encodes how the world worked on the day it was written. Boards redesign
+forms, hosts stop resolving, APIs move. Without a standing instruction to write
+fixes back, every session pays full price to rediscover the same workaround, and
+the file quietly becomes a liability that is followed and wrong.
+
+**Every skill carries a `## Self-healing and self-improvement` section.** The
+wording is the skill's own, and it says: when a step fails
+during use, fix the immediate problem, establish what changed with evidence, then
+edit the failing section in the same session. Replace the stale instruction
+rather than appending a second version beside it — two contradictory
+instructions are worse than one stale one. When the task succeeds and something
+was learned, add the trap and delete the step that has never mattered.
+
+## Ship sequence
+
+```bash
+git pull --ff-only origin main   # other sessions commit here concurrently
+pnpm run skills:compile          # `pnpm run check` does NOT recompile
+pnpm run check                   # must exit 0; read the exit code, not the tail
+git add src/skills/core/<name>/SKILL.md
+git commit && git push origin main
+pnpm run skills:link
+```
+
+Edit `src/skills/core/<name>/SKILL.md` only. A compiled copy under `dist/` or a
+linked copy under `~/.claude/skills/` is generated output; an edit there is lost
+on the next build and never reaches the other machine.
+
+Verify the linked file itself rather than the link summary. Linking after a
+`check` but without a `skills:compile` publishes the previous build, and the
+summary still reports success.
+
+## Gates a new skill must pass
+
+- The name must exist in `src/skills/skill-rules.map.json`, or `skills:compile`
+  fails with "missing in skill-rules.map.json".
+- The description needs a `Trigger when` clause starting before character 150,
+  so it survives listing truncation, and a `Do not use` exclusion boundary.
+- It needs an action verb from `scripts/constants/ACTION_WORDS.ts` (`audits`,
+  `fixes`, `plans`, `reviews`, `migrates`...). "Handles" and "manages" fail.
+- `gitleaks` runs on pre-push and matches prose. A phrase like "access codes,"
+  in a table trips `generic-api-key`. Reword the sentence; do not add an
+  allowlist entry for a false positive, and do not bypass the hook.
+
+## Skills do not live in project repositories
+
+`.claude/` is gitignored in most project repos, so a skill written there exists
+on one disk and does not survive a clone; skills have sat unversioned that way
+for months. Author an engine skill in this repository. A skill whose subject
+matter belongs to one instance - its clients, its accounts, its personal
+procedures - is authored in the private skill root that
+`AGENTS_INSTANCE_SKILLS_DIR` points at, which is versioned too and never
+published here.

@@ -1,0 +1,30 @@
+---
+globs: "**/*.php"
+description: Laravel + Livewire standards (component boundaries and UX state)
+alwaysApply: false
+---
+
+# Laravel + Livewire
+
+## Component architecture
+
+- Keep Livewire components focused and small; extract domain logic to services/actions.
+- Use Livewire for server-driven interactivity; avoid duplicating the same state logic in Alpine and Livewire.
+- Prefer explicit component names and predictable public properties/actions.
+
+## Validation and state
+
+- Validate inputs at component/action boundaries (Form Requests or Livewire validation rules).
+- Use loading/disabled states (`wire:loading`, `wire:target`) for async actions.
+- Keep side effects explicit; avoid hidden state mutation across unrelated hooks.
+
+## Security and rendering
+
+- Authorize mutations with Policies/Gates in component actions.
+- Treat component input as untrusted; sanitize/validate before persistence.
+- Escape output by default in Blade; only render raw HTML when explicitly sanitized.
+
+## Testing
+
+- Add focused Livewire component tests for critical UI flows.
+- Keep feature tests for end-to-end behavior across HTTP + Livewire boundaries.

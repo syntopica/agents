@@ -1,0 +1,17 @@
+export const PROCEDURE_STOPWORDS = new Set([
+  'the',
+  'a',
+  'an',
+  'to',
+  'for',
+  'of',
+  'in',
+  'on',
+  'with',
+  'and',
+  'or',
+  'by',
+  'at',
+  'from',
+  'via',
+])

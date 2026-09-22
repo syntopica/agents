@@ -1,0 +1,15 @@
+interface:
+  display_name: Project Continuation
+  short_description: Resume interrupted work from git, TODO, plan, and handoff evidence.
+  default_prompt:
+    Reconstruct the real working state from artifacts before touching code, then resume at the
+    smallest unfinished step without re-asking for context.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to the user when the recovered artifacts contradict each other or the interrupted
+    task's scope cannot be reconstructed from evidence.

@@ -1,0 +1,33 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Next.js rendering and performance (RSC-first, dynamic imports, web vitals)
+alwaysApply: false
+---
+
+# Rendering and Performance
+
+## Rendering model
+
+- Prefer Server Components by default.
+- Add `'use client'` only for interactivity, browser APIs, or client-only
+  libraries.
+- Keep client islands small and focused.
+
+## Dynamic imports
+
+- Use `dynamic()` + Suspense for non-critical client features that benefit from
+  split loading.
+- Do not add dynamic boundaries when they increase complexity without measurable
+  benefit.
+
+## Images and scripts
+
+- Use `<Image />` with explicit dimensions or `fill`.
+- Lazy-load non-critical images.
+- Use `<Script />` only when third-party scripts are required.
+
+## Web Vitals focus
+
+- Optimize LCP, CLS, and INP for user-visible pages.
+- Prefer changes that improve default rendering and payload size before
+  introducing micro-optimizations.

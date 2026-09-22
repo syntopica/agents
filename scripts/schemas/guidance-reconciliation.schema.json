@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://busirocket.dev/schemas/guidance-reconciliation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "inputHashes",
+    "shared",
+    "claudeOverlay",
+    "codexOverlay",
+    "claudeDocument",
+    "codexDocument",
+    "documentation",
+    "decisions",
+    "warnings",
+    "unresolvedLimitations"
+  ],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "inputHashes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "shared": { "type": "string", "minLength": 1 },
+    "claudeOverlay": { "type": "string", "minLength": 1 },
+    "codexOverlay": { "type": "string", "minLength": 1 },
+    "claudeDocument": { "type": "string", "minLength": 1 },
+    "codexDocument": { "type": "string", "minLength": 1 },
+    "documentation": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["provider", "url", "retrievedAt"],
+        "properties": {
+          "provider": { "type": "string", "enum": ["claude", "codex"] },
+          "url": { "type": "string", "pattern": "^https://" },
+          "retrievedAt": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "source", "rationale"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["promoted", "preserved", "translated", "removed"]
+          },
+          "source": {
+            "type": "string",
+            "enum": ["shared", "claude", "codex", "rule"]
+          },
+          "rationale": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "unresolvedLimitations": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,20 @@
+---
+description: "Deliverable text is pasted, not read"
+alwaysApply: true
+---
+
+# Text meant to be pasted carries its own line breaks
+
+Unscoped on purpose: the client message, the form answer or the listing that
+the owner will paste elsewhere can be the deliverable of any session, and the
+damage is done at the moment the block is written.
+
+`CLAUDE.md` says such text goes in a fenced block, one paragraph per unbroken
+line. What it omits is the cost: WhatsApp, Slack, mail and web forms reflow
+text themselves, so a paragraph hard-wrapped at 80 columns arrives ragged and
+has to be rejoined by hand — the exact work the block existed to save. Leading
+spaces are worse: the destination renders the message as a code listing.
+
+So no line of the block is indented, a paragraph is one line however long, and
+blank lines are the only breaks. Never run a formatter over such a block. The
+terminal soft-wraps it for reading; the clipboard still holds one line.

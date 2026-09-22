@@ -1,0 +1,29 @@
+---
+description: "The two Claude Code profiles"
+alwaysApply: true
+---
+
+# Claude Code profiles: two accounts, one shared configuration
+
+Two profiles, two Anthropic accounts, two quotas. The personal one is the
+default and is plain `claude`; the secondary one is
+`CLAUDE_CONFIG_DIR="$HOME/<secondary>" claude`, where `<secondary>` is this
+machine's `CLAUDE_SECONDARY_CONFIG_DIR`. Write `$HOME`, never a bare `~`: an
+unexpanded tilde makes Claude Code create `./~/<secondary>/` under the current
+directory, which is how a directory literally named `~` gets created.
+Everything but credentials and session state is shared by symlink; the full map
+is in `claude-profile-safety`.
+
+**Never set `CLAUDE_CONFIG_DIR=~/.claude`.** Unset, Claude Code reads `$HOME/.claude.json`;
+set, it reads `$CLAUDE_CONFIG_DIR/.claude.json`, so pointing it at `~/.claude`
+starts a THIRD, empty profile with its own login and none of the MCP servers.
+It fails silently — servers simply do not appear.
+
+Two more: editing a file under the secondary profile's directory directly is a
+bug (it belongs in `~/.claude` and should be linked, or it is session state);
+and **a missing MCP server reads as a broken browser**, so compare the two
+profiles' server lists before debugging Chrome.
+
+Invoke `claude-profile-safety` before starting a session under another account,
+before editing or linking shared global configuration, and when tools or an
+identity are missing for reasons that are not obvious.

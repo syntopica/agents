@@ -1,0 +1,16 @@
+interface:
+  display_name: BRP Release
+  short_description: Cut a versioned release with changelog, semver bump, and a green-check gate.
+  default_prompt:
+    Collect commits since the last tag, choose the semver bump, update version and changelog, gate
+    on a full check, then tag the release.
+  brand_color: '#6D28D9'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to a bug-fix pass (the brp orchestrator's brp-fix reference) when the pre-release check
+    fails, or to a review pass (its brp-review reference) when the pending changes look unsafe to
+    ship.

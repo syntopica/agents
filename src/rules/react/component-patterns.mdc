@@ -1,0 +1,57 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: React component patterns (strict one-component-per-file)
+alwaysApply: false
+---
+
+# React Component Patterns (strict)
+
+## Component Organization
+
+- **UI components** (`components/ui/`): primitive, reusable, no business logic (Button, Modal, Panel).
+- **Feature components** (`components/<area>/`): organize by domain (app shell, feature-specific UI, shared).
+
+## Component Guidelines
+
+- Keep components small (<100 lines preferred, <200 max); extract sub-components when complexity grows.
+- Prefer components that orchestrate small, single-purpose helpers and hooks.
+
+## One Component Per File (STRICT)
+
+- Exactly one exported component per `.tsx` file.
+- No helper functions inside component files; extract to `utils/`.
+- No inline types; import from `types/`.
+
+## Client vs Server (App Router)
+
+- Prefer Server Components by default.
+- Add `'use client'` only when needed (state/effects/event handlers).
+
+## Folder Namespacing
+
+For complex components with children:
+
+- `components/<area>/Parent/Parent.tsx`
+- `components/<area>/Parent/Header.tsx`
+- `components/<area>/Parent/Footer.tsx`
+
+Avoid repeating the parent name in child filenames.
+
+## Performance
+
+- Memoize expensive computations with `useMemo`.
+- Use `useCallback` for handlers passed to children to avoid unnecessary re-renders.
+- Consider `React.memo` for purely presentational components.
+
+## Accessibility
+
+- Use semantic HTML where appropriate.
+- Add ARIA attributes when needed.
+- Support keyboard navigation where applicable.
+- Maintain sufficient color contrast.
+
+## Testing
+
+- Don't write tests if not requested.
+- Prefer tests next to or under the component (e.g. `__tests__` or colocated test files).
+- Use React Testing Library for component tests; cover behaviour and rendering.

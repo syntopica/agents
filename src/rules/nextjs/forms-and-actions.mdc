@@ -1,0 +1,32 @@
+---
+globs: "**/*.ts,**/*.tsx"
+description: Forms and server action integration (Zod, RHF, next-safe-action)
+alwaysApply: false
+---
+
+# Forms and Actions
+
+## Validation-first forms
+
+- Validate form input at boundaries.
+- If the repo already uses Zod, prefer Zod schemas + inferred types.
+- Keep user-facing validation messages specific and actionable.
+
+## React Hook Form (optional)
+
+- If React Hook Form is already in the repo, prefer it for non-trivial forms.
+- Do not introduce RHF for tiny one-field forms unless consistency requires it.
+
+## Server actions integration
+
+- Prefer typed server actions for form submissions.
+- If `next-safe-action` is present, prefer it for action typing and safe input
+  handling.
+- Keep a consistent action result shape:
+  - success: `{ ok: true, data }`
+  - failure: `{ ok: false, error: { code, message } }`
+
+## Error model
+
+- Expected validation/domain failures return typed results.
+- Unexpected failures throw and are handled by boundaries.

@@ -1,0 +1,53 @@
+---
+globs: "**/*.py"
+description: Python schema-driven development and UV-based tooling
+alwaysApply: false
+---
+
+# Python Standards (Schema-Driven + UV)
+
+## Core Principles
+
+- **Schema first**: Define data models and interfaces in schemas before implementation.
+- **UV for environments**: Use `uv venv` (not `pip venv`); use `uv pip` for install/sync/compile.
+- **Strict pinning**: Pin dependencies strictly; use `uv pip sync` with requirements; use `uv pip compile` for requirements.
+- **Type hints**: Use type hints consistently; generate type stubs from schemas when applicable.
+
+## Project Structure
+
+- Use proper package layout (e.g. `src/` layout).
+- Follow PEP 8, 484, 517, 621.
+- Avoid ad-hoc types and circular imports. Do not centralise types in a shared
+  `schema.py`: `codeality-py`'s BPY002 file-matches-unit requires each unit in a
+  file named after it, and a central schema module fails it (measured 2026-09-18).
+- Maintain schema-to-code documentation.
+
+## Code Organization
+
+- Define interfaces in schemas; implement clean architecture; follow SOLID.
+- Use absolute imports over relative where appropriate.
+- Document code and schemas; keep schema and docs synchronized.
+- Never write implementations before schemas; never mix package boundaries.
+
+## Dependency Management
+
+- Use UV for all package operations (uv pip sync, uv pip compile).
+- Do not use `pip` directly or global packages.
+- Handle dev dependencies separately; version interfaces; update with validation.
+
+## Testing & Validation
+
+- Define validation rules in schemas; write unit tests against schemas.
+- Implement integration tests; use proper fixtures; test edge cases and error scenarios.
+- Generate validators from schemas; do not skip schema validation or test isolation.
+
+## Quality
+
+- Use schema-based generators where helpful; implement proper linting and style guides.
+- Use static analysis; monitor complexity; validate generated code.
+- Use structured logging; handle errors with schema validation where appropriate.
+
+## Packaging
+
+- Use proper packaging (pyproject.toml); handle versioning for schemas and code.
+- Include schema metadata; provide schema validation tools; maintain UV-compatible requirements.

@@ -1,0 +1,51 @@
+---
+globs: "**/*.css,**/*.scss,**/*.sass,**/*.less,**/*.tsx,**/*.jsx,**/*.vue,**/*.svelte,**/*.html,**/*.astro,**/*.blade.php"
+description: Tailwind state and accessibility (focus-visible, disabled, aria/data variants)
+alwaysApply: false
+---
+
+# Tailwind State and Accessibility
+
+- Interactive components must have visible `focus-visible` styles.
+- Prefer ring-based focus over removing outlines.
+- Disabled states should be explicit:
+  - `disabled:opacity-50 disabled:pointer-events-none`
+- Prefer `aria-*` and `data-*` variants for state-driven styling (especially Radix/Shadcn patterns).
+- Do not hide information needed by assistive technology.
+
+## Cursor affordance
+
+- Every clickable gets `cursor-pointer`: buttons, links, custom clickables (`div`/`span` with `onClick`), menu items, tabs, toggles, sortable headers, clickable rows/cards.
+- **Tailwind v4 Preflight sets `<button>` to `cursor: default`** — the browser no longer shows a pointer on buttons. Add `cursor-pointer` explicitly on every button/clickable, or restore it once in the base layer: `@layer base { button:not(:disabled), [role="button"]:not([aria-disabled="true"]) { cursor: pointer } }`. This is the usual cause of "no pointer cursor on anything."
+- Disabled controls use `cursor-not-allowed` (with `disabled:pointer-events-none`), never `cursor-pointer`.
+- Match other affordances to the action: `cursor-text`, `cursor-grab`/`cursor-grabbing`, `cursor-col-resize`, `cursor-wait`.
+
+## Full state set
+
+- Every interactive element ships `hover`, `focus-visible`, `active`, and `disabled` — not just the resting style.
+- Add a short `transition` (e.g. `transition-colors`) so state changes aren't jarring.
+- Async triggers disable themselves and show a pending state (spinner/skeleton) to block double-submit.
+- Keep hit areas ≥ 44×44px on interactive controls.
+- Non-native clickables need `role`, `tabIndex={0}`, and Enter/Space handlers — then all the states above still apply.
+
+## Most-missed clickables (audit by name)
+
+Repeatedly shipped without `cursor-pointer`/states — check each explicitly:
+
+- Icon-only buttons (close `×`, kebab `⋮`, chevrons, FABs).
+- Dropdown / select / combobox triggers (a `<button>` or `<div>` opening a listbox).
+- Tabs, segmented controls, toggles, switches, chips, pills.
+- Clickable table rows, sortable column headers, pagination controls.
+- Cards / list items that navigate on click; avatars/badges that open menus.
+- Accordion headers, disclosure triangles, breadcrumb links.
+
+## Self-check before delivering UI
+
+Do not call a UI done until, element by element:
+
+1. Every clickable has `cursor-pointer` (disabled → `cursor-not-allowed` + handler actually blocked).
+2. `hover`, `focus-visible`, `active`, and `disabled` are all styled — not just the resting state.
+3. A keyboard user can reach and operate it (visible focus ring; Enter/Space on non-native clickables).
+4. Async triggers disable + show a pending state (no double-submit).
+
+If you cannot point to where each of these is implemented for a control, it is not done.

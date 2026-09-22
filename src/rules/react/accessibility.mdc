@@ -1,0 +1,31 @@
+---
+globs: "**/*.ts,**/*.tsx,**/*.jsx"
+description: React accessibility baseline (semantic HTML, keyboard support, forms)
+alwaysApply: false
+---
+
+# Accessibility Baseline
+
+## Semantics first
+
+- Prefer semantic elements (`button`, `a`, `nav`, `main`, `header`, `section`) over generic `div` wrappers.
+- Do not use a `div` as a button unless unavoidable.
+
+## Keyboard and focus
+
+- Interactive UI must be operable with keyboard.
+- Preserve visible focus states; do not remove focus outlines without an accessible replacement.
+
+## ARIA usage
+
+- Add ARIA only when semantics are insufficient.
+- Keep `aria-label`/`aria-describedby` aligned with visible intent.
+
+## Forms
+
+- Inputs need accessible labels.
+- Validation and error messages must be programmatically associated with fields.
+
+## Contrast
+
+- Ensure text and interactive controls maintain accessible contrast in light and dark themes.

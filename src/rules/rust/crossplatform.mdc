@@ -1,0 +1,31 @@
+---
+globs: "**/*.rs"
+description: Cross-platform Rust conditional compilation
+alwaysApply: false
+---
+
+# Cross-platform Rust
+
+## Goal
+
+Compile cleanly on supported targets (Windows/Linux/macOS) without cfg-related warnings/errors.
+
+## Rules
+
+- Use `#[cfg(...)]` for platform-specific code paths. Do not use `cfg!()` with platform-specific APIs.
+- Scope platform-specific imports inside the matching `#[cfg]` block or module.
+- Prefer target families (`unix`, `windows`) when behavior is family-wide.
+- Use `any()`, `all()`, `not()` predicates for readable conditions.
+- Keep platform implementations in separate modules with a unified public interface.
+- Keep Cargo target dependencies under `[target.'cfg(...)'.dependencies]`.
+
+## Common pitfalls
+
+- `cfg!()` still type-checks all branches; this breaks with `std::os::windows::*` imports on Unix.
+- Hiding conditional compilation issues with `#[allow(unused_imports)]`.
+- Over-specific predicates when a family predicate is enough.
+
+## Validation
+
+- Check cfg values with `rustc --print=cfg` (or a specific `--target`).
+- Run formatting/lints/tests on relevant targets in CI when possible.

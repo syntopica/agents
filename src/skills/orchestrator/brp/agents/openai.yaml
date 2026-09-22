@@ -1,0 +1,15 @@
+interface:
+  display_name: BRP Orchestrator
+  short_description: Route BRP commands to the right workflow and ruleset.
+  default_prompt:
+    Detect the task intent, choose the right BRP workflow, and hand off with the minimum rules and
+    context needed for style-faithful execution.
+  brand_color: '#0F766E'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Fall back to the narrowest BRP workflow that preserves correctness when stack or task routing
+    signals conflict.

@@ -1,0 +1,15 @@
+interface:
+  display_name: Stakeholder Recap
+  short_description: Channel-history-first status recaps with every claim backed by evidence.
+  default_prompt:
+    Read the channel history, cross-check progress claims against commits and deploys, and draft a
+    stakeholder recap that follows the communication norms without restating what was sent.
+  brand_color: '#4338CA'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Escalate to the user when channel history is inaccessible, when a progress claim has no
+    verifiable artifact behind it, or before anything is posted externally.

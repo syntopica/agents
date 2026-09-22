@@ -1,0 +1,23 @@
+---
+globs: "**/*.rs"
+description: RON (Rusty Object Notation) usage
+alwaysApply: false
+---
+
+# RON Guidance
+
+## Scope
+
+Use when editing `.ron` files or Rust code that serializes/deserializes RON.
+
+## Rules
+
+- Keep `.ron` human-readable (trailing commas, concise comments where helpful).
+- Prefer raw strings (`r#"..."#`) in Rust for multiline or escaped RON payloads.
+- Prefer `serde` derives for domain types.
+- Surface parse/serialize errors with context; avoid silent fallbacks.
+
+## Typical APIs
+
+- Deserialize: `ron::de::from_str::<T>(...)`
+- Serialize: `ron::ser::to_string(...)`
