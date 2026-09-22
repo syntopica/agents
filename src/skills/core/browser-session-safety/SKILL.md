@@ -144,6 +144,24 @@ Chrome" to the wrong process; chrome-cli still hits the real one.
      Real key events (`pressSequentially`) work, so type the text; a 1,500
      character answer costs about twenty seconds at a 12 ms delay.
 
+   - **The relay opens its connect page in the last-used Chrome profile that has
+     the extension, not in the profile its token belongs to.** Measured
+     2026-09-22 under the secondary Claude profile: both `playwright-chrome` and
+     `playwright-busirocket` failed with
+     `Playwright extension did not connect within 30s … Chrome profile "Default"`,
+     because Chrome's `profile.last_used` was `Default` and each server's token
+     belongs to another profile. Opening any URL with
+     `open -na "Google Chrome" --args --profile-directory="Profile 2"` first
+     made the next `browser_tabs` call connect through `playwright-busirocket`
+     with no config change. The durable fix is `--profile-dir-name "<dir>"` in
+     that server's `args`.
+   - **A tab that is not in the front window gets no keystrokes.** With the
+     relay tab hidden (`document.hidden === true`) behind the owner's window,
+     `pressSequentially` typed nothing and screenshots timed out, while
+     `page.fill`, `page.evaluate`, in-page `.click()` and the network log all
+     worked. Drive a hidden tab with fill and DOM events, never with key events,
+     and never raise the window to fix it: the owner's front window is theirs.
+
    `browser_run_code_unsafe` echoes the whole script back in its result, so a
    script with a base64 file embedded blows the result limit and lands in a
    tool-results file. Keep the verification the script returns small and read it
