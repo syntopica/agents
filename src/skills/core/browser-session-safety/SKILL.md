@@ -128,7 +128,27 @@ Chrome" to the wrong process; chrome-cli still hits the real one.
    the real Chrome with `--autoConnect`: it auto-attaches to every one of the
    hundreds of open tabs and never answers. Claude in Chrome only acts inside
    its own tab group and needs a manual Connect per profile, so it is the last
-   of these.
+   of these. Two traps measured on 2026-09-22 while filling an Ashby form
+   through `playwright-chrome`:
+
+   - **1Password closes the tab when a `type=email` input takes focus.** Every
+     route into it — `locator.click()`, `locator.fill()` and the first key event
+     — came back as `Target page, context or browser has been closed` or
+     `Protocol error (Input.dispatchKeyEvent): Detached while handling command`,
+     four times in a row, losing a filled form each time. Setting
+     `data-1p-ignore` on the input from `page.evaluate` before focusing it stops
+     it, and that is also what names the cause. Every other field typed
+     normally, so read a tab that dies on one specific field as the password
+     manager, not as a broken relay.
+   - **`page.keyboard.insertText` detaches the tab outright** on this transport.
+     Real key events (`pressSequentially`) work, so type the text; a 1,500
+     character answer costs about twenty seconds at a 12 ms delay.
+
+   `browser_run_code_unsafe` echoes the whole script back in its result, so a
+   script with a base64 file embedded blows the result limit and lands in a
+   tool-results file. Keep the verification the script returns small and read it
+   from that file's first few hundred bytes.
+
 3. **A separate browser only when unavoidable** (parallel runs, tests of our own
    app that must not touch real sessions), and then always a persistent profile
    on the real Google Chrome binary with the password manager extension
