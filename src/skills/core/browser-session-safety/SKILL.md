@@ -18,18 +18,21 @@ each, and the trusted-device state banks demand. A browser launched with a
 temporary or isolated profile has none of it and is unusable for any logged-in
 site, so do not launch one for that.
 
-0a. **A page that needs no owner login goes to Orca's embedded browser first**
-(owner decision 2026-09-23): application forms, public boards, anything an API
-does not cover. `orca tab create --url`, `snapshot`, `fill`, `upload`, `click`,
-`eval`; full command list in the `orca-cli` skill. It shares no tab and no focus
-with the owner, so none of the traps below apply, and Ashby's bot gate accepted
-it where a Playwright-launched Chrome was refused. It also holds the sessions
-imported from the real Chrome through Orca's UI: `orca tab profile list --json`
-lists them (Cristian as `default`, Favish, BusiRocket; imported 2026-08-08), and
-on 2026-09-23 Favish and BusiRocket still carried a live LinkedIn `li_at` while
-`default` landed on the authwall. Switch a tab with
-`orca tab profile set --page <browserPageId> --profile <id>` and confirm with
-`orca cookie get` before reading the page as logged in;
+0a. **Every page Orca can reach goes to Orca's embedded browser first** (owner
+decision 2026-09-23, repeated 2026-09-24 as "always when you can"): application
+forms, public boards, anything an API does not cover, and logged-in sites an
+Orca profile can sign into (email+password or magic link). Chrome is the
+fallback only when no Orca profile can log in, typically Google SSO with no
+password on record. `orca tab create --url`, `snapshot`, `fill`, `upload`,
+`click`, `eval`; full command list in the `orca-cli` skill. It shares no tab and
+no focus with the owner, so none of the traps below apply, and Ashby's bot gate
+accepted it where a Playwright-launched Chrome was refused. It also holds the
+sessions imported from the real Chrome through Orca's UI:
+`orca tab profile list --json` lists them (Cristian as `default`, Favish,
+BusiRocket; imported 2026-08-08), and on 2026-09-23 Favish and BusiRocket still
+carried a live LinkedIn `li_at` while `default` landed on the authwall. Switch a
+tab with `orca tab profile set --page <browserPageId> --profile <id>` and
+confirm with `orca cookie get` before reading the page as logged in;
 `orca tab profile create --scope imported` only creates an empty profile, the
 import itself is a UI action. A site none of the imported profiles is logged
 into still needs the real Chrome below.
