@@ -86,6 +86,20 @@ Everything else tried that day failed, and each failure is silent or expensive:
   `chrome-cli activate -t <tab-id>`. The password manager window kept the front
   in both cases. Do not build a read on top of a raise, and if you do raise,
   verify with `chrome-cli info` before acting rather than assuming it took.
+  **The flag that does raise it is `--focus`**:
+  `chrome-cli activate -t <id> --focus` brought a background window to the front
+  on 2026-09-23 where the AppleScript above had just failed on the same window.
+  It is in `chrome-cli --help` and was missed for a year.
+- **A raise you won is not a raise you keep.** With the owner at the keyboard
+  the same night, the front window changed back between two consecutive
+  `execute` calls, and the second landed on his X timeline while the script
+  still believed it was on a Stripe settings page. So make every `execute`
+  self-guarding: begin the script with
+  `if (!location.href.includes("<the page you mean>"))` and return the wrong URL
+  instead of acting. The guard costs one line and is the only thing that turns
+  this failure from silent into visible — it caught the very next call. When the
+  owner is actively browsing, stop driving their Chrome rather than racing them
+  for the front window.
 - **The Playwright extension MCP hung on `browser_tabs list`**, past 120 s, on a
   Chrome holding hundreds of tabs. Same shape as the `chrome-devtools`
   `--autoConnect` trap: tab enumeration is what does not scale here.
