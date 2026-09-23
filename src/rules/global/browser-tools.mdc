@@ -8,8 +8,8 @@ alwaysApply: true
 **Use Orca's embedded browser whenever it can do the job** (owner order,
 repeated 2026-09-24). It shares no tab and no focus with the owner or other
 sessions. Check `orca tab profile list --json` for a profile holding the login;
-fall back to Chrome only when no Orca profile can log in (usually Google SSO),
-and say so.
+if none does, ask the owner to import that Chrome profile in Orca's UI (no CLI
+for it) before falling back to Chrome.
 
 The real Chrome carries what an automation browser cannot reproduce: many
 authenticated profiles, their password managers, trusted-device state. Routing
