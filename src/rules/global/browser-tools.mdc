@@ -1,19 +1,22 @@
 ---
-description: "Orca browser first; real Chrome only for logged-in sites"
+description: "Orca browser always; the real Chrome is read-only"
 alwaysApply: true
 ---
 
-# Browser control: Orca first, then the real Chrome, never a fresh profile
+# Browser control: Orca always, the real Chrome only to read, never a fresh profile
 
-**Use Orca's embedded browser whenever it can do the job** (owner order,
-repeated 2026-09-24). It shares no tab and no focus with the owner or other
-sessions. Check `orca tab profile list --json` for a profile holding the login;
-if none does, ask the owner to import that Chrome profile in Orca's UI (no CLI
-for it) before falling back to Chrome.
+**Every browser task runs in Orca's embedded browser** (owner order 2026-09-25:
+"usa orca browser como primario siempre... que no me roba el foco"). It shares
+no tab and no focus with the owner or other sessions. The real Chrome is not
+the fallback for a missing login: check `orca tab profile list --json`, and if
+no profile holds it, ask the owner to import that Chrome profile in Orca's UI
+(no CLI for it) or to sign in inside Orca. A locked screen is not permission:
+on 2026-09-25 a session drove Chrome to Product Hunt while it was locked, and
+the owner was back at the keyboard, on another tab, before the next write.
 
-The real Chrome carries what an automation browser cannot reproduce: many
-authenticated profiles, their password managers, trusted-device state. Routing
-inside Chrome and its traps are in `browser-session-safety`. Before it loads:
+What the real Chrome may still do is answer without focus: `chrome-cli source -t
+<id>` and `info -t <id>` read a tab wherever it sits. Its traps are in
+`browser-session-safety`. Before it loads:
 
 **A temporary or isolated Chrome profile is unusable for any logged-in site.**
 Never substitute one, and never copy cookies between profiles.
