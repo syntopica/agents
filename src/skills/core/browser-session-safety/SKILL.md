@@ -1,37 +1,46 @@
 ---
 name: browser-session-safety
 description:
-  Driving or troubleshooting a real browser — chrome-cli, Playwright MCP, Chrome
-  profiles and identities, and reading or clicking a logged-in page. Trigger
-  when a task is about to issue its first browser command, when a browser action
-  fails for want of an identity or a login, and when a window or tab that is not
-  certainly yours is about to be closed. Do not use for fetching a public URL or
-  for headless test runs of your own app.
+  Driving or troubleshooting a browser — Orca's embedded browser first and
+  always, then chrome-cli, Playwright MCP, Chrome profiles and identities, and
+  reading or clicking a logged-in page. Trigger when a task is about to issue
+  its first browser command, when a browser action fails for want of an identity
+  or a login, and when a window or tab that is not certainly yours is about to
+  be closed. Do not use for fetching a public URL or for headless test runs of
+  your own app.
 allowed-tools: Read, Grep, Glob, Bash
 ---
 
-# Browser control: the real Chrome, never a fresh profile
+# Browser control: Orca always, the real Chrome only to read, never a fresh profile
 
-Owner preference. The user's real Chrome carries what an automation browser
-cannot reproduce: many authenticated profiles, the password manager extension in
-each, and the trusted-device state banks demand. A browser launched with a
-temporary or isolated profile has none of it and is unusable for any logged-in
-site, so do not launch one for that.
+Owner order, 2026-09-25: "usa orca browser como primario siempre... que no me
+roba el foco". The real Chrome carries what an automation browser cannot
+reproduce: many authenticated profiles, the password manager extension in each,
+and the trusted-device state banks demand. That is why a login missing in Orca
+is fixed by importing the Chrome profile into Orca, not by driving Chrome. A
+browser launched with a temporary or isolated profile has none of it and is
+unusable for any logged-in site, so do not launch one for that.
 
-0a. **Every page Orca can reach goes to Orca's embedded browser first** (owner
-decision 2026-09-23, repeated 2026-09-24 as "always when you can"): application
-forms, public boards, anything an API does not cover, and logged-in sites an
-Orca profile can sign into. When none holds the login (typically Google SSO with
-no password on record), ask the owner to import that Chrome profile into Orca
-through its UI (the CLI cannot) before falling back to Chrome; on 2026-09-24 a
+0a. **Every browser task runs in Orca's embedded browser** (owner decision
+2026-09-23, "always when you can" on 2026-09-24, "siempre" on 2026-09-25):
+application forms, public boards, anything an API does not cover, and every
+logged-in site. When no Orca profile holds the login (typically Google SSO or
+GitHub with no password on record), ask the owner to import that Chrome profile
+into Orca through its UI (the CLI cannot) or to sign in inside Orca's browser;
+do not fall back to Chrome, not even with the screen locked. On 2026-09-24 a
 Resend SSO login went through Chrome Profile 18 when an import would have kept
-it in Orca. `orca tab create --url`, `snapshot`, `fill`, `upload`, `click`,
-`eval`; full command list in the `orca-cli` skill. It shares no tab and no focus
-with the owner, so none of the traps below apply, and Ashby's bot gate accepted
-it where a Playwright-launched Chrome was refused. It also holds the sessions
-imported from the real Chrome through Orca's UI: `orca tab profile list --json`
-lists them (Cristian as `default`, Favish, BusiRocket; imported 2026-08-08), and
-on 2026-09-23 Favish and BusiRocket still carried a live LinkedIn `li_at` while
+it in Orca; on 2026-09-25 a session logged into Product Hunt through the real
+Chrome with the screen locked, and the owner was back at the keyboard on another
+tab before the next write, which is exactly the focus theft the order forbids.
+The Chrome sections below stay for reading (`chrome-cli source -t`, `info -t`,
+which take no focus) and for the day an owner explicitly asks for Chrome.
+`orca tab create --url`, `snapshot`, `fill`, `upload`, `click`, `eval`; full
+command list in the `orca-cli` skill. It shares no tab and no focus with the
+owner, so none of the traps below apply, and Ashby's bot gate accepted it where
+a Playwright-launched Chrome was refused. It also holds the sessions imported
+from the real Chrome through Orca's UI: `orca tab profile list --json` lists
+them (Cristian as `default`, Favish, BusiRocket; imported 2026-08-08), and on
+2026-09-23 Favish and BusiRocket still carried a live LinkedIn `li_at` while
 `default` landed on the authwall. Switch a tab with
 `orca tab profile set --page <browserPageId> --profile <id>` and confirm with
 `orca cookie get` before reading the page as logged in;
