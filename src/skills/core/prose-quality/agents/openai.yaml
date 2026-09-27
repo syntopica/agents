@@ -1,0 +1,15 @@
+interface:
+  display_name: Prose Quality
+  short_description: Edit or audit prose for AI writing patterns while keeping the writer's voice.
+  default_prompt:
+    Read the draft, name its reader, cut the inflated words, formulaic structures and decorative
+    formatting listed in the patterns reference, and return the edited draft with what changed.
+  brand_color: '#B45309'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: true
+  failure_mode:
+    Ask the user when the draft's reader or purpose cannot be identified, and flag unsourced claims
+    instead of inventing sources.

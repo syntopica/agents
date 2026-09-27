@@ -1,13 +1,12 @@
 ---
 name: browser-session-safety
 description:
-  Driving or troubleshooting a browser — Orca's embedded browser first and
-  always, then chrome-cli, Playwright MCP, Chrome profiles and identities, and
-  reading or clicking a logged-in page. Trigger when a task is about to issue
-  its first browser command, when a browser action fails for want of an identity
-  or a login, and when a window or tab that is not certainly yours is about to
-  be closed. Do not use for fetching a public URL or for headless test runs of
-  your own app.
+  Driving or troubleshooting a browser, Orca's embedded browser first, then
+  chrome-cli, Playwright MCP, Chrome profiles and logged-in pages. Trigger when
+  a task is about to issue its first browser command, when a browser action
+  fails for want of an identity or a login, and when a window or tab that is not
+  certainly yours is about to be closed. Do not use for fetching a public URL or
+  for headless test runs of your own app.
 allowed-tools: Read, Grep, Glob, Bash
 ---
 

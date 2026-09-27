@@ -123,6 +123,9 @@
         "@rules/core/git-workflow.mdc"
       ]
     },
+    "prose-quality": {
+      "rules": ["@rules/core/text-hygiene.mdc"]
+    },
     "reference-coverage": {
       "rules": ["@rules/core/agent-discipline.mdc"]
     },
