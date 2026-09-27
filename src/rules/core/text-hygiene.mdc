@@ -33,6 +33,12 @@ of converting it costs more than the convention does.
 Edit the lines the task touches. Never sweep a file for punctuation you had no
 other reason to change.
 
+## Prose style
+
+This rule covers characters, not wording. For prose a person will read, the
+`prose-quality` skill cuts AI writing patterns: inflated words, formulaic
+structures, decorative formatting.
+
 ## Output discipline
 
 Speak up only when the reader has to act: a `never introduce` character sitting

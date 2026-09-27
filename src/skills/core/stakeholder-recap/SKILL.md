@@ -22,7 +22,8 @@ argument-hint: [channel-or-stakeholder]
 - Follow the instance's disclosure norms if it has a page for them. Absent one:
   outcome first, system health second, pointer to the ticket for depth, 3-5
   sentences; never inline the found-and-fixed list to a non-technical audience.
-- Draft in the language and register the channel already uses.
+- Draft in the language and register the channel already uses, and run the
+  `prose-quality` skill in write mode before showing the draft.
 - Never post without the user seeing the draft first, and never send credentials
   or internal details into an external channel.
 

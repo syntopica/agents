@@ -14,6 +14,7 @@ argument-hint: [target-or-topic]
 ## Rules
 
 - Avoid time-sensitive references ("recently", "in the next release").
+- Apply the `prose-quality` skill in write mode to every prose section.
 - Include runnable examples wherever possible, and run each example command
   before publishing it; an example that was never executed is a guess, not
   documentation.
