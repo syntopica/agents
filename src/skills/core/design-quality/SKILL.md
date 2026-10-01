@@ -76,7 +76,11 @@ Group findings by route, then by rule, errors first. One line each:
    visual review while the phone menu opened onto a drawer with no links, and
    the owner found it. At the phone viewport, open the navigation menu, every
    dialog trigger in the header and one row action, and confirm each reveals
-   working controls, closes on Escape and returns focus or navigates.
+   working controls, closes on Escape and returns focus or navigates. Then use
+   one form the way its user would: focus a field, type, submit. The same day a
+   14px reply box made iOS Safari zoom the inbox on focus and cut off Send;
+   `input-zoom` now measures that, but a typed-in form still shows what a still
+   frame cannot.
 3. Walk `references/rubric.md` section by section. For an admin, CRM or other
    operational tool, also walk `references/admin-rubric.md`: about 100 concrete
    items (tables, forms, threads, dashboards, states), each with its source and
