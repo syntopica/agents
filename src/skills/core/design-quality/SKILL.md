@@ -70,11 +70,18 @@ Group findings by route, then by rule, errors first. One line each:
 1. Read `report.json`. Open the widest light screenshot, the phone one and the
    widest dark one of each route with the Read tool. Look at them as the person
    who uses the screen every day would.
-2. Walk `references/rubric.md` section by section. For an admin, CRM or other
+2. Operate what a screenshot shows closed. Screenshots, the rules and a
+   screenshot reviewer all see a menu, drawer or dialog only in its resting
+   state: on 2026-10-01 a 66-route admin sweep passed both `check` and a Codex
+   visual review while the phone menu opened onto a drawer with no links, and
+   the owner found it. At the phone viewport, open the navigation menu, every
+   dialog trigger in the header and one row action, and confirm each reveals
+   working controls, closes on Escape and returns focus or navigates.
+3. Walk `references/rubric.md` section by section. For an admin, CRM or other
    operational tool, also walk `references/admin-rubric.md`: about 100 concrete
    items (tables, forms, threads, dashboards, states), each with its source and
    whether a rule already measures it.
-3. Report in three groups, each item with route, element or area, why it matters
+4. Report in three groups, each item with route, element or area, why it matters
    to the person using the screen, and the fix in one line:
    - **Defects** - every `check` finding, quoted, plus visual breakage the rules
      cannot see (overlaps in screenshots, broken images, a state that reads as
@@ -83,7 +90,7 @@ Group findings by route, then by rule, errors first. One line each:
    - **Missing** - what the screen needs to do its job and does not have:
      states, controls, information. Name the job first; a missing piece is
      missing relative to a job.
-4. Rank inside each group by how often the person hits it, not by how easy it is
+5. Rank inside each group by how often the person hits it, not by how easy it is
    to fix. Then offer redesign.
 
 ## 4. redesign mode
