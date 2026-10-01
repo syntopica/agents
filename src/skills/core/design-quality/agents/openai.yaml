@@ -1,0 +1,15 @@
+interface:
+  display_name: Design Quality
+  short_description: Measure a running UI with codeality-ui, review it against a rubric, and redesign it until the gate is clean.
+  default_prompt:
+    Run codeality-ui check on the routes in question, read the screenshots against the rubric,
+    and report defects, improvements and missing pieces; redesign only when asked.
+  brand_color: '#DB2777'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: true
+  failure_mode:
+    Stop and report the exit code and stderr when codeality-ui cannot run; never judge a screen
+    from source code alone or invent findings without a screenshot or report line behind them.
