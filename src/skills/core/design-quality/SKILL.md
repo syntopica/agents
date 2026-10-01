@@ -39,13 +39,21 @@ rule cannot see.
    `palette` from the project's own tokens (root custom-property prefixes such
    as `--brand-`, `--gray-`, plus `#ffffff`): without it the palette rule is
    off.
-2. Credentials come from the password manager into the environment for the one
+2. Judge the whole area, not the page that was named: every list, and for each
+   one a detail, a "new" and an "edit" page. Take real ids from the links each
+   list renders; when a local table is empty, seed a clearly labelled local
+   fixture (and its undo script) rather than skipping the page. On TienesLaVibra
+   the first full run (61 routes) found 297 findings, most of them on child
+   pages nobody had opened.
+3. Credentials come from the password manager into the environment for the one
    command, never into the file, the chat or a commit:
    `UI_QUALITY_USER="$(op read ...)" UI_QUALITY_PASSWORD="$(op read ...)" codeality-ui check --json`.
-3. A local dev server is the default target; production is fine for `check` and
-   `review` because they only read. Never point `redesign` verification at
-   production before the change is deployed.
-4. Exit 0 or 1 is a result. Exit 2 is configuration (read stderr), exit 3 a
+4. A local dev server is the default target; production is fine for `check` and
+   `review` when the pages only read. Some pages write on view (an inbox thread
+   marks itself read), so check what a route does before pointing at production.
+   Never point `redesign` verification at production before the change is
+   deployed.
+5. Exit 0 or 1 is a result. Exit 2 is configuration (read stderr), exit 3 a
    browser or page failure (Playwright browsers missing:
    `pnpm exec playwright install chromium`).
 
@@ -62,7 +70,10 @@ Group findings by route, then by rule, errors first. One line each:
 1. Read `report.json`. Open the widest light screenshot, the phone one and the
    widest dark one of each route with the Read tool. Look at them as the person
    who uses the screen every day would.
-2. Walk `references/rubric.md` section by section.
+2. Walk `references/rubric.md` section by section. For an admin, CRM or other
+   operational tool, also walk `references/admin-rubric.md`: about 100 concrete
+   items (tables, forms, threads, dashboards, states), each with its source and
+   whether a rule already measures it.
 3. Report in three groups, each item with route, element or area, why it matters
    to the person using the screen, and the fix in one line:
    - **Defects** - every `check` finding, quoted, plus visual breakage the rules
@@ -81,7 +92,11 @@ Group findings by route, then by rule, errors first. One line each:
    list as the baseline of this change.
 2. Agree the scope from the review (or the creative direction). Change the code
    where the design system lives: tokens and shared components before one-off
-   classes. Keep the project's stack, conventions and file rules.
+   classes. Keep the project's stack, conventions and file rules. When a model
+   writes the change (yourself, a subagent or Codex), give it a concrete
+   specification, not taste words: `references/prompting.md` has what the
+   Anthropic and OpenAI guides recommend and an `<admin_ui>` block ready to
+   paste for operational screens.
 3. Re-run `codeality-ui check` after each change. Never silence a finding with
    `disable` to get to zero; a `disable` entry needs a reason a reviewer would
    accept, written in the file.
