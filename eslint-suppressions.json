@@ -1,0 +1,792 @@
+{
+  "scripts/commands/buildLlmsTxt.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/commands/configureCloudflareManagedOAuth.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 6
+    }
+  },
+  "scripts/commands/generateLlmsTxt.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/commands/libraryClassify.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/commands/processors/populateCanonicalSkillsDir.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/commands/verifyIndexOnlyOutput.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/constants/skills.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/codex-state/rebuildDerivedDatabase.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/connectors/parseConnectorManifest.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/CONVERSATION_EXPORT_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/CONVERSATION_SEGMENT_FORMAT_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/conversations/ConversationArchiveState.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 4
+    }
+  },
+  "scripts/lib/conversations/benchmarkConversationSegments.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/captureConversationArtifactsIncrementally.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/collectConversationEventVariants.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/conversationArtifactCacheHit.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/conversationEventFromRecord.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/deriveConversationFragmentSetProvenance.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/evaluateConversationSegmentBenchmark.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/createConversationCaptureInstallation.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/createConversationFragment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/createConversationScratchDirectory.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/exportConversationFixtureArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/planFragmentErasure.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/seedConversationSegmentArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/writeClaudeConversationArtifact.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/fixtures/writeDamagedConversationArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/importConversationExport.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/initializeConversationArchiveGeneration.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/migrateConversationArchiveToSegments.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/openConversationArchiveState.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/planConversationArchiveErasure.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/publishConversationCapture.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/conversations/publishConversationSegment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/readArchiveRevision.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/readConversationArchiveGeneration.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/readConversationArchiveSegment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/renderConversationArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/rewriteConversationArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/rewriteConversationRecord.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/conversations/runConversationCapturePass.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/serializeConversationSegment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/streamJsonlConversationRecord.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/conversations/validators/validateConversationSegment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/conversations/verifyConversationSegmentArchive.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/GUIDANCE_SYNC_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/applyGuidanceFastPath.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/applyGuidanceResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/collectGuidanceSources.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/createGuidanceSnapshot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/createSandboxCommand.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/guidanceDoctor.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/guidanceRollback.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/guidanceTargets.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/parseAcceptedGuidanceState.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/parseGuidanceInputHashes.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/parseGuidancePolicy.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/parseReconciliationResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/readGuidanceDocuments.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/guidance/readGuidanceLockObservation.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/resolveGuidanceFastPath.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/restoreGuidanceSnapshot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/guidance/validators/validateReconciliationResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/hooks/constants/ROUTER_FIXTURES.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/hooks/findUnreachableHooks.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/hooks/runBackgroundJobGuard.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/hooks/runPausedJobGuard.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/hooks/runRouterHook.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/hooks/runStopGate.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/cli/readLoopConfig.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/library/cli/readSkillLock.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/installPlannedLinks.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/library/learning/aggregateProcedures.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/library/learning/canonicalizeProcedureNames.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/learning/collectSkillInvocations.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/learning/parseClassifierOutput.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/library/learning/readTranscriptTurns.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/learning/runRouterProbe.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/learning/toCodexInvocationText.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/library/mergeSeedIntoManifest.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/resolveLinkDir.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/library/runPatchCommand.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/cleanGlobalPrefix.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/collectCodexSkillTrimPaths.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/compileAgentsForCodex.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/copySkillToTargetWithTransform.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/copySkillsToTarget.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/findIde.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/linkAgentsToClaude.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/linkAgentsToCodex.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/link/operations/linkOneWithBackup.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/cli/resolveSelectedDomains.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/machine/cli/resolveServicesPaths.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/capabilities/applySelectedCapabilityLinks.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/capabilities/formatters/formatCapabilityApplyResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/capabilities/planCapabilityLinks.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/capabilities/toCapabilityMessages.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/IDEMPOTENCY_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 4
+    }
+  },
+  "scripts/lib/machine/domains/mcp/WRITE_CURSOR_CONFIG_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/WRITE_GEMINI_SETTINGS_TEST.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/applySelectedMcp.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/capture/captureMcpManifest.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/capture/toCapturedServer.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/capture/toCapturedValues.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/capture/toLiveServer.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/fixtures/readClaudeServersFromFile.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/toMcpApplyDomain.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/writeCursorConfig.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/mcp/writeGeminiSettings.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/apply.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/findOrphanCacheDirectories.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/findStaleCacheEntries.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/plan.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/planDeclaredPlugin.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/planEnablement.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/planRemovals.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/pruneOrphanCacheDirectories.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/readCacheEntries.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/readSettingsReferencedCachePaths.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/runPluginsApply.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/toPluginsApplyStatus.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/plugins/toPluginsDomainResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/security/applySelectedClaudeSettings.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/security/findSecurityCredentialLiterals.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/security/inspectSecurityCredentialNode.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 3
+    }
+  },
+  "scripts/lib/machine/domains/security/planClaudeSettings.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/security/writeClaudeSettings.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/apply.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/collectDriftedUnits.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/plan.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/reloadServiceUnit.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/renderServiceUnits.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/resolveDeclaredUnitPaths.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/runServicesApply.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/domains/services/toReloadCommands.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/machine/domains/services/toServicesDomainResult.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/exec/fixtures/createRecordingRunner.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/profiles/selectors/selectProfileDomains.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/report/toFailedRunReport.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/runs/createSnapshot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/runs/listRuns.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/machine/runs/restoreSnapshot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/platform-health/detectPlatformRuntime.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/plugins/builders/copyAgentsIntoPluginRoot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/plugins/builders/copyFlatSkillsIntoPluginRoot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/plugins/builders/copyHooksIntoPluginRoot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/plugins/builders/extractRepositoryUrl.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/rules/converters/toWindsurfRule.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/rules/groupers/groupByTopSegment.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/rules/renderers/renderRouter.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/rules/resolvers/getOneLineDescription.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/skill-sources/createSkillSourceSnapshot.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/skills/collectSkillFrontmatter.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/skills/emitters/emitPortableSkillsFromDist.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/skills/loaders/loadInstanceSkillRules.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 2
+    }
+  },
+  "scripts/lib/skills/parsePortabilityFrontmatter.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/lib/skills/validators/validateSkillEntry.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  },
+  "scripts/validators/validateManifestReferences.ts": {
+    "code-policy/no-inline-types-in-runtime-files": {
+      "count": 1
+    }
+  }
+}
