@@ -116,6 +116,12 @@
         "@rules/core/boundaries.mdc"
       ]
     },
+    "onepassword-agent-access": {
+      "rules": [
+        "@rules/core/security-baseline.mdc",
+        "@rules/core/interactive-auth-secrets.mdc"
+      ]
+    },
     "orphan-process-cleanup": {
       "rules": ["@rules/core/security-baseline.mdc"]
     },
