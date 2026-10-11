@@ -2,15 +2,14 @@
 
 ## What this is
 
-This public TypeScript control plane owns BRP policy, adapters, diagnostics,
-machine convergence, and safe conversation transport. Changes can alter the
-agent environment on every linked client.
+This public TypeScript control plane owns BRP policy, adapters, diagnostics, and
+machine convergence. Conversation capture moved to `syntopica/scribe` on
+2026-10-11. Changes can alter the agent environment on every linked client.
 
 **Do not run `machine:apply`, `machine:rollback`, `rules:link`, `skills:link`,
-`hooks:link`, a conversation `--apply` against durable user data, or a release
-without explicit human authorization.** Read-only inspection, builds, tests,
-doctors, diffs, conversation dry-runs, and apply-path tests wholly contained in
-a newly created OS temporary directory are safe.
+`hooks:link`, or a release without explicit human authorization.** Read-only
+inspection, builds, tests, doctors, diffs, and apply-path tests wholly contained
+in a newly created OS temporary directory are safe.
 
 ## Branch model
 
@@ -61,12 +60,9 @@ Verified commands:
 
 ```bash
 pnpm run type-check
-pnpm run conversations:test
-pnpm run conversations:doctor -- --source pi --json
 ```
 
-The first two exit zero. The doctor returns JSON with `ok: true`; an unavailable
-optional source is reported rather than treated as a failure.
+It exits zero.
 
 ## Distribution
 
@@ -80,18 +76,14 @@ Releases use the `brp-release` workflow.
 - `~/p/rocket-agents-library` owns curated skill sources consumed by the linker.
 - `~/p/dotfiles` owns host bootstrap, private machine manifests, and scheduled
   invocations.
-- `~/p/mem` owns derived conversation indexing and semantic retrieval.
+- `syntopica/scribe` owns conversation capture and the canonical archive;
+  `syntopica/atrium` owns indexing and retrieval.
 - `~/p/wiki` owns deliberate, human-authored knowledge.
 
 ## Security
 
 - Never commit secrets or captured conversations. Tracked manifests contain
   environment references, never credential values.
-- Conversation capture is read-only. Exports redact recognized secrets, omit
-  credential stores, reject unsafe paths, use SHA-256 manifests, and write mode
-  `0600`.
-- SQLite sources are queried read-only through allowlisted conversation tables;
-  databases, cookies, auth state, and sidecars are never transported.
 
 ## Conventions
 
