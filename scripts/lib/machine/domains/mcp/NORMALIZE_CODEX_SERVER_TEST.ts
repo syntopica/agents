@@ -64,3 +64,13 @@ void test('an escaped quote inside a value is unescaped', () => {
     command: 'a"b',
   })
 })
+
+void test('the env sub-table is normalized so a dropped binding is a change', () => {
+  assert.deepEqual(
+    normalizeCodexServer({
+      command: '"atrium-mcp"',
+      'env.SYNTOPICA_DATA': '"/data"',
+    }),
+    { command: 'atrium-mcp', env: { SYNTOPICA_DATA: '/data' } },
+  )
+})
