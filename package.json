@@ -88,7 +88,7 @@
     "check:security": "pnpm secrets:check && pnpm audit:check"
   },
   "devDependencies": {
-    "@syntopica/prettier-config": "^0.2.0",
+    "@syntopica/prettier-config": "^0.3.0",
     "@syntopica/quality-config": "^0.11.0",
     "@syntopica/tsconfig": "^0.3.0",
     "@eslint/js": "^10.0.1",

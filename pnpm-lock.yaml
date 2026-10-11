@@ -174,8 +174,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.7.0(jiti@2.7.0)(supports-color@7.2.0))
       '@syntopica/prettier-config':
-        specifier: ^0.2.0
-        version: 0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)
+        specifier: ^0.3.0
+        version: 0.3.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)
       '@syntopica/quality-config':
         specifier: ^0.11.0
         version: 0.11.0(@typescript/typescript6@6.0.2)(dependency-cruiser@18.2.0)(knip@6.32.2)
@@ -753,8 +753,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@syntopica/prettier-config@0.2.0':
-    resolution: {integrity: sha512-/ORTmzDnVwRIbaUo6+dFYR3FRkGRwhp600hZD3soQm3nSW6t7LcZxgJpsCC0mlkRU3ndxuME17WN5Xc9FzqAtA==}
+  '@syntopica/prettier-config@0.3.0':
+    resolution: {integrity: sha512-iWXfgAPMSjW37ncjoWUiIFcQ4ysMhkBIKZD1dRbvAMu+IrpWR2PZy1+KnLAbDTg360dM/W+IEmLw2O6S0nH6BA==}
     engines: {node: '>=20'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -2552,7 +2552,7 @@ snapshots:
   '@oxc-resolver/binding-win32-x64-msvc@11.24.2':
     optional: true
 
-  '@syntopica/prettier-config@0.2.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)':
+  '@syntopica/prettier-config@0.3.0(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5))(prettier@3.9.5)':
     dependencies:
       prettier: 3.9.5
       prettier-plugin-organize-imports: 4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.5)
@@ -2626,8 +2626,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.68.0(@typescript/typescript6@6.0.2)(supports-color@7.2.0)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.68.0(@typescript/typescript6@6.0.2)
-      '@typescript-eslint/types': 8.68.0
+      '@typescript-eslint/tsconfig-utils': 8.71.1(@typescript/typescript6@6.0.2)
+      '@typescript-eslint/types': 8.71.1
       debug: 4.4.3(supports-color@7.2.0)
       typescript: '@typescript/typescript6@6.0.2'
     transitivePeerDependencies:
