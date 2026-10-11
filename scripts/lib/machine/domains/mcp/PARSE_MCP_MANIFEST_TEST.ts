@@ -114,3 +114,24 @@ void test('an unknown Codex tool approval mode is rejected', () => {
   })
   assert.equal(result.ok, false)
 })
+
+void test('a credential literal in a target env override fails validation', () => {
+  const result = parseMcpManifest({
+    servers: {
+      leaky: {
+        targets: ['codex'],
+        transport: 'stdio',
+        command: 'npx',
+        target_overrides: {
+          codex: { env: { TOKEN: 'ghp_0000000000000000000000000000000000' } },
+        },
+      },
+    },
+  })
+  assert.ok(!result.ok)
+  assert.ok(
+    result.errors.some((error) =>
+      error.includes('target_overrides.codex.env.TOKEN'),
+    ),
+  )
+})

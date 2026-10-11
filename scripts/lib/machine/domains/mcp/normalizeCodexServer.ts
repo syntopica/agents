@@ -44,5 +44,10 @@ export const normalizeCodexServer = (
     normalized.env_http_headers = environmentHeaders
   }
 
+  const environment = normalizeCodexSubTable(record, 'env')
+  if (environment !== undefined) {
+    normalized.env = environment
+  }
+
   return normalized
 }

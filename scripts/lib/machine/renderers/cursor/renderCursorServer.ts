@@ -1,3 +1,4 @@
+import { serverEnvForTarget } from '../../domains/mcp/serverEnvForTarget'
 import type { McpServer } from '../../domains/mcp/types/McpServer'
 import { toStringArgs } from '../claude/toStringArgs'
 import { renderCursorValueMap } from './renderCursorValueMap'
@@ -6,7 +7,7 @@ export const renderCursorServer = (
   server: McpServer,
   env: NodeJS.ProcessEnv,
 ) => {
-  const envMap = renderCursorValueMap(server.env ?? {}, env)
+  const envMap = renderCursorValueMap(serverEnvForTarget(server, 'cursor'), env)
   const headerMap = renderCursorValueMap(server.headers ?? {}, env)
   const missing = [...envMap.missing, ...headerMap.missing]
   if (missing.length > 0) return { rendered: undefined, missing }

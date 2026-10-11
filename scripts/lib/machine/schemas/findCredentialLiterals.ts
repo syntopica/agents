@@ -16,5 +16,17 @@ export const findCredentialLiterals = (server: ServerShape) => {
     checkCredentialValue(`headers.${key}`, value, findings)
   }
 
+  for (const [target, override] of Object.entries(
+    server.target_overrides ?? {},
+  )) {
+    for (const [key, value] of Object.entries(override?.env ?? {})) {
+      checkCredentialValue(
+        `target_overrides.${target}.env.${key}`,
+        value,
+        findings,
+      )
+    }
+  }
+
   return findings
 }

@@ -7,4 +7,5 @@ export interface NormalizedCodexServer {
   default_tools_approval_mode?: string
   http_headers?: Record<string, string>
   env_http_headers?: Record<string, string>
+  env?: Record<string, string>
 }

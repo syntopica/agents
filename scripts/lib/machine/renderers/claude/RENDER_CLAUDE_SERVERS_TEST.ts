@@ -92,3 +92,34 @@ void test('a target with no servers renders an empty record', () => {
   const { servers } = renderClaudeServers(manifest, 'gemini', {})
   assert.deepEqual(servers, {})
 })
+
+void test('a target env override applies only to that target', () => {
+  const overridden: McpManifest = {
+    servers: {
+      atrium: {
+        targets: ['claude-personal', 'claude-secondary'],
+        transport: 'stdio',
+        command: 'atrium-mcp',
+        env: { LOG_LEVEL: 'info' },
+        target_overrides: {
+          'claude-secondary': {
+            env: { SYNTOPICA_DATA: '/data', LOG_LEVEL: 'debug' },
+          },
+        },
+      },
+    },
+  }
+
+  const personal = renderClaudeServers(overridden, 'claude-personal', {})
+  const secondary = renderClaudeServers(overridden, 'claude-secondary', {})
+  assert.deepEqual(personal.servers['atrium'], {
+    type: 'stdio',
+    command: 'atrium-mcp',
+    env: { LOG_LEVEL: 'info' },
+  })
+  assert.deepEqual(secondary.servers['atrium'], {
+    type: 'stdio',
+    command: 'atrium-mcp',
+    env: { LOG_LEVEL: 'debug', SYNTOPICA_DATA: '/data' },
+  })
+})

@@ -1,3 +1,4 @@
+import { serverEnvForTarget } from '../../domains/mcp/serverEnvForTarget'
 import type { McpServer } from '../../domains/mcp/types/McpServer'
 import { renderClaudeValueMap } from '../claude/renderClaudeValueMap'
 import { toStringArgs } from '../claude/toStringArgs'
@@ -6,7 +7,7 @@ export const renderGeminiServer = (
   server: McpServer,
   env: NodeJS.ProcessEnv,
 ) => {
-  const envMap = renderClaudeValueMap(server.env ?? {}, env)
+  const envMap = renderClaudeValueMap(serverEnvForTarget(server, 'gemini'), env)
   const headerMap = renderClaudeValueMap(server.headers ?? {}, env)
   const missing = [...envMap.missing, ...headerMap.missing]
   if (missing.length > 0) return { rendered: undefined, missing }

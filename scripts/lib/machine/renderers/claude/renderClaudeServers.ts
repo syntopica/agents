@@ -1,3 +1,4 @@
+import { serverEnvForTarget } from '../../domains/mcp/serverEnvForTarget'
 import type { McpManifest } from '../../domains/mcp/types/McpManifest'
 import type { McpTarget } from '../../domains/mcp/types/McpTarget'
 import { expandedCommand } from './expandedCommand'
@@ -17,7 +18,10 @@ export const renderClaudeServers = (
       continue
     }
 
-    const envMap = renderValueMapForTarget(server.env ?? {}, env)
+    const envMap = renderValueMapForTarget(
+      serverEnvForTarget(server, target),
+      env,
+    )
     const headerMap = renderValueMapForTarget(server.headers ?? {}, env)
     const serverMissing = [...envMap.missing, ...headerMap.missing]
 

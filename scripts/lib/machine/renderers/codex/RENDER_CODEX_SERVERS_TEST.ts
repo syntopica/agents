@@ -163,3 +163,35 @@ void test('the codex target override is appended to args', () => {
   const { toml } = renderCodexServers(manifest, {})
   assert.match(toml, /args = \["serena", "--context", "ide-assistant"\]/)
 })
+
+void test('the codex env override is rendered into the env table', () => {
+  const manifest: McpManifest = {
+    servers: {
+      atrium: {
+        targets: ['claude-personal', 'codex'],
+        transport: 'stdio',
+        command: 'atrium-mcp',
+        target_overrides: { codex: { env: { SYNTOPICA_DATA: '/data' } } },
+      },
+    },
+  }
+  const { toml } = renderCodexServers(manifest, {})
+  assert.match(toml, /\[mcp_servers\.atrium\.env\]\nSYNTOPICA_DATA = "\/data"/)
+})
+
+void test('an env override for another target is not rendered for codex', () => {
+  const manifest: McpManifest = {
+    servers: {
+      atrium: {
+        targets: ['claude-secondary', 'codex'],
+        transport: 'stdio',
+        command: 'atrium-mcp',
+        target_overrides: {
+          'claude-secondary': { env: { SYNTOPICA_DATA: '/data' } },
+        },
+      },
+    },
+  }
+  const { toml } = renderCodexServers(manifest, {})
+  assert.doesNotMatch(toml, /SYNTOPICA_DATA/)
+})

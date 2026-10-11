@@ -171,7 +171,12 @@ Validator invariants:
    `url`.
 3. `target_overrides` carries semantic deltas only, such as Serena's context or
    chrome-devtools' `--autoConnect`. Serialization differences between JSON and
-   TOML belong to the renderer, never to the manifest.
+   TOML belong to the renderer, never to the manifest. An override may carry
+   `args_append` and `env`; an override's `env` is merged over the server's
+   `env` for that target alone (the override wins on a shared key) and is held
+   to invariant 1 like any other `env`. Atrium's `SYNTOPICA_DATA` binding is the
+   motivating case: some targets pin the instance, the others resolve it from
+   the working directory.
 
 Renderers are one file per target format. The Codex renderer emits native TOML
 tables rather than the current shell-wrapped `mcp-remote` bridge for HTTP

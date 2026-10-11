@@ -1,3 +1,4 @@
+import { serverEnvForTarget } from '../../domains/mcp/serverEnvForTarget'
 import type { McpManifest } from '../../domains/mcp/types/McpManifest'
 import { resolveValueMap } from '../claude/resolveValueMap'
 import { renderCodexServer } from './renderCodexServer'
@@ -15,7 +16,7 @@ export const renderCodexServers = (
       continue
     }
 
-    const envMap = resolveValueMap(server.env ?? {}, env)
+    const envMap = resolveValueMap(serverEnvForTarget(server, 'codex'), env)
     if (envMap.missing.length > 0) {
       missing.push(...envMap.missing)
       continue
