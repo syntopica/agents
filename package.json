@@ -29,7 +29,7 @@
     "skills:prompt:file": "tsx scripts/bin/run-to-prompt.ts > available_skills.xml",
     "skills:prompt": "tsx scripts/bin/run-to-prompt.ts",
     "skills:test": "tsx scripts/commands/testSkills.ts",
-    "link:test": "tsx --test scripts/lib/link/constants/IDE_REGISTRY_TEST.ts scripts/lib/link/operations/CLEAN_GLOBAL_PREFIX_TEST.ts scripts/lib/link/operations/REMOVE_STALE_NAMESPACE_ENTRIES_TEST.ts scripts/lib/link/renderers/RENDER_CODEX_AGENT_TEST.ts scripts/lib/link/operations/CODEX_SKILL_TRIM_TEST.ts",
+    "link:test": "tsx --test scripts/lib/link/constants/IDE_REGISTRY_TEST.ts scripts/lib/link/operations/CLEAN_GLOBAL_PREFIX_TEST.ts scripts/lib/link/operations/REMOVE_STALE_NAMESPACE_ENTRIES_TEST.ts scripts/lib/link/renderers/RENDER_CODEX_AGENT_TEST.ts scripts/lib/link/operations/CODEX_SKILL_TRIM_TEST.ts scripts/lib/link/operations/FIND_SKILLS_MISSING_FROM_DIST_TEST.ts",
     "skills:validate": "tsx scripts/commands/validators/validateSkills.ts",
     "skills:portability": "tsx scripts/bin/run-audit-skill-portability.ts",
     "skills:bootstrap": "tsx scripts/bin/run-bootstrap-skill-sources.ts",
