@@ -1,5 +1,5 @@
 ---
-description: "codegraph vs serena vs grep; verify first"
+description: "codegraph vs language server vs grep; verify first"
 alwaysApply: true
 ---
 
