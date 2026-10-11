@@ -104,15 +104,6 @@ export default tseslint.config(
     settings: {
       'import-x/resolver-next': [createTypeScriptImportResolver()],
       'boundaries/elements': [
-        {
-          type: 'conversation-bin',
-          pattern: 'scripts/bin/run-conversations-*',
-        },
-        {
-          type: 'conversation-command',
-          pattern: 'scripts/commands/conversations*',
-        },
-        { type: 'conversation-lib', pattern: 'scripts/lib/conversations/*' },
         { type: 'scripts', pattern: 'scripts/*' },
         { type: 'lib', pattern: 'scripts/lib/*' },
       ],
@@ -167,23 +158,6 @@ export default tseslint.config(
         {
           default: 'allow',
           policies: [
-            {
-              from: { element: { type: 'conversation-bin' } },
-              allow: { to: [{ element: { type: 'conversation-command' } }] },
-            },
-            {
-              from: { element: { type: 'conversation-command' } },
-              allow: {
-                to: [
-                  { element: { type: 'conversation-lib' } },
-                  { element: { type: 'lib' } },
-                ],
-              },
-            },
-            {
-              from: { element: { type: 'conversation-lib' } },
-              allow: { to: [{ element: { type: 'conversation-lib' } }] },
-            },
             {
               from: { element: { type: 'scripts' } },
               allow: {
