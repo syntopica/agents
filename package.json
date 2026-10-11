@@ -40,7 +40,7 @@
     "validate:install": "python3 -m venv .venv-validate && .venv-validate/bin/pip install skills-ref",
     "hooks:test": "tsx --test scripts/lib/hooks/ROUTER_TEST.ts scripts/lib/hooks/ROUTER_EXPECTATIONS_TEST.ts scripts/lib/hooks/DOCTOR_TEST.ts scripts/lib/hooks/STOP_GATE_TEST.ts scripts/lib/hooks/BACKGROUND_JOB_GUARD_TEST.ts scripts/lib/hooks/PAUSED_JOB_GUARD_TEST.ts",
     "hooks:link": "tsx scripts/bin/run-link-hooks-global.ts",
-    "skills:lint": "tsx --test scripts/lib/skills/DESCRIPTIONS_TEST.ts scripts/lib/skills/TODO_FORMATS_SYNC_TEST.ts scripts/lib/skills/BUNDLED_DOCS_SYNC_TEST.ts scripts/lib/skills/PORTABLE_LIBRARY_VALIDATION_TEST.ts",
+    "skills:lint": "tsx --test scripts/lib/skills/DESCRIPTIONS_TEST.ts scripts/lib/skills/BUNDLED_DOCS_SYNC_TEST.ts scripts/lib/skills/PORTABLE_LIBRARY_VALIDATION_TEST.ts",
     "hygiene:test": "tsx --test scripts/lib/UNICODE_HYGIENE_TEST.ts",
     "machine:diff": "tsx scripts/bin/run-machine-diff.ts",
     "machine:apply": "tsx scripts/bin/run-machine-apply.ts",

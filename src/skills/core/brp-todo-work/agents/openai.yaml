@@ -1,6 +1,6 @@
 interface:
   display_name: BRP Todo Work
-  short_description: Execute an existing TODO backlog under an approved plan and hard run caps.
+  short_description: Owner overlay over tadu-work, to execute a TODO backlog with owner routing and rules.
   default_prompt:
     Reconstruct the backlog, present the execution plan for approval, then advance every safe
     actionable item with evidence and keep TODO.md and TODO_LOG.md truthful.
