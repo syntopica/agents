@@ -21,3 +21,4 @@ allowBuilds:
 # 2026-10-08 and verify with `pnpm install --frozen-lockfile`.
 minimumReleaseAgeExclude:
   - eslint-plugin-code-policy@0.8.0
+  - '@syntopica/prettier-config@0.3.0'
