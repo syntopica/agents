@@ -107,7 +107,7 @@ export const main = async () => {
     return
   }
 
-  const paths = resolveTargetPaths(home)
+  const paths = resolveTargetPaths(home, process.env)
   const claudeSettingsPaths = resolveClaudeSettingsPaths(home, process.env)
   const ownedPath = resolveOwnedPath(home)
   const ownedRecord = await readOwned(ownedPath)
