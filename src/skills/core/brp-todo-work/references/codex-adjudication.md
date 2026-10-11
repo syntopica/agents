@@ -1,8 +1,9 @@
 # Codex adjudication
 
 How to resolve an open decision during a backlog run without stopping for the
-user. Codex runs on a separate OpenAI quota, so an adjudication costs the main
-session almost nothing beyond the brief and the verdict.
+user. Codex is the verifier in the owner's routing (bulk and implementation go
+to agy, OpenRouter free models, local models or cheaper Claude subagents), so
+one adjudication per wave is its job: one brief, one verdict, no bulk volume.
 
 ## When
 
