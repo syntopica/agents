@@ -1,11 +1,13 @@
 import path from 'node:path'
 import { CODEX_AGENTS_DIST_DIR } from '../constants/CODEX_AGENTS_DIST_DIR'
+import { SKILL_SOURCE_DIRS } from '../constants/SKILL_SOURCE_DIRS'
 import { SRC_AGENTS_DIR } from '../constants/SRC_AGENTS_DIR'
 import { CANONICAL_SKILLS_DIR } from '../lib/link/constants/CANONICAL_SKILLS_DIR'
 import { CANONICAL_SKILLS_PORTABLE_DIR } from '../lib/link/constants/CANONICAL_SKILLS_PORTABLE_DIR'
 import { CLAUDE_HOME } from '../lib/link/constants/CLAUDE_HOME'
 import { CODEX_HOME } from '../lib/link/constants/CODEX_HOME'
 import { IDE_REGISTRY } from '../lib/link/constants/IDE_REGISTRY'
+import { findSkillsMissingFromDist } from '../lib/link/operations/findSkillsMissingFromDist'
 import { linkAgentsToClaude } from '../lib/link/operations/linkAgentsToClaude'
 import { linkAgentsToCodex } from '../lib/link/operations/linkAgentsToCodex'
 import { writeCodexSkillTrim } from '../lib/link/operations/writeCodexSkillTrim'
@@ -20,6 +22,15 @@ export const main = async () => {
   if (claudeSkillNames.length === 0) {
     console.log('No skills found in dist/skills/.')
     return
+  }
+  const notCompiled = await findSkillsMissingFromDist(
+    SKILL_SOURCE_DIRS,
+    SKILLS_DIST_DIR,
+  )
+  if (notCompiled.length > 0) {
+    throw new Error(
+      `dist/skills is stale: it lacks source skills that linking would unlink (${notCompiled.join(', ')}). Run \`pnpm run skills:compile\` first.`,
+    )
   }
   const portableSkillNames = await collectSkillNames(SKILLS_PORTABLE_DIST_DIR)
 
