@@ -18,7 +18,7 @@ export const main = async () => {
 
   const declared = await loadMcpManifest(instanceDir)
   const capture = captureMcpManifest({
-    state: await read(resolveTargetPaths(homedir())),
+    state: await read(resolveTargetPaths(homedir(), process.env)),
     declared: declared.ok ? declared.manifest : undefined,
   })
 
