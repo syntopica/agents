@@ -122,10 +122,10 @@ pnpm run connectors:doctor -- --json
 pnpm run connectors:doctor -- --profile codex --json
 ```
 
-Context7, Serena, and CodeGraph are required machine-managed MCP servers. The
-Codex profile also requires the Codex-only `memstore-mcp --read-only` stdio
-server. Cloudflare is required in both Claude profiles and Gateway Example is
-required only in the personal profile. Consequently:
+CodeGraph is a required machine-managed MCP server, and Context7 is required in
+Codex. The Codex profile also requires the Codex-only `memstore-mcp --read-only`
+stdio server. Cloudflare is required in both Claude profiles and Gateway Example
+is required only in the personal profile. Consequently:
 
 - a missing required connector, required OAuth flow, or required disabled
   connector exits with 1;
@@ -214,8 +214,6 @@ configuration is stored in `~/.cursor/mcp.json` and verified with:
 ```bash
 cursor-agent mcp list
 cursor-agent mcp list-tools codegraph
-cursor-agent mcp list-tools context7
-cursor-agent mcp list-tools serena
 ```
 
 ---
