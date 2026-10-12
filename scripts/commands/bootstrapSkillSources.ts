@@ -10,6 +10,7 @@ import { planSkillSourceApply } from '../lib/skill-sources/planSkillSourceApply'
 import { planSkillSourceInstall } from '../lib/skill-sources/planSkillSourceInstall'
 import { resolveSkillSourceHead } from '../lib/skill-sources/resolveSkillSourceHead'
 import { resolveSkillSourceManifestPath } from '../lib/skill-sources/resolveSkillSourceManifestPath'
+import { retireInstalledSkills } from '../lib/skill-sources/retireInstalledSkills'
 
 export const main = async () => {
   const apply = process.argv.includes('--apply')
@@ -59,7 +60,16 @@ export const main = async () => {
     parsed.manifest,
     runId,
   )
+  const installedSkillsDir = join(homedir(), '.claude', 'skills')
   for (const [index, plan] of plans.entries()) {
+    const source = parsed.manifest.sources.at(index)
+    if (source === undefined)
+      throw new Error(`${plan.id}: source plan index is inconsistent`)
+    await retireInstalledSkills(
+      source.skills,
+      installedSkillsDir,
+      join(snapshot.snapshotDir, 'installed'),
+    )
     const result = spawnSync('skillkit', plan.applyArgs, {
       encoding: 'utf8',
       stdio: 'pipe',
@@ -73,14 +83,7 @@ export const main = async () => {
       process.exitCode = 1
       return
     }
-    const source = parsed.manifest.sources.at(index)
-    if (source === undefined)
-      throw new Error(`${plan.id}: source plan index is inconsistent`)
-    await importInstalledSkillSource(
-      source,
-      join(homedir(), '.claude', 'skills'),
-      libraryDir,
-    )
+    await importInstalledSkillSource(source, installedSkillsDir, libraryDir)
   }
   console.log(
     JSON.stringify(
