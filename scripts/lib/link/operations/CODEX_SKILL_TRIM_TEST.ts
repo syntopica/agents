@@ -71,3 +71,18 @@ void test('only skills outside the curated destination are disabled', async () =
   ])
   await fs.rm(root, { recursive: true, force: true })
 })
+
+void test('an orphaned end before the fence does not make the block grow', () => {
+  const orphan = `[[skills.config]]\npath = "/skills/old/SKILL.md"\nenabled = false\n${CODEX_SKILL_TRIM_MARKERS.end}\n\n`
+  const fenced = applyCodexSkillTrim(
+    orphan,
+    renderCodexSkillTrim(['/skills/a/SKILL.md']),
+  )
+  const again = applyCodexSkillTrim(
+    fenced,
+    renderCodexSkillTrim(['/skills/a/SKILL.md']),
+  )
+
+  assert.equal(again, fenced)
+  assert.equal(again.split(CODEX_SKILL_TRIM_MARKERS.start).length - 1, 1)
+})

@@ -103,3 +103,33 @@ void test('writing twice leaves an identical file', async () => {
   })
   assert.equal(await readFile(path, 'utf8'), first)
 })
+
+void test('a comment after a replaced block stays with the table it introduces', async () => {
+  const path = await createTempConfigFile(
+    'config.toml',
+    [
+      '[mcp_servers.a]',
+      'command = "old"',
+      '',
+      '# BEGIN generated skills trim (rocket-agents)',
+      '[[skills.config]]',
+      'path = "/skills/a/SKILL.md"',
+      'enabled = false',
+      '# END generated skills trim (rocket-agents)',
+      '',
+    ].join('\n'),
+  )
+  await writeCodexConfig({
+    path,
+    toml: '[mcp_servers.a]\ncommand = "new"',
+    ownedNames: ['a'],
+    renderedNames: ['a'],
+  })
+
+  const written = await readFile(path, 'utf8')
+  assert.match(
+    written,
+    /# BEGIN generated skills trim \(rocket-agents\)\n\[\[skills\.config\]\]/u,
+  )
+  assert.doesNotMatch(written, /command = "old"/u)
+})
