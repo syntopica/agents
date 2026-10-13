@@ -27,7 +27,9 @@ win where they differ.
 - Commit and push authority is standing in `~/p` and in owned repositories, per
   each repository's own instructions. Client repositories (origin owner
   `client-example`, `client-example`, `client-example`, `client-example`, `client-example`,
-  `owner-product`, `client-example`, `client-example`) are report-only: no commit, no push.
+  `client-example`, `client-example`) are report-only: no commit, no push. `owner-product` is
+  the owner's product, not a client: commit, push to `main` and deploy per its
+  `AGENTS.md` (owner, 2026-10-13: "hacemos push y commit y todo").
 - Cross-project discoveries go to the owning repository under `~/p`, or to
   `~/p/TODO.md` when none owns them.
 - Finish with `tadu doctor <repo>` exiting 0, or report each remaining finding.
