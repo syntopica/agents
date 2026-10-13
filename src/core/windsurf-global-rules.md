@@ -18,6 +18,7 @@
   verification that could not run.
 - Write conventional, imperative Git commit subjects. Do not add tool
   attribution or assistant co-author trailers.
-- Do not edit an existing migration without explicit confirmation.
+- Never rewrite a migration already applied to a shared or production database;
+  add a new one instead.
 - Treat `AGENTS.md` as the repository instruction source and apply nested
   instructions to files in their scope.
