@@ -4,23 +4,29 @@ description:
   Audits and improves a running web UI's design with codeality-ui measurements
   plus a screenshot review. Trigger when asked to check, review or improve how
   a screen looks, whether a UI is polished, what a screen is missing, or to
-  redesign a page so it stops looking AI-made. Triggers (ES) are revisa el
-  diseño, check-design, mejora la UI, que le falta a esta pantalla, modo
-  creativo. Do not use for building a new UI from a blank page (that is
+  redesign a page so it stops looking AI-made, or to have a chosen model
+  (Codex, Claude) critique screens and propose a better design as mockup images.
+  Triggers (ES) are revisa el diseño, check-design, mejora la UI, que le falta
+  a esta pantalla, modo creativo, vamos a mejorar la UI de X usando codex.
+  Do not use for building a new UI from a blank page (that is
   frontend-design), for prose (prose-quality) or for functional testing of a
   running app (ui-verification-loop).
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write
-argument-hint: [route-or-url] [check|review|redesign]
+argument-hint: [route-or-url...] [check|review|propose|redesign] [codex|claude]
 ---
 
 # Design quality: measure, then judge, then change
 
-Three modes, from cheapest to most invasive. Each one includes the one before.
+Four modes, from cheapest to most invasive. Each one includes the one before.
 
 - **check** - defects only. Run `codeality-ui check` and report its findings. No
   screenshots read, no opinions. This is what CI runs.
 - **review** (default) - defects, improvements and missing pieces. `check`, then
   read the screenshots against `references/rubric.md`. No edits.
+- **propose** - full-page screenshots, the app's brief (what it is for, who uses
+  it) and outside references go to the model the person names ("mejora la UI de
+  X usando codex"), which returns a critique, a new approach and mockup images.
+  No edits; it stops for the person to pick a direction. Section 4.
 - **redesign** - `review`, then change the code. Finished only when `check`
   reports nothing new and the before/after screenshots are in front of the
   person. Add "creative" when the person wants a new direction rather than a
@@ -97,7 +103,41 @@ Group findings by route, then by rule, errors first. One line each:
 5. Rank inside each group by how often the person hits it, not by how easy it is
    to fix. Then offer redesign.
 
-## 4. redesign mode
+## 4. propose mode
+
+The person's own method, which gave strong results in ChatGPT: screenshot plus
+the real job, "look at how others do it", a critique from the user's seat, a
+change of approach rather than touch-ups, and a mockup image. Replicate it, with
+the repository as extra context.
+
+1. **Model.** "usando codex" (or no model named): Codex writes the critique and
+   draws the mockups. "usando claude": you write the critique and research,
+   Codex only draws the mockups, because Claude cannot generate images.
+2. **Brief.** Read `docs/ui-brief.md` in the project. When it is missing, draft
+   it from the repo (README, routes, roles, domain models) with the template in
+   `references/propose.md`, show it, and wait for corrections once; it is then
+   reused on every run. Never invent a persona the repo does not support; mark
+   guesses as guesses.
+3. **Screens.** Run `codeality-ui check --routes '<glob>'` for the routes named
+   (section 1 covers setup and auth). Captures are already full-page. Take the
+   widest light and the phone light screenshot of each route from `report.json`;
+   several routes are fine, which is how a flow is shown.
+4. **Hand-off.** Make `.codeality-ui/propose/<YYYY-MM-DD-HHMM>/`, copy the
+   chosen screenshots and the brief into it, and run the prompt in
+   `references/propose.md` with the command given there. It writes `critique.md`
+   and `mockup-*.png` into that directory.
+5. **Check before showing.** Read every mockup. Reject and resume (same session)
+   any mockup that drops a real feature, invents data presented as real, or
+   ignores the brief's persona. Confirm each critique point names something
+   visible in a screenshot.
+6. **Deliver.** Show the mockups (Read them; send the files when the person is
+   on another device), then the critique in five to ten lines: the change of
+   approach first, then the problems ranked by how often the user hits them,
+   then the references. Stop and ask which direction to take. "Sí, aplícalo"
+   goes to redesign with the chosen mockup as the target and `critique.md` as
+   scope.
+
+## 5. redesign mode
 
 1. Copy `.codeality-ui/screens/` to `.codeality-ui/before/` and keep the finding
    list as the baseline of this change.
