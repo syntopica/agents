@@ -45,8 +45,13 @@ Read first:
   this directory.
 
 Method:
-1. Research how 3-4 well-regarded products solve the same job (search the web).
-   For each, one line on what it does better than this screen, with the URL.
+1. Search the web for 3-4 mature products that already do this same job,
+   market leaders that have spent years on it, and have run into the edge
+   cases this screen will meet. For each: the URL, the pattern it settled on,
+   and the hard case that pattern handles. Then say which patterns fit this
+   app's users, brand and data from brief.md, which do not and why, and how
+   you adapt them. The goal is their hard-won solutions fitted to us, not a
+   copy of any of them.
 2. Critique the screens from the seat of the user in brief.md: wasted space,
    irrelevant or badly ordered content, missing explanation, a primary action
    that does not stand out, too many controls, wrong or misleading states. Each
@@ -54,14 +59,17 @@ Method:
 3. Propose a change of approach, not touch-ups: how this screen should work for
    that user, in two or three sentences. Then the concrete changes, ranked by
    how often the user hits each problem.
-4. Draw one mockup image per screen with your image generation tool, desktop
-   width, applying the proposal. Keep every real feature and the product's
-   colours and type unless the critique says why to change them. Use plausible
-   data and label the image "Conceptual mockup". Save each as
-   mockup-<screen>.png in this directory.
+4. Generate one mockup image per screen with your image generation tool,
+   desktop width, showing the interface as you imagine it should be: your own
+   vision built from step 3 and the adapted patterns, free to change layout,
+   structure and flow, not a restyle of the current screen. Keep the brand
+   identity (logo, colours, type) and every real feature; use plausible data
+   and label the image "Conceptual mockup". Save each as mockup-<screen>.png in
+   this directory.
 
 Write the critique to critique.md in <language>, with these sections: Change of
-approach, Problems, Proposal, References, Mockups (file names). Do not invent
+approach, Problems, Proposal, References and adapted patterns, Mockups (file
+names). Do not invent
 features the product lacks without marking them "new". Finish by printing the
 paths of the files you wrote.
 ```
@@ -89,3 +97,24 @@ are first written under `~/.codex/generated_images/<session>/` and copied by
 Codex to the requested path. If a `mockup-*.png` is missing, look there before
 re-running. To fix a mockup, `codex exec resume <SESSION_ID>` with the
 rejection, not a new run.
+
+## ChatGPT (web) instead of Codex
+
+"usando chatgpt" drives chatgpt.com in Orca's embedded browser, `default`
+profile, which holds the owner's ChatGPT login; it takes no focus from the real
+Chrome. ChatGPT cannot read the repository, so its `prompt.md` inlines the
+brief, drops the "source of these screens" bullet, and asks for the mockups "in
+this same reply" instead of as files. Then:
+
+```bash
+timeout 1500 python3 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
+  <run-dir> <run-dir>/desktop-<screen>.png <run-dir>/phone-<screen>.png
+```
+
+It opens a new chat, attaches each screenshot, sends the prompt, waits for the
+answer, and writes `critique.md` (the answer text), `mockup-<n>.png` (every
+image ChatGPT generated) and `chat-url.txt`. The tab stays open: corrections go
+as a follow-up message in that chat, which keeps its context, rather than a new
+run. The script reads ChatGPT's Spanish UI labels (`Enviar`, `Detener`,
+`Quitar`, `Imagen generada`, `ChatGPT dijo:`); when it times out, take an
+`orca screenshot` of the tab and fix the selector in the script.
