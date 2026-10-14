@@ -22,6 +22,16 @@ from pathlib import Path
 
 TIMEOUT_S = 1200
 POLL_S = 5
+# Clicks the remove button of a chip showing "Error al cargar" and returns its
+# label, or "none" when every attachment uploaded.
+FAILED_CHIP = (
+    "(() => { const e = [...document.querySelectorAll('*')].find(x =>"
+    " x.childElementCount === 0 && x.textContent.trim() === 'Error al cargar');"
+    " for (let p = e; p; p = p.parentElement) {"
+    " const b = p.querySelector('button[aria-label^=Quitar]');"
+    " if (b) { const l = b.getAttribute('aria-label'); b.click(); return l } }"
+    " return 'none' })()"
+)
 
 
 def orca(*args: str) -> dict:
@@ -66,6 +76,18 @@ def main() -> None:
             f"attachment {n}",
             120,
         )
+    # An upload can fail after its chip appears ("Error al cargar", seen
+    # 2026-10-15), which leaves Enviar disabled. Remove the failed chip and
+    # upload that file again.
+    for _attempt in range(3):
+        time.sleep(POLL_S)
+        failed = js(page, FAILED_CHIP)
+        if failed == "none":
+            break
+        shot = next(s for s in shots if Path(s).stem in failed)
+        orca("exec", "--page", page, "--command", f"upload input[type=file] {shot}")
+    else:
+        raise RuntimeError("an attachment kept failing to upload")
 
     js(
         page,
@@ -82,7 +104,7 @@ def main() -> None:
     wait_for(
         page,
         'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))',
-        "the answer to start",
+        "the answer to start (if the URL is still chatgpt.com/, the prompt was never sent)",
         60,
     )
     # Finished means no stop button on two polls in a row; image tools pause between steps.
