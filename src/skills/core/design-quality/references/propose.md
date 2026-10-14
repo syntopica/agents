@@ -93,15 +93,16 @@ codex --search exec --skip-git-repo-check --yolo -c 'mcp_servers={}' \
 ```
 
 Run it under `timeout 1200` and wait for it. Inside Orca (`ORCA_TERMINAL_HANDLE`
-set) run it in its own Orca tab so the owner can watch it, with `tee codex.log`
-instead of the redirect:
-`orca terminal create --worktree active --title "Codex: propose <screen>" --command "<command> 2>&1 | tee codex.log"`,
-then `orca terminal wait --terminal <handle> --for exit`. The same holds for the
-Codex runs of redirect mode (owner request, 2026-10-15). Generated images are
-first written under `~/.codex/generated_images/<session>/` and copied by Codex
-to the requested path. If a `mockup-*.png` is missing, look there before
-re-running. To fix a mockup, `codex exec resume <SESSION_ID>` with the
-rejection, not a new run.
+set) delegate it instead as a supervised interactive worker, so the owner sees
+Codex's own TUI in a tab and can type into it: `orca orchestration run-create`,
+then
+`orca orchestration worker-start --spec "Read prompt.md in <run-dir> fully and execute it." --worktree current --agent codex`,
+then `orca orchestration check --wait --types "worker_done,escalation,question"`
+(full loop in the `codex` skill). The same holds for redirect mode (owner
+request, 2026-10-15). Generated images are first written under
+`~/.codex/generated_images/<session>/` and copied by Codex to the requested
+path. If a `mockup-*.png` is missing, look there before re-running. To fix a
+mockup, `codex exec resume <SESSION_ID>` with the rejection, not a new run.
 
 ## ChatGPT (web) instead of Codex
 
