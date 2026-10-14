@@ -128,11 +128,12 @@ the repository as extra context.
    the request names the screen, not the target: capture the same path on the
    project's running dev server, whose data and login are the ones on record. On
    2026-10-15 a run aimed at `tieneslavibra.com/admin/leads` lost half an hour:
-   production rejected the recorded password ("Correo o contraseña incorrectos")
-   while the agent read the hang as a slow page, and the leads board holds its
-   `load` event on per-lead avatar requests. If a login does not redirect, read
-   the page text for the error before retrying anything, and stop after one
-   failed attempt on production rather than risk a lockout.
+   Cloudflare blocks the headless browser's login on production, and the page
+   then reads "Correo o contraseña incorrectos", so the credentials look wrong
+   when they are not. The agent read the hang as a slow page; the leads board
+   also holds its `load` event on per-lead avatar requests. A headless login
+   that does not redirect on production means Cloudflare: do not retry it and do
+   not suspect the password, capture on the dev server.
 4. **Hand-off.** Make `.codeality-ui/propose/<YYYY-MM-DD-HHMM>/`, copy the
    chosen screenshots and the brief into it, and run the prompt in
    `references/propose.md` with the command given there for the chosen model. It
