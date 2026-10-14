@@ -5,7 +5,7 @@ description:
   plus a screenshot review. Trigger when asked to check, review or improve how
   a screen looks, whether a UI is polished, what a screen is missing, or to
   redesign a page so it stops looking AI-made, or to have a chosen model
-  (Codex, Claude) critique screens and propose a better design as mockup images.
+  (Codex, Claude, ChatGPT web) critique screens and propose a better design as mockup images.
   Triggers (ES) are revisa el diseño, check-design, mejora la UI, que le falta
   a esta pantalla, modo creativo, vamos a mejorar la UI de X usando codex.
   Do not use for building a new UI from a blank page (that is
@@ -112,7 +112,10 @@ the repository as extra context.
 
 1. **Model.** "usando codex" (or no model named): Codex writes the critique and
    draws the mockups. "usando claude": you write the critique and research,
-   Codex only draws the mockups, because Claude cannot generate images.
+   Codex only draws the mockups, because Claude cannot generate images. "usando
+   chatgpt": ChatGPT's web UI in Orca's browser does both, through
+   `scripts/chatgpt_propose.py`; it cannot read the repository, so the brief
+   goes inside the prompt.
 2. **Brief.** Read `docs/ui-brief.md` in the project. When it is missing, draft
    it from the repo (README, routes, roles, domain models) with the template in
    `references/propose.md`, show it, and wait for corrections once; it is then
@@ -121,11 +124,19 @@ the repository as extra context.
 3. **Screens.** Run `codeality-ui check --routes '<glob>'` for the routes named
    (section 1 covers setup and auth). Captures are already full-page. Take the
    widest light and the phone light screenshot of each route from `report.json`;
-   several routes are fine, which is how a flow is shown.
+   several routes are fine, which is how a flow is shown. A production URL in
+   the request names the screen, not the target: capture the same path on the
+   project's running dev server, whose data and login are the ones on record. On
+   2026-10-15 a run aimed at `example-project/admin/leads` lost half an hour:
+   production rejected the recorded password ("Correo o contraseña incorrectos")
+   while the agent read the hang as a slow page, and the leads board holds its
+   `load` event on per-lead avatar requests. If a login does not redirect, read
+   the page text for the error before retrying anything, and stop after one
+   failed attempt on production rather than risk a lockout.
 4. **Hand-off.** Make `.codeality-ui/propose/<YYYY-MM-DD-HHMM>/`, copy the
    chosen screenshots and the brief into it, and run the prompt in
-   `references/propose.md` with the command given there. It writes `critique.md`
-   and `mockup-*.png` into that directory.
+   `references/propose.md` with the command given there for the chosen model. It
+   writes `critique.md` and `mockup-*.png` into that directory.
 5. **Check before showing.** Read every mockup. Reject and resume (same session)
    any mockup that drops a real feature, invents data presented as real, or
    ignores the brief's persona. Confirm each critique point names something
