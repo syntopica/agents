@@ -1,5 +1,7 @@
 # Redesign done checklist
 
+- [ ] When a mockup was the target: every `build` line of `gaps.md` is visible
+      on an after screenshot or is in the TODO with its reason.
 - [ ] `codeality-ui check` reports no finding that was not in the starting list,
       and every starting finding in scope is gone.
 - [ ] No new `disable` entry without a reason a reviewer would accept.
