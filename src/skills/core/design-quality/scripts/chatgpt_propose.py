@@ -124,18 +124,38 @@ def main() -> None:
         ' return t ? t.innerText : "" })()',
     )
     answer = turn.split("ChatGPT dijo:", 1)[-1].strip()
+    if len(answer) < 200:
+        # The answer turn can lack the turn-key attribute (seen 2026-10-15);
+        # the page text after the last "ChatGPT dijo:" still holds it.
+        answer = js(
+            page,
+            '(() => { const t = document.body.innerText; const i = t.lastIndexOf("ChatGPT dijo:");'
+            ' const e = t.lastIndexOf("ChatGPT puede cometer errores");'
+            ' return i < 0 ? "" : t.slice(i + 13, e > i ? e : undefined).trim() })()',
+        )
+    # An image-only reply leaves only the "Editar" button label as text; ask for
+    # the written critique as a follow-up in the same chat.
+    if len(answer) < 200:
+        print("warning: reply has no written critique; send a follow-up asking for it", file=sys.stderr)
     (run_dir / "critique.md").write_text(answer + "\n")
     (run_dir / "chat-url.txt").write_text(url + "\n")
 
-    count = int(js(page, 'String([...document.querySelectorAll("img")].filter(i => i.alt.startsWith("Imagen generada")).length)'))
-    for n in range(count):
+    # Several images land in one carousel where only the first carries the
+    # "Imagen generada" alt (seen 2026-10-15), so collect every distinct blob
+    # image that is not the user's own attachment.
+    srcs = json.loads(js(
+        page,
+        'JSON.stringify([...new Set([...document.querySelectorAll("img")]'
+        '.filter(i => i.naturalWidth > 300 && i.src.startsWith("blob:")'
+        ' && i.alt !== "Archivo adjunto del usuario").map(i => i.src))])',
+    ))
+    count = len(srcs)
+    for n, src in enumerate(srcs):
         data_url = js(
             page,
-            "(async () => { const i = [...document.querySelectorAll('img')]"
-            f".filter(i => i.alt.startsWith('Imagen generada'))[{n}];"
-            " const b = await (await fetch(i.src)).blob();"
-            " return await new Promise(r => { const f = new FileReader();"
-            " f.onload = () => r(f.result); f.readAsDataURL(b) }) })()",
+            f"(async () => {{ const b = await (await fetch({json.dumps(src)})).blob();"
+            " return await new Promise(r => {{ const f = new FileReader();"
+            " f.onload = () => r(f.result); f.readAsDataURL(b) }}) }})()",
         )
         (run_dir / f"mockup-{n + 1}.png").write_bytes(base64.b64decode(data_url.split(",", 1)[1]))
 

@@ -110,7 +110,9 @@ mockup, `codex exec resume <SESSION_ID>` with the rejection, not a new run.
 profile, which holds the owner's ChatGPT login; it takes no focus from the real
 Chrome. ChatGPT cannot read the repository, so its `prompt.md` inlines the
 brief, drops the "source of these screens" bullet, and asks for the mockups "in
-this same reply" instead of as files. Then:
+this same reply" instead of as files. Ask for the written sections before the
+images: on 2026-10-15 two of three runs answered with mockups only and no text,
+which then took a follow-up message in the same chat. Then:
 
 ```bash
 timeout 1500 python3 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
