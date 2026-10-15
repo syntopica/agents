@@ -40,7 +40,9 @@ def orca(*args: str) -> dict:
     )
     data = json.loads(out.stdout or "{}")
     if not data.get("ok"):
-        raise RuntimeError(f"orca {args[0]} failed: {out.stdout[:400]} {out.stderr[:400]}")
+        raise RuntimeError(
+            f"orca {args[0]} failed: {out.stdout[:400]} {out.stderr[:400]}"
+        )
     return data["result"]
 
 
@@ -58,13 +60,26 @@ def wait_for(page: str, expression: str, what: str, limit_s: int) -> None:
 
 def main() -> None:
     run_dir = Path(sys.argv[1]).resolve()
+    if sys.argv[2:3] == ["--followup"]:
+        # Ask more in an open chat, e.g. the written critique after an image-only reply.
+        send_and_wait(sys.argv[3], Path(sys.argv[4]).read_text())
+        collect(run_dir, sys.argv[3])
+        return
+    if sys.argv[2:3] == ["--collect"]:
+        # Re-read an answered chat still open in Orca (its browserPageId) without resending.
+        collect(run_dir, sys.argv[3])
+        return
     shots = [str(Path(p).resolve()) for p in sys.argv[2:]]
     if not shots:
-        sys.exit("usage: chatgpt_propose.py <run-dir> <screenshot.png> [...]")
+        sys.exit(
+            "usage: chatgpt_propose.py <run-dir> <screenshot.png> [...] | <run-dir> --collect <page-id> | <run-dir> --followup <page-id> <message.md>"
+        )
     prompt = (run_dir / "prompt.md").read_text()
 
     page = orca("tab", "create", "--url", "https://chatgpt.com/")["browserPageId"]
-    wait_for(page, 'String(!!document.querySelector(".ProseMirror"))', "the composer", 60)
+    wait_for(
+        page, 'String(!!document.querySelector(".ProseMirror"))', "the composer", 60
+    )
 
     # One file per upload: a multi-file upload attaches only the first. Count the
     # chips rather than match names, since ChatGPT renames a repeat "name(1).png".
@@ -89,10 +104,15 @@ def main() -> None:
     else:
         raise RuntimeError("an attachment kept failing to upload")
 
+    send_and_wait(page, prompt)
+    collect(run_dir, page)
+
+
+def send_and_wait(page: str, text: str) -> None:
     js(
         page,
         "(() => { const e = document.querySelector('.ProseMirror'); e.focus();"
-        f" document.execCommand('insertText', false, {json.dumps(prompt)}); return 'ok' }})()",
+        f" document.execCommand('insertText', false, {json.dumps(text)}); return 'ok' }})()",
     )
     wait_for(
         page,
@@ -100,7 +120,10 @@ def main() -> None:
         "the send button",
         120,
     )
-    js(page, '(() => { document.querySelector("button[aria-label=Enviar]").click(); return "ok" })()')
+    js(
+        page,
+        '(() => { document.querySelector("button[aria-label=Enviar]").click(); return "ok" })()',
+    )
     wait_for(
         page,
         'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))',
@@ -113,10 +136,15 @@ def main() -> None:
     while idle < 2:
         if time.time() > deadline:
             raise TimeoutError("timed out waiting for the answer")
-        busy = js(page, 'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))')
+        busy = js(
+            page,
+            'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))',
+        )
         idle = idle + 1 if busy == "false" else 0
         time.sleep(POLL_S)
 
+
+def collect(run_dir: Path, page: str) -> None:
     url = js(page, "location.href")
     turn = js(
         page,
@@ -136,30 +164,41 @@ def main() -> None:
     # An image-only reply leaves only the "Editar" button label as text; ask for
     # the written critique as a follow-up in the same chat.
     if len(answer) < 200:
-        print("warning: reply has no written critique; send a follow-up asking for it", file=sys.stderr)
+        print(
+            "warning: reply has no written critique; send a follow-up asking for it",
+            file=sys.stderr,
+        )
     (run_dir / "critique.md").write_text(answer + "\n")
     (run_dir / "chat-url.txt").write_text(url + "\n")
 
     # Several images land in one carousel where only the first carries the
     # "Imagen generada" alt (seen 2026-10-15), so collect every distinct blob
     # image that is not the user's own attachment.
-    srcs = json.loads(js(
-        page,
-        'JSON.stringify([...new Set([...document.querySelectorAll("img")]'
-        '.filter(i => i.naturalWidth > 300 && i.src.startsWith("blob:")'
-        ' && i.alt !== "Archivo adjunto del usuario").map(i => i.src))])',
-    ))
+    srcs = json.loads(
+        js(
+            page,
+            'JSON.stringify([...new Set([...document.querySelectorAll("img")]'
+            '.filter(i => i.naturalWidth > 300 && i.src.startsWith("blob:")'
+            ' && i.alt !== "Archivo adjunto del usuario").map(i => i.src))])',
+        )
+    )
     count = len(srcs)
     for n, src in enumerate(srcs):
         data_url = js(
             page,
             f"(async () => {{ const b = await (await fetch({json.dumps(src)})).blob();"
-            " return await new Promise(r => {{ const f = new FileReader();"
-            " f.onload = () => r(f.result); f.readAsDataURL(b) }}) }})()",
+            f" return await new Promise(r => {{ const f = new FileReader();"
+            f" f.onload = () => r(f.result); f.readAsDataURL(b) }}) }})()",
         )
-        (run_dir / f"mockup-{n + 1}.png").write_bytes(base64.b64decode(data_url.split(",", 1)[1]))
+        (run_dir / f"mockup-{n + 1}.png").write_bytes(
+            base64.b64decode(data_url.split(",", 1)[1])
+        )
 
-    print(json.dumps({"chat": url, "critique_chars": len(answer), "mockups": count, "page": page}))
+    print(
+        json.dumps(
+            {"chat": url, "critique_chars": len(answer), "mockups": count, "page": page}
+        )
+    )
 
 
 if __name__ == "__main__":
