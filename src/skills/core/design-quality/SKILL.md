@@ -162,15 +162,17 @@ the repository as extra context.
 2. **When the target is a mockup, the mockup is the scope, not a mood board.**
    Before editing, write `gaps.md` next to the mockups: one line for every
    section, field, badge, button, empty state and phone-only element visible in
-   each mockup (desktop and phone), and one for every numbered proposal in
-   `critique.md`. Mark each `build`, `exists`, `needs schema` (new table or
-   column; say which) or `rejected` with a reason the person would accept;
-   "minor" and "later" are not reasons. Everything marked `build` is in scope.
-   On 2026-10-15 the example-project lead, client and booking pages shipped with
-   the mockups' skeleton only - no activity tabs, no "Vincular cliente", no
-   pending-issues block, no contact rows, edit form still always open - and the
-   owner had to point out that ChatGPT's designs were complete and the copy was
-   minimal.
+   each mockup (desktop and phone), one for every numbered proposal in
+   `critique.md`, and one for every competitor pattern its references section
+   says to adopt (the "Adaptación" lines): those are product ideas the owner
+   wants integrated, not background reading. Mark each `build`, `exists`,
+   `needs schema` (new table or column; say which) or `rejected` with a reason
+   the person would accept; "minor" and "later" are not reasons. Everything
+   marked `build` is in scope. On 2026-10-15 the example-project lead, client and
+   booking pages shipped with the mockups' skeleton only - no activity tabs, no
+   "Vincular cliente", no pending-issues block, no contact rows, edit form still
+   always open - and the owner had to point out that ChatGPT's designs were
+   complete and the copy was minimal.
 3. Agree the scope from the review (or the creative direction). Change the code
    where the design system lives: tokens and shared components before one-off
    classes. Keep the project's stack, conventions and file rules. When a model
