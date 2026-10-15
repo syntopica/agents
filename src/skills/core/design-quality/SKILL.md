@@ -141,13 +141,19 @@ the repository as extra context.
 5. **Check before showing.** Read every mockup. Reject and resume (same session)
    any mockup that drops a real feature, invents data presented as real, or
    ignores the brief's persona. Confirm each critique point names something
-   visible in a screenshot.
+   visible in a screenshot. A feature the product lacks is not a reason to
+   reject: when the model brings a competitor's pattern or its own idea that
+   would serve the brief's users, keep it marked **new** and weigh it for
+   integration (owner order, 2026-10-15). Drop one only when it contradicts a
+   business or fiscal rule, duplicates something that exists, or serves no job.
 6. **Deliver.** Show the mockups (Read them; send the files when the person is
    on another device), then the critique in five to ten lines: the change of
    approach first, then the problems ranked by how often the user hits them,
-   then the references. Stop and ask which direction to take. "Sí, aplícalo"
-   goes to redesign with the chosen mockup as the target and `critique.md` as
-   scope.
+   then the references, then the **new** features worth integrating, each with
+   the job it serves, where the idea came from and its cost (UI only, new
+   endpoint, or new table or column). Stop and ask which direction to take. "Sí,
+   aplícalo" goes to redesign with the chosen mockup as the target and
+   `critique.md` as scope.
 
 ## 5. redesign mode
 
@@ -189,8 +195,9 @@ the repository as extra context.
 - Evidence over taste: every item names something visible on a screenshot or a
   number in the report. "Feels cluttered" is not a finding; "four type sizes in
   one row, two of them 1px apart" is.
-- Never invent data, copy or features the product does not have. A missing piece
-  is proposed as missing, not built silently.
+- Never invent data or copy, and never present a feature as existing when it
+  does not. A missing piece, or a competitor's idea worth adopting, is proposed
+  as **new** for the person to choose, not built silently and not discarded.
 - Match the existing design system before improving it. A redesign that
   introduces a second button style is a regression.
 - The rules flag symptoms; fix causes. A misaligned column is fixed with grid
