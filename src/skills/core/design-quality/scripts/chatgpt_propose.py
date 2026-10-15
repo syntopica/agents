@@ -22,6 +22,25 @@ from pathlib import Path
 
 TIMEOUT_S = 1200
 POLL_S = 5
+# Images keep arriving after the stop button goes away (2026-10-15: a run saved
+# no mockups because it read the page between image steps), so a reply is
+# settled only when the generated-image count holds for this many polls.
+SETTLED_POLLS = 4
+BUSY = 'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))'
+# Distinct generated images (blob URLs), leaving out the user's attachments.
+IMAGE_SRCS = (
+    'JSON.stringify([...new Set([...document.querySelectorAll("img")]'
+    '.filter(i => i.naturalWidth > 300 && i.src.startsWith("blob:")'
+    ' && i.alt !== "Archivo adjunto del usuario").map(i => i.src))])'
+)
+# Sent automatically when the first reply is image-only (two of three on
+# 2026-10-15), so the critique arrives without a manual --followup.
+FOLLOW_UP = (
+    "Escribe ahora, en texto, la crítica completa que acompaña a las maquetas: "
+    "el cambio de enfoque, los problemas numerados con lo que se ve en cada "
+    "captura, las referencias de otros productos con su adaptación y las "
+    "funcionalidades nuevas. No generes más imágenes."
+)
 # Clicks the remove button of a chip showing "Error al cargar" and returns its
 # label, or "none" when every attachment uploaded.
 FAILED_CHIP = (
@@ -104,11 +123,13 @@ def main() -> None:
     else:
         raise RuntimeError("an attachment kept failing to upload")
 
-    send_and_wait(page, prompt)
+    send_and_wait(page, prompt, run_dir)
+    if len(read_answer(page)) < 200:
+        send_and_wait(page, FOLLOW_UP)
     collect(run_dir, page)
 
 
-def send_and_wait(page: str, text: str) -> None:
+def send_and_wait(page: str, text: str, run_dir: Path | None = None) -> None:
     js(
         page,
         "(() => { const e = document.querySelector('.ProseMirror'); e.focus();"
@@ -130,42 +151,50 @@ def send_and_wait(page: str, text: str) -> None:
         "the answer to start (if the URL is still chatgpt.com/, the prompt was never sent)",
         60,
     )
-    # Finished means no stop button on two polls in a row; image tools pause between steps.
+    # Saved now, not at the end: if the Orca tab dies mid-answer (seen
+    # 2026-10-15), the chat can still be reopened and read with --collect.
+    if run_dir is not None:
+        (run_dir / "chat-url.txt").write_text(js(page, "location.href") + "\n")
+    # Finished means no stop button and the same image count for SETTLED_POLLS
+    # polls in a row; image tools pause between steps.
     deadline = time.time() + TIMEOUT_S
-    idle = 0
-    while idle < 2:
+    stable, last = 0, -1
+    while stable < SETTLED_POLLS:
         if time.time() > deadline:
-            raise TimeoutError("timed out waiting for the answer")
-        busy = js(
-            page,
-            'String(!!document.querySelector("button[aria-label*=Detener], [data-testid=stop-button]"))',
-        )
-        idle = idle + 1 if busy == "false" else 0
+            raise TimeoutError("timed out waiting for the answer to settle")
         time.sleep(POLL_S)
+        count = len(json.loads(js(page, IMAGE_SRCS)))
+        stable = 0 if js(page, BUSY) == "true" or count != last else stable + 1
+        last = count
 
 
-def collect(run_dir: Path, page: str) -> None:
-    url = js(page, "location.href")
+def read_answer(page: str) -> str:
+    """The text of the last ChatGPT turn."""
     turn = js(
         page,
         '(() => { const t = [...document.querySelectorAll("[data-content-search-turn-key]")].pop();'
         ' return t ? t.innerText : "" })()',
     )
     answer = turn.split("ChatGPT dijo:", 1)[-1].strip()
-    if len(answer) < 200:
-        # The answer turn can lack the turn-key attribute (seen 2026-10-15);
-        # the page text after the last "ChatGPT dijo:" still holds it.
-        answer = js(
-            page,
-            '(() => { const t = document.body.innerText; const i = t.lastIndexOf("ChatGPT dijo:");'
-            ' const e = t.lastIndexOf("ChatGPT puede cometer errores");'
-            ' return i < 0 ? "" : t.slice(i + 13, e > i ? e : undefined).trim() })()',
-        )
-    # An image-only reply leaves only the "Editar" button label as text; ask for
-    # the written critique as a follow-up in the same chat.
+    if len(answer) >= 200:
+        return answer
+    # The answer turn can lack the turn-key attribute (seen 2026-10-15); the
+    # page text after the last "ChatGPT dijo:" still holds it.
+    return js(
+        page,
+        '(() => { const t = document.body.innerText; const i = t.lastIndexOf("ChatGPT dijo:");'
+        ' const e = t.lastIndexOf("ChatGPT puede cometer errores");'
+        ' return i < 0 ? "" : t.slice(i + 13, e > i ? e : undefined).trim() })()',
+    )
+
+
+def collect(run_dir: Path, page: str) -> None:
+    url = js(page, "location.href")
+    answer = read_answer(page)
     if len(answer) < 200:
         print(
-            "warning: reply has no written critique; send a follow-up asking for it",
+            "warning: reply has no written critique even after the follow-up;"
+            " send one with --followup",
             file=sys.stderr,
         )
     (run_dir / "critique.md").write_text(answer + "\n")
@@ -174,14 +203,7 @@ def collect(run_dir: Path, page: str) -> None:
     # Several images land in one carousel where only the first carries the
     # "Imagen generada" alt (seen 2026-10-15), so collect every distinct blob
     # image that is not the user's own attachment.
-    srcs = json.loads(
-        js(
-            page,
-            'JSON.stringify([...new Set([...document.querySelectorAll("img")]'
-            '.filter(i => i.naturalWidth > 300 && i.src.startsWith("blob:")'
-            ' && i.alt !== "Archivo adjunto del usuario").map(i => i.src))])',
-        )
-    )
+    srcs = json.loads(js(page, IMAGE_SRCS))
     count = len(srcs)
     for n, src in enumerate(srcs):
         data_url = js(
