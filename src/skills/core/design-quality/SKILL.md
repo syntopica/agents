@@ -153,18 +153,34 @@ the repository as extra context.
 
 1. Copy `.codeality-ui/screens/` to `.codeality-ui/before/` and keep the finding
    list as the baseline of this change.
-2. Agree the scope from the review (or the creative direction). Change the code
+2. **When the target is a mockup, the mockup is the scope, not a mood board.**
+   Before editing, write `gaps.md` next to the mockups: one line for every
+   section, field, badge, button, empty state and phone-only element visible in
+   each mockup (desktop and phone), and one for every numbered proposal in
+   `critique.md`. Mark each `build`, `exists`, `needs schema` (new table or
+   column; say which) or `rejected` with a reason the person would accept;
+   "minor" and "later" are not reasons. Everything marked `build` is in scope.
+   On 2026-10-15 the example-project lead, client and booking pages shipped with
+   the mockups' skeleton only - no activity tabs, no "Vincular cliente", no
+   pending-issues block, no contact rows, edit form still always open - and the
+   owner had to point out that ChatGPT's designs were complete and the copy was
+   minimal.
+3. Agree the scope from the review (or the creative direction). Change the code
    where the design system lives: tokens and shared components before one-off
    classes. Keep the project's stack, conventions and file rules. When a model
    writes the change (yourself, a subagent or Codex), give it a concrete
    specification, not taste words: `references/prompting.md` has what the
    Anthropic and OpenAI guides recommend and an `<admin_ui>` block ready to
    paste for operational screens.
-3. Re-run `codeality-ui check` after each change. Never silence a finding with
+4. Re-run `codeality-ui check` after each change. Never silence a finding with
    `disable` to get to zero; a `disable` entry needs a reason a reviewer would
    accept, written in the file.
-4. Run the project's own gates (type-check, lint, tests) before calling it done.
-5. Finish with `references/checklist.md`, then show the before and after
+5. Run the project's own gates (type-check, lint, tests) before calling it done.
+6. Put the after screenshots beside the mockups and walk `gaps.md` line by line:
+   each `build` line is either visible on an after screenshot or moved to the
+   project's TODO with the reason it could not ship. A line still open means the
+   redesign is not done.
+7. Finish with `references/checklist.md`, then show the before and after
    screenshots of the same route, viewport and scheme side by side, and list
    what changed in one line per change.
 
