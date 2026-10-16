@@ -124,8 +124,10 @@ answer, and writes `critique.md` (the answer text), `mockup-<n>.png` (every
 image ChatGPT generated) and `chat-url.txt`. The tab stays open: corrections go
 as a follow-up message in that chat, which keeps its context, rather than a new
 run: `chatgpt_propose.py <run-dir> --followup <page-id> <message.md>` sends it,
-waits and rewrites `critique.md` and the mockups; `--collect <page-id>` only
-re-reads an answered chat (the page id is in the script's last JSON line or in
+waits and rewrites `critique.md` with that reply alone (copy it aside first: on
+2026-10-16 a follow-up asking for one missing mockup replaced a 25K critique
+with one word) and the mockups; `--collect <page-id>` only re-reads an answered
+chat (the page id is in the script's last JSON line or in
 `orca tab list --json`). An image-only reply (three of five runs on 2026-10-15)
 takes a `--followup` asking for the written sections. The script reads ChatGPT's
 Spanish UI labels (`Enviar`, `Detener`, `Quitar`, `Imagen generada`,
