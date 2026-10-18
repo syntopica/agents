@@ -106,13 +106,17 @@ mockup, `codex exec resume <SESSION_ID>` with the rejection, not a new run.
 
 ## ChatGPT (web) instead of Codex
 
-"usando chatgpt" drives chatgpt.com in Orca's embedded browser, `default`
-profile, which holds the owner's ChatGPT login; it takes no focus from the real
-Chrome. ChatGPT cannot read the repository, so its `prompt.md` inlines the
-brief, drops the "source of these screens" bullet, and asks for the mockups "in
-this same reply" instead of as files. Ask for the written sections before the
-images: on 2026-10-15 two of three runs answered with mockups only and no text,
-which then took a follow-up message in the same chat. Then:
+"usando chatgpt" drives chatgpt.com in Orca's embedded browser; it takes no
+focus from the real Chrome. Since 2026-10-18 the ChatGPT login lives in the Orca
+profile `pxpotion` (Google SSO as `cristian@pxpotion.com`, OpenAI MFA by the
+TOTP in 1Password item `chat.com`); `default` is logged out. Pass its id:
+`CHATGPT_ORCA_PROFILE=$(orca tab profile list --json | jq -r '.result.profiles[] | select(.label=="pxpotion") | .id')`.
+A "timed out waiting for the composer" means the chosen profile is logged out.
+ChatGPT cannot read the repository, so its `prompt.md` inlines the brief, drops
+the "source of these screens" bullet, and asks for the mockups "in this same
+reply" instead of as files. Ask for the written sections before the images: on
+2026-10-15 two of three runs answered with mockups only and no text, which then
+took a follow-up message in the same chat. Then:
 
 ```bash
 timeout 1500 python3 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \

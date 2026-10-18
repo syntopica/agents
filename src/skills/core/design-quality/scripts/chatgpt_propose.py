@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Run one propose pass in ChatGPT's web UI through Orca's embedded browser.
 
-Opens a new chat in the Orca `default` profile (signed in to ChatGPT), attaches
+Opens a new chat in an Orca browser profile signed in to ChatGPT (the
+`CHATGPT_ORCA_PROFILE` profile id, else Orca's default profile), attaches
 the screenshots, sends prompt.md, waits for the answer to finish, then writes
 critique.md, mockup-<n>.png and chat-url.txt into the run directory.
 
@@ -15,6 +16,7 @@ and the answer text follows "ChatGPT dijo:" in the last turn.
 
 import base64
 import json
+import os
 import subprocess
 import sys
 import time
@@ -95,7 +97,11 @@ def main() -> None:
         )
     prompt = (run_dir / "prompt.md").read_text()
 
-    page = orca("tab", "create", "--url", "https://chatgpt.com/")["browserPageId"]
+    # The `default` profile lost its ChatGPT login on 2026-10-18; the session
+    # now lives in the `pxpotion` profile, so the profile is chosen per run.
+    profile = os.environ.get("CHATGPT_ORCA_PROFILE")
+    create = ["tab", "create", "--url", "https://chatgpt.com/"]
+    page = orca(*create, *(["--profile", profile] if profile else []))["browserPageId"]
     wait_for(
         page, 'String(!!document.querySelector(".ProseMirror"))', "the composer", 60
     )
