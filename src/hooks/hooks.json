@@ -44,5 +44,17 @@
         }
       ]
     }
+  ],
+  "PostToolUse": [
+    {
+      "matcher": "Edit|Write|MultiEdit|Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/tadu-doctor-after-edit.sh",
+          "timeout": 20
+        }
+      ]
+    }
   ]
 }
