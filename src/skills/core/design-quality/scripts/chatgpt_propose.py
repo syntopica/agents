@@ -138,7 +138,9 @@ def main() -> None:
 def send_and_wait(page: str, text: str, run_dir: Path | None = None) -> None:
     js(
         page,
-        "(() => { const e = document.querySelector('.ProseMirror'); e.focus();"
+        # The composer is the last ProseMirror: an answer's "Escritura" canvas is one too
+        # and comes first, so querySelector typed a follow-up into it (2026-10-19).
+        "(() => { const e = [...document.querySelectorAll('.ProseMirror')].at(-1); e.focus();"
         f" document.execCommand('insertText', false, {json.dumps(text)}); return 'ok' }})()",
     )
     wait_for(
