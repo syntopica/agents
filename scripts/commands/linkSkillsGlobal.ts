@@ -8,6 +8,7 @@ import { CLAUDE_HOME } from '../lib/link/constants/CLAUDE_HOME'
 import { CODEX_HOME } from '../lib/link/constants/CODEX_HOME'
 import { IDE_REGISTRY } from '../lib/link/constants/IDE_REGISTRY'
 import { findSkillsMissingFromDist } from '../lib/link/operations/findSkillsMissingFromDist'
+import { findSkillsStaleInDist } from '../lib/link/operations/findSkillsStaleInDist'
 import { linkAgentsToClaude } from '../lib/link/operations/linkAgentsToClaude'
 import { linkAgentsToCodex } from '../lib/link/operations/linkAgentsToCodex'
 import { writeCodexSkillTrim } from '../lib/link/operations/writeCodexSkillTrim'
@@ -30,6 +31,15 @@ export const main = async () => {
   if (notCompiled.length > 0) {
     throw new Error(
       `dist/skills is stale: it lacks source skills that linking would unlink (${notCompiled.join(', ')}). Run \`pnpm run skills:compile\` first.`,
+    )
+  }
+  const outdated = await findSkillsStaleInDist(
+    SKILL_SOURCE_DIRS,
+    SKILLS_DIST_DIR,
+  )
+  if (outdated.length > 0) {
+    throw new Error(
+      `dist/skills is stale: its copy of ${outdated.join(', ')} no longer matches the source, so linking would ship the old text. Run \`pnpm run skills:compile\` first.`,
     )
   }
   const portableSkillNames = await collectSkillNames(SKILLS_PORTABLE_DIST_DIR)

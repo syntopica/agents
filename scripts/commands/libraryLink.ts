@@ -8,6 +8,7 @@ import { expandPlannedLink } from '../lib/library/expandPlannedLink'
 import { findLinkCollisions } from '../lib/library/findLinkCollisions'
 import { formatLinkReport } from '../lib/library/formatters/formatLinkReport'
 import { installPlannedLinks } from '../lib/library/installPlannedLinks'
+import { isInstalledUnderAlias } from '../lib/library/isInstalledUnderAlias'
 import { isSkillTarget } from '../lib/library/isSkillTarget'
 import { linkStrategyForTarget } from '../lib/library/linkStrategyForTarget'
 import { planLinks } from '../lib/library/planLinks'
@@ -44,12 +45,38 @@ export const main = async () => {
     return
   }
 
+  const linkDir = resolveLinkDir({
+    into: flagValue(process.argv, '--into'),
+    target,
+    home,
+  })
+
+  if (linkDir === undefined) {
+    console.error(
+      `--into is required for target ${target}; only claude has a default destination`,
+    )
+    process.exitCode = 1
+    return
+  }
+
   const skillsRoot = join(libraryDir, 'skills')
   const entryKeys = selectFannedOutSkills(parsed.manifest, target)
   const missing: string[] = []
   let links: PlannedLink[]
   if (target === 'claude') {
-    const planned = planLinks(skillsRoot, entryKeys)
+    const installedUnderAlias = await Promise.all(
+      entryKeys.map((entryKey) =>
+        isInstalledUnderAlias(
+          parsed.manifest.entries[entryKey],
+          target,
+          linkDir,
+        ),
+      ),
+    )
+    const planned = planLinks(
+      skillsRoot,
+      entryKeys.filter((_, index) => installedUnderAlias[index] !== true),
+    )
     links = deduplicatePlannedLinks(
       (await Promise.all(planned.map(expandPlannedLink))).flat(),
     )
@@ -82,19 +109,6 @@ export const main = async () => {
     return
   }
 
-  const linkDir = resolveLinkDir({
-    into: flagValue(process.argv, '--into'),
-    target,
-    home,
-  })
-
-  if (linkDir === undefined) {
-    console.error(
-      `--into is required for target ${target}; only claude has a default destination`,
-    )
-    process.exitCode = 1
-    return
-  }
   const installed = await installPlannedLinks({
     links,
     linkDir,
