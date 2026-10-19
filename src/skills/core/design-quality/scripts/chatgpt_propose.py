@@ -43,6 +43,12 @@ FOLLOW_UP = (
     "captura, las referencias de otros productos con su adaptación y las "
     "funcionalidades nuevas. No generes más imágenes."
 )
+# ChatGPT can end a turn on a plan with a literal "end_turn=false" line and no
+# images ("Ahora genero ... los cinco mockups", 2026-10-19); nothing more comes
+# until it is told to go on, so this is sent at most CONTINUE_TRIES times.
+STALLED = "end_turn=false"
+CONTINUE = "Continúa: genera ahora las imágenes que has anunciado, en esta misma respuesta."
+CONTINUE_TRIES = 2
 # Clicks the remove button of a chip showing "Error al cargar" and returns its
 # label, or "none" when every attachment uploaded.
 FAILED_CHIP = (
@@ -84,6 +90,7 @@ def main() -> None:
     if sys.argv[2:3] == ["--followup"]:
         # Ask more in an open chat, e.g. the written critique after an image-only reply.
         send_and_wait(sys.argv[3], Path(sys.argv[4]).read_text())
+        nudge_stalled(sys.argv[3])
         collect(run_dir, sys.argv[3])
         return
     if sys.argv[2:3] == ["--collect"]:
@@ -130,6 +137,7 @@ def main() -> None:
         raise RuntimeError("an attachment kept failing to upload")
 
     send_and_wait(page, prompt, run_dir)
+    nudge_stalled(page)
     if len(read_answer(page)) < 200:
         send_and_wait(page, FOLLOW_UP)
     collect(run_dir, page)
@@ -174,6 +182,14 @@ def send_and_wait(page: str, text: str, run_dir: Path | None = None) -> None:
         count = len(json.loads(js(page, IMAGE_SRCS)))
         stable = 0 if js(page, BUSY) == "true" or count != last else stable + 1
         last = count
+
+
+def nudge_stalled(page: str) -> None:
+    """Tell ChatGPT to go on while its last turn stopped at a plan."""
+    for _attempt in range(CONTINUE_TRIES):
+        if STALLED not in read_answer(page):
+            return
+        send_and_wait(page, CONTINUE)
 
 
 def read_answer(page: str) -> str:

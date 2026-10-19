@@ -135,7 +135,11 @@ waits and rewrites `critique.md` with that reply alone (copy it aside first: on
 with one word) and the mockups; `--collect <page-id>` only re-reads an answered
 chat (the page id is in the script's last JSON line or in
 `orca tab list --json`). An image-only reply (three of five runs on 2026-10-15)
-takes a `--followup` asking for the written sections. The script reads ChatGPT's
-Spanish UI labels (`Enviar`, `Detener`, `Quitar`, `Imagen generada`,
-`ChatGPT dijo:`); when it times out, take an `orca screenshot` of the tab and
-fix the selector in the script.
+takes a `--followup` asking for the written sections. A turn that stops at a
+plan ending in a literal `end_turn=false` line, with no images, is nudged with
+"Continúa" up to twice by the script itself (2026-10-19). Every collect rewrites
+`mockup-1..N` from all the images in the chat, in page order, so the numbers
+shift between rounds: copy each round's new images to their own names before the
+next follow-up. The script reads ChatGPT's Spanish UI labels (`Enviar`,
+`Detener`, `Quitar`, `Imagen generada`, `ChatGPT dijo:`); when it times out,
+take an `orca screenshot` of the tab and fix the selector in the script.
