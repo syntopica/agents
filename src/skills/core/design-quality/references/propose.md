@@ -107,19 +107,21 @@ mockup, `codex exec resume <SESSION_ID>` with the rejection, not a new run.
 ## ChatGPT (web) instead of Codex
 
 "usando chatgpt" drives chatgpt.com in Orca's embedded browser; it takes no
-focus from the real Chrome. Since 2026-10-18 the ChatGPT login lives in the Orca
-profile `pxpotion` (Google SSO as `cristian@pxpotion.com`, OpenAI MFA by the
-TOTP in 1Password item `chat.com`); `default` is logged out. Pass its id:
-`CHATGPT_ORCA_PROFILE=$(orca tab profile list --json | jq -r '.result.profiles[] | select(.label=="pxpotion") | .id')`.
-A "timed out waiting for the composer" means the chosen profile is logged out.
-ChatGPT cannot read the repository, so its `prompt.md` inlines the brief, drops
-the "source of these screens" bullet, and asks for the mockups "in this same
-reply" instead of as files. Ask for the written sections before the images: on
-2026-10-15 two of three runs answered with mockups only and no text, which then
-took a follow-up message in the same chat. Then:
+focus from the real Chrome. Which Orca profile holds the ChatGPT login moves: on
+2026-10-18 it was `pxpotion`; on 2026-10-19 that profile no longer existed and
+`default` (imported from Chrome) was logged in. List the profiles with
+`orca tab profile list --json`, open chatgpt.com in the likely one and check for
+a `.ProseMirror` composer before a run, then pass its id as
+`CHATGPT_ORCA_PROFILE` (unset means `default`). A "timed out waiting for the
+composer" means the chosen profile is logged out. ChatGPT cannot read the
+repository, so its `prompt.md` inlines the brief, drops the "source of these
+screens" bullet, and asks for the mockups "in this same reply" instead of as
+files. Ask for the written sections before the images: on 2026-10-15 two of
+three runs answered with mockups only and no text, which then took a follow-up
+message in the same chat. Then:
 
 ```bash
-timeout 1500 python3 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
+timeout 1500 /opt/homebrew/bin/python3.13 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
   <run-dir> <run-dir>/desktop-<screen>.png <run-dir>/phone-<screen>.png
 ```
 
