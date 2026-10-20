@@ -1,12 +1,13 @@
 import { findCommandOnPath } from './findCommandOnPath'
 import { findExistingPath } from './findExistingPath'
+import type { DetectPlatformRuntimeOptions } from './types/DetectPlatformRuntimeOptions'
 import type { PlatformDefinition } from './types/PlatformDefinition'
 import type { PlatformRuntimeState } from './types/PlatformRuntimeState'
 import type { ProbeResult } from './types/ProbeResult'
 
 export const detectPlatformRuntime = async (
   platform: PlatformDefinition,
-  options: { env: NodeJS.ProcessEnv; home: string },
+  options: DetectPlatformRuntimeOptions,
 ): Promise<PlatformRuntimeState> => {
   const commands = await Promise.all(
     (platform.probe.commands ?? []).map(

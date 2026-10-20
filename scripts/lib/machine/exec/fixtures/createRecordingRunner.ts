@@ -1,4 +1,5 @@
 import type { CommandRunner } from '../types/CommandRunner'
+import type { CreateRecordingRunnerCalls } from './types/CreateRecordingRunnerCalls'
 
 /**
  * A CommandRunner that records invocations instead of executing them, so apply
@@ -6,7 +7,7 @@ import type { CommandRunner } from '../types/CommandRunner'
  * positions (matched on the second word) that should report failure.
  */
 export const createRecordingRunner = (fails: string[] = []) => {
-  const calls: { argv: string[]; env?: Record<string, string> }[] = []
+  const calls: CreateRecordingRunnerCalls[] = []
 
   const run: CommandRunner = (argv, env) => {
     calls.push({ argv, ...(env === undefined ? {} : { env }) })

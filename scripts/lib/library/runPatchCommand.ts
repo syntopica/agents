@@ -1,7 +1,8 @@
 import { spawn } from 'node:child_process'
+import type { RunPatchCommandResult } from './types/RunPatchCommandResult'
 
 export const runPatchCommand = async (args: string[], cwd: string) =>
-  new Promise<{ code: number; stderr: string }>((resolve) => {
+  new Promise<RunPatchCommandResult>((resolve) => {
     const child = spawn('git', args, {
       cwd,
       stdio: ['ignore', 'ignore', 'pipe'],

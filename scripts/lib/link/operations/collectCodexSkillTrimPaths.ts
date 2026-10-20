@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import type { CollectCodexSkillTrimPathsInput } from './types/CollectCodexSkillTrimPathsInput'
 
 /**
  * Lists every `SKILL.md` under `skillsDir` that no entry in `curatedDir` points
@@ -12,10 +13,7 @@ import path from 'node:path'
 export const collectCodexSkillTrimPaths = async ({
   skillsDir,
   curatedDir,
-}: {
-  skillsDir: string
-  curatedDir: string
-}) => {
+}: CollectCodexSkillTrimPathsInput) => {
   const curated = new Set<string>()
   for (const entry of await fs.readdir(curatedDir).catch(() => [])) {
     const resolved = await fs

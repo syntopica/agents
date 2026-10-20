@@ -1,4 +1,5 @@
 import type { DomainResult } from '../../types/DomainResult'
+import type { ToMcpApplyDomainInput } from './types/ToMcpApplyDomainInput'
 
 /**
  * An unresolved secret reference is not a failure: the run wrote what it could
@@ -8,11 +9,7 @@ export const toMcpApplyDomain = ({
   written,
   targets,
   missing,
-}: {
-  written: number
-  targets: number
-  missing: string[]
-}): DomainResult => {
+}: ToMcpApplyDomainInput): DomainResult => {
   if (missing.length > 0) {
     return {
       domain: 'mcp',

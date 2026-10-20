@@ -1,11 +1,12 @@
 import type { ClaudeSecurityPolicy } from './types/ClaudeSecurityPolicy'
 import type { ClaudeSettingsPaths } from './types/ClaudeSettingsPaths'
+import type { PlanClaudeSettingsChanges } from './types/PlanClaudeSettingsChanges'
 
 export const planClaudeSettings = (
   policy: ClaudeSecurityPolicy,
   settings: Record<keyof ClaudeSettingsPaths, Record<string, unknown>>,
 ) => {
-  const changes: { profile: keyof ClaudeSettingsPaths; key: string }[] = []
+  const changes: PlanClaudeSettingsChanges[] = []
 
   for (const profile of policy.profiles) {
     const current = settings[profile]

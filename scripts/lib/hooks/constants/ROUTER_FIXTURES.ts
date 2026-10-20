@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { RouterFixtures } from './types/RouterFixtures'
 
 /**
  * Router fixtures compiled from the reviewed expectation corpus. Every prompt
@@ -14,9 +15,4 @@ export const ROUTER_FIXTURES = JSON.parse(
     ),
     'utf8',
   ),
-) as {
-  phraseCount: number
-  sourceAssociationCount: number
-  routes: Record<string, string[]>
-  silent: { prompts: string[] }
-}
+) as RouterFixtures

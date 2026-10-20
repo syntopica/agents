@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process'
+import type { RunRouterProbeParsed } from './types/RunRouterProbeParsed'
 
 export const runRouterProbe = async (routerPath: string, prompt: string) =>
   new Promise<string | undefined>((resolve) => {
@@ -22,9 +23,7 @@ export const runRouterProbe = async (routerPath: string, prompt: string) =>
       }
 
       try {
-        const parsed = JSON.parse(output) as {
-          hookSpecificOutput?: { additionalContext?: string }
-        }
+        const parsed = JSON.parse(output) as RunRouterProbeParsed
         resolve(parsed.hookSpecificOutput?.additionalContext)
       } catch {
         resolve(undefined)

@@ -1,13 +1,10 @@
 import type { MachineStatus } from '../../types/MachineStatus'
-import type { PluginsApplyResult } from './types/PluginsApplyResult'
+import type { ToPluginsApplyStatusInput } from './types/ToPluginsApplyStatusInput'
 
 export const toPluginsApplyStatus = ({
   result,
   pruned,
-}: {
-  result: PluginsApplyResult
-  pruned: number
-}): MachineStatus => {
+}: ToPluginsApplyStatusInput): MachineStatus => {
   if (result.failed.length > 0) {
     return 'failed'
   }

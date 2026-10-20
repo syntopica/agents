@@ -1,14 +1,10 @@
 import { applyGuidanceResult } from './applyGuidanceResult'
-import type { GuidanceFastPath } from './types/GuidanceFastPath'
+import type { ApplyGuidanceFastPathOptions } from './types/ApplyGuidanceFastPathOptions'
 import type { GuidanceRunReport } from './types/GuidanceRunReport'
-import type { GuidanceSyncOptions } from './types/GuidanceSyncOptions'
 
-export const applyGuidanceFastPath = async (options: {
-  fastPath: GuidanceFastPath
-  sync: GuidanceSyncOptions
-  runId: string
-  snapshotDir: string
-}): Promise<GuidanceRunReport | undefined> => {
+export const applyGuidanceFastPath = async (
+  options: ApplyGuidanceFastPathOptions,
+): Promise<GuidanceRunReport | undefined> => {
   if (options.fastPath.kind === 'reconcile') return undefined
   if (options.fastPath.kind === 'converged')
     return {

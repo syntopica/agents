@@ -2,6 +2,7 @@ import { collectSkillInvocations } from './collectSkillInvocations'
 import { extractTurnText } from './extractTurnText'
 import { isMachineTurn } from './isMachineTurn'
 import type { ObservedTurn } from './types/ObservedTurn'
+import type { ReadTranscriptTurnsMessage } from './types/ReadTranscriptTurnsMessage'
 
 export const readTranscriptTurns = (contents: string) => {
   const turns: ObservedTurn[] = []
@@ -18,7 +19,7 @@ export const readTranscriptTurns = (contents: string) => {
       continue
     }
 
-    const message = parsed['message'] as { content?: unknown } | undefined
+    const message = parsed['message'] as ReadTranscriptTurnsMessage | undefined
     if (message === undefined) {
       continue
     }

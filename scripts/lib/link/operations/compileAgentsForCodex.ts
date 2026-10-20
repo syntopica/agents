@@ -1,14 +1,12 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { renderCodexAgent } from '../renderers/renderCodexAgent'
+import type { CompileAgentsForCodexInput } from './types/CompileAgentsForCodexInput'
 
 export const compileAgentsForCodex = async ({
   srcAgentsDir,
   outputAgentsDir,
-}: {
-  srcAgentsDir: string
-  outputAgentsDir: string
-}): Promise<string[]> => {
+}: CompileAgentsForCodexInput): Promise<string[]> => {
   await fs.rm(outputAgentsDir, { recursive: true, force: true })
   await fs.mkdir(outputAgentsDir, { recursive: true })
 

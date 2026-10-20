@@ -6,14 +6,11 @@ import { sha256Text } from './sha256Text'
 import { toGuidanceInputHashes } from './toGuidanceInputHashes'
 import type { GuidanceFastPath } from './types/GuidanceFastPath'
 import type { GuidanceOutputDocuments } from './types/GuidanceOutputDocuments'
-import type { GuidancePolicy } from './types/GuidancePolicy'
-import type { GuidanceSources } from './types/GuidanceSources'
+import type { ResolveGuidanceFastPathOptions } from './types/ResolveGuidanceFastPathOptions'
 
-export const resolveGuidanceFastPath = (options: {
-  sources: GuidanceSources
-  policy: GuidancePolicy
-  acceptPublished: boolean
-}): GuidanceFastPath => {
+export const resolveGuidanceFastPath = (
+  options: ResolveGuidanceFastPathOptions,
+): GuidanceFastPath => {
   const canonicalPaths = [
     'canonical/shared.md',
     'canonical/claude-overlay.md',

@@ -2,14 +2,12 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { linkOneWithBackup } from './linkOneWithBackup'
 import { pathExists } from './pathExists'
+import type { LinkAgentsToCodexInput } from './types/LinkAgentsToCodexInput'
 
 export const linkAgentsToCodex = async ({
   compiledAgentsDir,
   targetAgentsDir,
-}: {
-  compiledAgentsDir: string
-  targetAgentsDir: string
-}): Promise<string[]> => {
+}: LinkAgentsToCodexInput): Promise<string[]> => {
   if (!(await pathExists(compiledAgentsDir))) return []
   await fs.mkdir(targetAgentsDir, { recursive: true })
 

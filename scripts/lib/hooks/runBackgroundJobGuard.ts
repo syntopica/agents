@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { RunBackgroundJobGuardParsed } from './types/RunBackgroundJobGuardParsed'
 
 /**
  * Run the PreToolUse background-job guard against one Bash tool call and return
@@ -34,8 +35,6 @@ export const runBackgroundJobGuard = (
   }).trim()
 
   if (raw === '') return null
-  const parsed = JSON.parse(raw) as {
-    hookSpecificOutput?: { additionalContext?: string }
-  }
+  const parsed = JSON.parse(raw) as RunBackgroundJobGuardParsed
   return parsed.hookSpecificOutput?.additionalContext ?? null
 }

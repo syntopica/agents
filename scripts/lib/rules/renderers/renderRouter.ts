@@ -1,16 +1,9 @@
 import type { RuleItem } from '../types/RuleItem'
+import type { RenderRouterInput } from './types/RenderRouterInput'
 
 export function renderRouter(
   groups: Record<string, RuleItem[]>,
-  {
-    getRuleRef,
-    getRuleBadges,
-    getOneLineDesc,
-  }: {
-    getRuleRef: (item: RuleItem) => string
-    getRuleBadges: (item: RuleItem) => string[]
-    getOneLineDesc: (item: RuleItem) => string
-  },
+  { getRuleRef, getRuleBadges, getOneLineDesc }: RenderRouterInput,
 ) {
   const segments = Object.keys(groups).sort((a: string, b: string) => {
     if (a === 'entrypoints') return -1

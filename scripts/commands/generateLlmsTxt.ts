@@ -8,6 +8,7 @@ import { parseDescription } from '../lib/skills/parsers/parseDescription'
 import { parseFrontmatter } from '../lib/skills/parsers/parseFrontmatter'
 import { stripQuotes } from '../lib/skills/transformers/stripQuotes'
 import { buildLlmsTxt } from './buildLlmsTxt'
+import type { SkillNameEntry } from './types/SkillNameEntry'
 
 export const main = async () => {
   const engineSkillNames = await listEngineSkillNames()
@@ -29,7 +30,7 @@ export const main = async () => {
     skills.push({ name, description, skillPath })
   }
 
-  skills.sort((a: { name: string }, b: { name: string }) =>
+  skills.sort((a: SkillNameEntry, b: SkillNameEntry) =>
     a.name.localeCompare(b.name),
   )
   writeFileSync(LLMS_TXT, buildLlmsTxt(skills), 'utf-8')

@@ -1,5 +1,4 @@
-import type { OwnedRecord } from '../../ownership/OwnedRecord'
-import type { writeClaudeSettings } from './writeClaudeSettings'
+import type { ApplySelectedClaudeSettingsInput } from './types/ApplySelectedClaudeSettingsInput'
 
 /**
  * Writes the Claude security policy, or keeps the ownership already on record
@@ -9,8 +8,5 @@ export const applySelectedClaudeSettings = async ({
   selected,
   owned,
   run,
-}: {
-  selected: boolean
-  owned: OwnedRecord
-  run: () => ReturnType<typeof writeClaudeSettings>
-}) => (selected ? await run() : (owned.security ?? {}))
+}: ApplySelectedClaudeSettingsInput) =>
+  selected ? await run() : (owned.security ?? {})

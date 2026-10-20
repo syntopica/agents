@@ -1,12 +1,10 @@
-import type { CommandRunner } from '../../exec/types/CommandRunner'
 import type { DomainResult } from '../../types/DomainResult'
 import { apply } from './apply'
 import { plan } from './plan'
 import { pruneOrphanCacheDirectories } from './pruneOrphanCacheDirectories'
 import { read } from './read'
 import { toPluginsApplyStatus } from './toPluginsApplyStatus'
-import type { PluginsManifestParseResult } from './types/PluginsManifestParseResult'
-import type { PluginsPaths } from './types/PluginsPaths'
+import type { RunPluginsApplyInput } from './types/RunPluginsApplyInput'
 
 /**
  * Converges the plugin tree and reports the domain result. A missing manifest
@@ -18,12 +16,7 @@ export const runPluginsApply = async ({
   paths,
   prune,
   run,
-}: {
-  parsed: PluginsManifestParseResult | undefined
-  paths: PluginsPaths
-  prune: boolean
-  run: CommandRunner
-}): Promise<DomainResult> => {
+}: RunPluginsApplyInput): Promise<DomainResult> => {
   if (parsed === undefined) {
     return {
       domain: 'plugins',

@@ -1,18 +1,14 @@
 import { installCopiedSkill } from './installCopiedSkill'
 import { installLink } from './installLink'
-import type { PlannedLink } from './types/PlannedLink'
+import type { InstallPlannedLinksInput } from './types/InstallPlannedLinksInput'
+import type { InstallPlannedLinksResult } from './types/InstallPlannedLinksResult'
 
 export const installPlannedLinks = async ({
   links,
   linkDir,
   dryRun,
   strategy,
-}: {
-  links: PlannedLink[]
-  linkDir: string
-  dryRun: boolean
-  strategy: 'symlink' | 'copy'
-}): Promise<{ created: string[]; missing: string[]; foreign: string[] }> => {
+}: InstallPlannedLinksInput): Promise<InstallPlannedLinksResult> => {
   const created: string[] = []
   const missing: string[] = []
   const foreign: string[] = []

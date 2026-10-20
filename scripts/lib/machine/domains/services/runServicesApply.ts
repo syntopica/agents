@@ -1,10 +1,8 @@
-import type { CommandRunner } from '../../exec/types/CommandRunner'
 import type { DomainResult } from '../../types/DomainResult'
 import { apply } from './apply'
 import { read } from './read'
 import { toServicesApplyStatus } from './toServicesApplyStatus'
-import type { ServicesManifestParseResult } from './types/ServicesManifestParseResult'
-import type { ServicesPaths } from './types/ServicesPaths'
+import type { RunServicesApplyInput } from './types/RunServicesApplyInput'
 
 /**
  * Writes and loads the declared units, then reports the domain result. Like
@@ -16,12 +14,7 @@ export const runServicesApply = async ({
   paths,
   uid,
   run,
-}: {
-  parsed: ServicesManifestParseResult | undefined
-  paths: ServicesPaths
-  uid: number
-  run: CommandRunner
-}): Promise<DomainResult> => {
+}: RunServicesApplyInput): Promise<DomainResult> => {
   if (parsed === undefined) {
     return {
       domain: 'services',

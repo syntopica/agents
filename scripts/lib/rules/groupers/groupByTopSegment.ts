@@ -1,7 +1,10 @@
 import { ENTRYPOINTS } from '../constants/ENTRYPOINTS'
 import { ROOT_FILE_TO_SEGMENT } from '../constants/ROOT_FILE_TO_SEGMENT'
+import type { GroupByTopSegmentEntry } from './types/GroupByTopSegmentEntry'
 
-export function groupByTopSegment<T extends { rel: string }>(items: T[]) {
+export function groupByTopSegment<T extends GroupByTopSegmentEntry>(
+  items: T[],
+) {
   const map: Record<string, T[]> = {}
   for (const item of items) {
     const parts = item.rel.split('/')

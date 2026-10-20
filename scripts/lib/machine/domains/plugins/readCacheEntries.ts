@@ -2,15 +2,12 @@ import { join } from 'node:path'
 import { readDirectoryNames } from './readDirectoryNames'
 import { toRealPath } from './toRealPath'
 import type { CacheEntry } from './types/CacheEntry'
-import type { PluginMarketplaceEntry } from './types/PluginMarketplaceEntry'
+import type { ReadCacheEntriesInput } from './types/ReadCacheEntriesInput'
 
 export const readCacheEntries = async ({
   cacheDir,
   marketplaces,
-}: {
-  cacheDir: string
-  marketplaces: PluginMarketplaceEntry[]
-}): Promise<CacheEntry[]> => {
+}: ReadCacheEntriesInput): Promise<CacheEntry[]> => {
   const root = await toRealPath(cacheDir)
   const entries: CacheEntry[] = []
 

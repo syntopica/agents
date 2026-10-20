@@ -3,14 +3,12 @@ import path from 'node:path'
 import { copyDirRecursive } from '../../../operations/copyDirRecursive'
 import { listSkillDirs } from '../loaders/listSkillDirs'
 import { stripAnthropicOnlyFields } from '../transformers/stripAnthropicOnlyFields'
+import type { EmitPortableSkillsFromDistInput } from './types/EmitPortableSkillsFromDistInput'
 
 export const emitPortableSkillsFromDist = async ({
   distSkillsDir,
   distSkillsPortableDir,
-}: {
-  distSkillsDir: string
-  distSkillsPortableDir: string
-}): Promise<number> => {
+}: EmitPortableSkillsFromDistInput): Promise<number> => {
   await fs.rm(distSkillsPortableDir, { recursive: true, force: true })
   await fs.mkdir(distSkillsPortableDir, { recursive: true })
 

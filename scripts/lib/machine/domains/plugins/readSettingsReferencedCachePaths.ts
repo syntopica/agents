@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { escapeRegExpSource } from './escapeRegExpSource'
 import { toRealPath } from './toRealPath'
+import type { ReadSettingsReferencedCachePathsInput } from './types/ReadSettingsReferencedCachePathsInput'
 
 /**
  * Cache directories a settings file points into. A `statusLine` command, a
@@ -13,10 +14,7 @@ import { toRealPath } from './toRealPath'
 export const readSettingsReferencedCachePaths = async ({
   settingsFiles,
   cacheDirs,
-}: {
-  settingsFiles: string[]
-  cacheDirs: string[]
-}): Promise<string[]> => {
+}: ReadSettingsReferencedCachePathsInput): Promise<string[]> => {
   const found = new Set<string>()
 
   for (const file of settingsFiles) {

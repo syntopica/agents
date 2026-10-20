@@ -1,18 +1,12 @@
 import { renderServiceUnits } from './renderServiceUnits'
+import type { PlanInput } from './types/PlanInput'
 import type { ServiceChange } from './types/ServiceChange'
-import type { ServicesManifest } from './types/ServicesManifest'
-import type { ServicesPlatform } from './types/ServicesPlatform'
-import type { ServicesState } from './types/ServicesState'
 
 export const plan = ({
   manifest,
   platform,
   state,
-}: {
-  manifest: ServicesManifest
-  platform: ServicesPlatform
-  state: ServicesState
-}): ServiceChange[] =>
+}: PlanInput): ServiceChange[] =>
   manifest.services.flatMap((service) =>
     renderServiceUnits({ service, platform }).flatMap((unit) => {
       const current = state[unit.file]

@@ -1,6 +1,8 @@
+import type { ParsePortabilityFrontmatterResult } from './types/ParsePortabilityFrontmatterResult'
+
 export const parsePortabilityFrontmatter = (
   frontmatter: string,
-): { fields: Map<string, string>; errors: string[] } => {
+): ParsePortabilityFrontmatterResult => {
   const fields = new Map<string, string>()
   const errors: string[] = []
   for (const [index, line] of frontmatter.split(/\r?\n/).entries()) {

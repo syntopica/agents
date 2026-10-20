@@ -1,6 +1,5 @@
-import type { CommandRunner } from '../../exec/types/CommandRunner'
 import { toReloadCommands } from './toReloadCommands'
-import type { ServicesPlatform } from './types/ServicesPlatform'
+import type { ReloadServiceUnitInput } from './types/ReloadServiceUnitInput'
 
 /**
  * Runs the init-system commands that load one unit. Returns the failure output
@@ -13,14 +12,7 @@ export const reloadServiceUnit = async ({
   uid,
   hasTimer,
   run,
-}: {
-  platform: ServicesPlatform
-  unitPath: string
-  unitFile: string
-  uid: number
-  hasTimer: boolean
-  run: CommandRunner
-}): Promise<string | undefined> => {
+}: ReloadServiceUnitInput): Promise<string | undefined> => {
   for (const command of toReloadCommands({
     platform,
     unitPath,

@@ -2,10 +2,12 @@ import { collectGuidancePolicyPathErrors } from './collectGuidancePolicyPathErro
 import { containsSensitiveGuidanceContent } from './containsSensitiveGuidanceContent'
 import { isRecord } from './isRecord'
 import type { GuidancePolicy } from './types/GuidancePolicy'
+import type { ParseGuidancePolicyFailure } from './types/ParseGuidancePolicyFailure'
+import type { ParseGuidancePolicySuccess } from './types/ParseGuidancePolicySuccess'
 
 export const parseGuidancePolicy = (
   raw: unknown,
-): { ok: true; policy: GuidancePolicy } | { ok: false; errors: string[] } => {
+): ParseGuidancePolicySuccess | ParseGuidancePolicyFailure => {
   if (!isRecord(raw)) return { ok: false, errors: ['policy must be an object'] }
   const policyKeys = new Set([
     'version',

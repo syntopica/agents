@@ -2,14 +2,12 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { copyDirRecursive } from '../../../operations/copyDirRecursive'
 import { listSkillDirs } from '../../skills/loaders/listSkillDirs'
+import type { CopyFlatSkillsIntoPluginRootInput } from './types/CopyFlatSkillsIntoPluginRootInput'
 
 export const copyFlatSkillsIntoPluginRoot = async ({
   distSkillsDir,
   pluginSkillsDir,
-}: {
-  distSkillsDir: string
-  pluginSkillsDir: string
-}): Promise<string[]> => {
+}: CopyFlatSkillsIntoPluginRootInput): Promise<string[]> => {
   await fs.rm(pluginSkillsDir, { recursive: true, force: true })
   await fs.mkdir(pluginSkillsDir, { recursive: true })
 

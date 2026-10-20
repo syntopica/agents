@@ -2,14 +2,12 @@ import { MAX_DESCRIPTION_CHARS } from '../constants/MAX_DESCRIPTION_CHARS'
 import { extractShortSummaryLine } from '../extractors/extractShortSummaryLine'
 import { toOneLine } from '../formatters/toOneLine'
 import { truncate } from '../formatters/truncate'
+import type { GetOneLineDescriptionInput } from './types/GetOneLineDescriptionInput'
+import type { GetOneLineDescriptionItem } from './types/GetOneLineDescriptionItem'
 
 export function getOneLineDescription(
-  item: {
-    frontmatter?: Record<string, unknown>
-    content?: string
-    [key: string]: unknown
-  },
-  { includeShortSummary }: { includeShortSummary?: boolean },
+  item: GetOneLineDescriptionItem,
+  { includeShortSummary }: GetOneLineDescriptionInput,
 ) {
   const fm = item.frontmatter ?? {}
 

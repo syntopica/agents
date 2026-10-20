@@ -14,6 +14,7 @@ import { applyGuidanceResult } from './applyGuidanceResult'
 import { guidanceRollback } from './guidanceRollback'
 import { guidanceSync } from './guidanceSync'
 import { toGuidanceInputHashes } from './toGuidanceInputHashes'
+import type { GuidanceSyncAcceptedStateFixture } from './types/GuidanceSyncAcceptedStateFixture'
 
 void test('sync snapshots and atomically applies canonical and live documents, then rollback restores all', async () => {
   const hash = async (value: string) => {
@@ -117,9 +118,7 @@ void test('sync snapshots and atomically applies canonical and live documents, t
   )
   const accepted = JSON.parse(
     await readFile(join(root, 'state', 'accepted.json'), 'utf8'),
-  ) as {
-    inputHashes: unknown
-  }
+  ) as GuidanceSyncAcceptedStateFixture
   assert.deepEqual(accepted.inputHashes, toGuidanceInputHashes(inputHashes))
   assert.equal(
     (await stat(join(home, '.codex', 'AGENTS.md'))).mode & 0o777,

@@ -1,12 +1,9 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { CommandRunner } from '../../exec/types/CommandRunner'
 import { collectDriftedUnits } from './collectDriftedUnits'
 import { reloadServiceUnit } from './reloadServiceUnit'
+import type { ApplyInput } from './types/ApplyInput'
 import type { ServicesApplyResult } from './types/ServicesApplyResult'
-import type { ServicesManifest } from './types/ServicesManifest'
-import type { ServicesPaths } from './types/ServicesPaths'
-import type { ServicesState } from './types/ServicesState'
 
 /**
  * Writes every drifted unit file, then loads it in its init system. Undeclared
@@ -19,13 +16,7 @@ export const apply = async ({
   state,
   uid,
   run,
-}: {
-  manifest: ServicesManifest
-  paths: ServicesPaths
-  state: ServicesState
-  uid: number
-  run: CommandRunner
-}): Promise<ServicesApplyResult> => {
+}: ApplyInput): Promise<ServicesApplyResult> => {
   const result: ServicesApplyResult = { written: [], reloaded: [], failed: [] }
   const drifted = collectDriftedUnits({
     manifest,

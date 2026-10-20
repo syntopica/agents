@@ -4,16 +4,12 @@ import { createGuidanceSnapshot } from './createGuidanceSnapshot'
 import { guidanceTargets } from './guidanceTargets'
 import { restoreGuidanceSnapshot } from './restoreGuidanceSnapshot'
 import { sha256Text } from './sha256Text'
-import type { ReconciliationResult } from './types/ReconciliationResult'
+import type { ApplyGuidanceResultOptions } from './types/ApplyGuidanceResultOptions'
 import { writeGuidanceAtomically } from './writeGuidanceAtomically'
 
-export const applyGuidanceResult = async (options: {
-  home: string
-  canonicalDir: string
-  stateDir: string
-  runId: string
-  result: ReconciliationResult
-}): Promise<string> => {
+export const applyGuidanceResult = async (
+  options: ApplyGuidanceResultOptions,
+): Promise<string> => {
   const snapshotDir = join(options.stateDir, 'runs', options.runId)
   const targets = guidanceTargets(options)
   await createGuidanceSnapshot({ snapshotDir, targets })

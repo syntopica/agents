@@ -1,6 +1,7 @@
 import { chmod, readFile, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { sha256Text } from './sha256Text'
+import type { RestoreGuidanceSnapshotRaw } from './types/RestoreGuidanceSnapshotRaw'
 import { writeGuidanceAtomically } from './writeGuidanceAtomically'
 
 export const restoreGuidanceSnapshot = async (
@@ -9,10 +10,7 @@ export const restoreGuidanceSnapshot = async (
 ): Promise<void> => {
   const raw = JSON.parse(
     await readFile(join(snapshotDir, 'manifest.json'), 'utf8'),
-  ) as {
-    version?: unknown
-    entries?: unknown
-  }
+  ) as RestoreGuidanceSnapshotRaw
   if (raw.version !== 1 || !Array.isArray(raw.entries))
     throw new Error('guidance snapshot manifest is invalid')
   for (const entry of raw.entries) {

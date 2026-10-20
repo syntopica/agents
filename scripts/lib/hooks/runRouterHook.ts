@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { RunRouterHookParsed } from './types/RunRouterHookParsed'
 
 /**
  * Run the UserPromptSubmit router hook against a prompt and return the directive
@@ -33,9 +34,7 @@ export const runRouterHook = (
 
   if (raw === '') return null
 
-  const parsed = JSON.parse(raw) as {
-    hookSpecificOutput?: { hookEventName?: string; additionalContext?: string }
-  }
+  const parsed = JSON.parse(raw) as RunRouterHookParsed
   if (parsed.hookSpecificOutput?.hookEventName !== 'UserPromptSubmit') {
     throw new Error(`unexpected hookEventName in router output: ${raw}`)
   }

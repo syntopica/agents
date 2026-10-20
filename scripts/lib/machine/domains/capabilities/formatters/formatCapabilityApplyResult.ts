@@ -1,8 +1,6 @@
-export const formatCapabilityApplyResult = (result: {
-  cleaned: string[]
-  linked: number
-  copied: number
-}) => {
+import type { CapabilityApplySummary } from './types/CapabilityApplySummary'
+
+export const formatCapabilityApplyResult = (result: CapabilityApplySummary) => {
   const parts = [
     ...(result.cleaned.length > 0
       ? [`cleaned ${String(result.cleaned.length)}`]

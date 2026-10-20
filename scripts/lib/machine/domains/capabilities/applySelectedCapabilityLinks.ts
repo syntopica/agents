@@ -1,6 +1,6 @@
 import { applyCapabilityLinks } from './applyCapabilityLinks'
+import type { ApplySelectedCapabilityLinksInput } from './types/ApplySelectedCapabilityLinksInput'
 import type { CapabilityApplyResult } from './types/CapabilityApplyResult'
-import type { CapabilityTarget } from './types/CapabilityTarget'
 
 /**
  * Applies each target in turn, or nothing at all when this run does not
@@ -10,10 +10,7 @@ import type { CapabilityTarget } from './types/CapabilityTarget'
 export const applySelectedCapabilityLinks = async ({
   targets,
   selected,
-}: {
-  targets: CapabilityTarget[]
-  selected: boolean
-}): Promise<CapabilityApplyResult[]> => {
+}: ApplySelectedCapabilityLinksInput): Promise<CapabilityApplyResult[]> => {
   const results: CapabilityApplyResult[] = []
   if (!selected) return results
 

@@ -1,5 +1,4 @@
-import type { OwnedRecord } from '../../ownership/OwnedRecord'
-import type { apply } from './apply'
+import type { ApplySelectedMcpInput } from './types/ApplySelectedMcpInput'
 
 /**
  * Converges the MCP domain, or returns the ownership already on record when
@@ -10,9 +9,5 @@ export const applySelectedMcp = async ({
   selected,
   owned,
   run,
-}: {
-  selected: boolean
-  owned: OwnedRecord
-  run: () => ReturnType<typeof apply>
-}) =>
+}: ApplySelectedMcpInput) =>
   selected ? await run() : { owned: owned.mcp ?? {}, missing: [] as string[] }

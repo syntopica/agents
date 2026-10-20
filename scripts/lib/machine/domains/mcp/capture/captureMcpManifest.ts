@@ -1,19 +1,15 @@
 import type { McpCapture } from '../types/McpCapture'
 import type { McpCaptureRefusal } from '../types/McpCaptureRefusal'
-import type { McpManifest } from '../types/McpManifest'
 import type { McpServer } from '../types/McpServer'
-import type { McpState } from '../types/McpState'
 import { collectServerTargets } from './collectServerTargets'
 import { toCapturedServer } from './toCapturedServer'
 import { toLiveServer } from './toLiveServer'
+import type { CaptureMcpManifestInput } from './types/CaptureMcpManifestInput'
 
 export const captureMcpManifest = ({
   state,
   declared,
-}: {
-  state: McpState
-  declared: McpManifest | undefined
-}): McpCapture => {
+}: CaptureMcpManifestInput): McpCapture => {
   const servers: Record<string, McpServer> = {}
   const refused: McpCaptureRefusal[] = []
 

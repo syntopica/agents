@@ -1,5 +1,6 @@
 import { DEFAULT_MAX_CHARS } from '../constants/DEFAULT_MAX_CHARS'
 import { DEFAULT_MIN_REFS } from '../constants/DEFAULT_MIN_REFS'
+import type { VerifyIndexOnlyOutputOptions } from './types/VerifyIndexOnlyOutputOptions'
 
 /**
  * DoD checks on index-only output string.
@@ -14,12 +15,7 @@ import { DEFAULT_MIN_REFS } from '../constants/DEFAULT_MIN_REFS'
  */
 export function verifyIndexOnlyOutput(
   output: string,
-  options: {
-    maxChars?: number
-    minRefs?: number
-    refPattern?: RegExp
-    refLabel?: string
-  } = {},
+  options: VerifyIndexOnlyOutputOptions = {},
 ) {
   const maxChars = options.maxChars ?? DEFAULT_MAX_CHARS
   const minRefs = options.minRefs ?? DEFAULT_MIN_REFS

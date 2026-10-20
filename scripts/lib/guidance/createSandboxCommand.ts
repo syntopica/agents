@@ -1,15 +1,11 @@
 import { existsSync } from 'node:fs'
 import { pathContainsPath } from './pathContainsPath'
+import type { CreateSandboxCommandOptions } from './types/CreateSandboxCommandOptions'
+import type { CreateSandboxCommandResult } from './types/CreateSandboxCommandResult'
 
-export const createSandboxCommand = (options: {
-  platform: NodeJS.Platform
-  scratchDir: string
-  readDenyRoot?: string
-  readAllowPaths?: string[]
-  command: string
-  args: string[]
-  pathExists?: (path: string) => boolean
-}): { executable: string; args: string[] } => {
+export const createSandboxCommand = (
+  options: CreateSandboxCommandOptions,
+): CreateSandboxCommandResult => {
   if (options.platform === 'darwin') {
     const readDenyRoot = options.readDenyRoot
     if (

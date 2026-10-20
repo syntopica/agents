@@ -1,14 +1,12 @@
 import { promises as fs } from 'node:fs'
 import { copyDirRecursive } from '../../../operations/copyDirRecursive'
 import { pathExists } from '../../link/operations/pathExists'
+import type { CopyHooksIntoPluginRootInput } from './types/CopyHooksIntoPluginRootInput'
 
 export const copyHooksIntoPluginRoot = async ({
   srcHooksDir,
   pluginHooksDir,
-}: {
-  srcHooksDir: string
-  pluginHooksDir: string
-}): Promise<number> => {
+}: CopyHooksIntoPluginRootInput): Promise<number> => {
   if (!(await pathExists(srcHooksDir))) return 0
 
   await fs.rm(pluginHooksDir, { recursive: true, force: true })

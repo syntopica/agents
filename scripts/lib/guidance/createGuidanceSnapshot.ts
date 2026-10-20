@@ -8,11 +8,12 @@ import {
 } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { sha256Text } from './sha256Text'
+import type { CreateGuidanceSnapshotEntries } from './types/CreateGuidanceSnapshotEntries'
+import type { CreateGuidanceSnapshotOptions } from './types/CreateGuidanceSnapshotOptions'
 
-export const createGuidanceSnapshot = async (options: {
-  snapshotDir: string
-  targets: Record<string, string>
-}): Promise<void> => {
+export const createGuidanceSnapshot = async (
+  options: CreateGuidanceSnapshotOptions,
+): Promise<void> => {
   const syncPath = async (path: string): Promise<void> => {
     const handle = await open(path, 'r')
     try {
@@ -25,14 +26,7 @@ export const createGuidanceSnapshot = async (options: {
     recursive: true,
     mode: 0o700,
   })
-  const entries: {
-    key: string
-    target: string
-    existed: boolean
-    storage: string
-    sha256?: string
-    mode?: number
-  }[] = []
+  const entries: CreateGuidanceSnapshotEntries[] = []
   for (const [index, [key, target]] of Object.entries(
     options.targets,
   ).entries()) {

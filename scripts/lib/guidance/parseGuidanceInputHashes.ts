@@ -1,11 +1,11 @@
 import { isRecord } from './isRecord'
 import type { GuidanceInputHash } from './types/GuidanceInputHash'
+import type { ParseGuidanceInputHashesFailure } from './types/ParseGuidanceInputHashesFailure'
+import type { ParseGuidanceInputHashesSuccess } from './types/ParseGuidanceInputHashesSuccess'
 
 export const parseGuidanceInputHashes = (
   raw: unknown,
-):
-  | { ok: true; inputHashes: GuidanceInputHash[] }
-  | { ok: false; error: string } => {
+): ParseGuidanceInputHashesSuccess | ParseGuidanceInputHashesFailure => {
   if (!Array.isArray(raw) || raw.length === 0)
     return {
       ok: false,

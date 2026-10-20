@@ -1,6 +1,6 @@
 import { rm } from 'node:fs/promises'
 import { findOrphanCacheDirectories } from './findOrphanCacheDirectories'
-import type { PluginMarketplaceEntry } from './types/PluginMarketplaceEntry'
+import type { PruneOrphanCacheDirectoriesInput } from './types/PruneOrphanCacheDirectoriesInput'
 
 /**
  * Removes cache directories that belong to no known marketplace. Stale version
@@ -11,10 +11,7 @@ import type { PluginMarketplaceEntry } from './types/PluginMarketplaceEntry'
 export const pruneOrphanCacheDirectories = async ({
   cacheDir,
   marketplaces,
-}: {
-  cacheDir: string
-  marketplaces: PluginMarketplaceEntry[]
-}): Promise<string[]> => {
+}: PruneOrphanCacheDirectoriesInput): Promise<string[]> => {
   const orphans = await findOrphanCacheDirectories({ cacheDir, marketplaces })
 
   for (const orphan of orphans) {

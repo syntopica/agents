@@ -1,8 +1,6 @@
-import type { CommandRunner } from '../../exec/types/CommandRunner'
 import { toPluginCommand } from './toPluginCommand'
-import type { PluginChange } from './types/PluginChange'
+import type { ApplyInput } from './types/ApplyInput'
 import type { PluginsApplyResult } from './types/PluginsApplyResult'
-import type { PluginsPaths } from './types/PluginsPaths'
 
 /**
  * Changes run sequentially: the plugin tree is shared between profiles and is
@@ -13,11 +11,7 @@ export const apply = async ({
   changes,
   paths,
   run,
-}: {
-  changes: PluginChange[]
-  paths: PluginsPaths
-  run: CommandRunner
-}): Promise<PluginsApplyResult> => {
+}: ApplyInput): Promise<PluginsApplyResult> => {
   const result: PluginsApplyResult = { applied: [], manual: [], failed: [] }
 
   for (const change of changes) {

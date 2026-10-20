@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import type { SkillTarget } from './types/SkillTarget'
+import type { ResolveLinkDirInput } from './types/ResolveLinkDirInput'
 
 /**
  * Where a target's links belong. Only claude has a default: every other target
@@ -12,11 +12,7 @@ export const resolveLinkDir = ({
   into,
   target,
   home,
-}: {
-  into: string | undefined
-  target: SkillTarget
-  home: string
-}): string | undefined => {
+}: ResolveLinkDirInput): string | undefined => {
   if (into !== undefined) {
     return into
   }

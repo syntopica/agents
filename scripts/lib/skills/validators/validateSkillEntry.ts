@@ -1,3 +1,5 @@
+import type { SkillEntryRuleFields } from './types/SkillEntryRuleFields'
+
 export const validateSkillEntry = (
   skillName: string,
   entry: unknown,
@@ -8,7 +10,7 @@ export const validateSkillEntry = (
     return
   }
 
-  const typedEntry = entry as { rules?: unknown }
+  const typedEntry = entry as SkillEntryRuleFields
 
   if (!Array.isArray(typedEntry.rules)) {
     errors.push(`Manifest entry '${skillName}' must include a 'rules' array.`)

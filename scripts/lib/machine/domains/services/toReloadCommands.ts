@@ -1,4 +1,5 @@
-import type { ServicesPlatform } from './types/ServicesPlatform'
+import type { ToReloadCommandsInput } from './types/ToReloadCommandsInput'
+import type { ToReloadCommandsResult } from './types/ToReloadCommandsResult'
 
 /**
  * Commands that make the init system pick up one freshly written unit file.
@@ -13,13 +14,7 @@ export const toReloadCommands = ({
   unitFile,
   uid,
   hasTimer,
-}: {
-  platform: ServicesPlatform
-  unitPath: string
-  unitFile: string
-  uid: number
-  hasTimer: boolean
-}): { argv: string[]; tolerateFailure: boolean }[] => {
+}: ToReloadCommandsInput): ToReloadCommandsResult[] => {
   if (platform === 'launchd') {
     return [
       {

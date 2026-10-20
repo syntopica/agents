@@ -1,6 +1,6 @@
 import { isSecretReference } from '../../../secrets/isSecretReference'
-import type { McpCaptureRefusal } from '../types/McpCaptureRefusal'
 import type { McpValue } from '../types/McpValue'
+import type { ToCapturedValuesInput } from './types/ToCapturedValuesInput'
 
 export const toCapturedValues = ({
   server,
@@ -8,13 +8,7 @@ export const toCapturedValues = ({
   live,
   declared,
   refused,
-}: {
-  server: string
-  field: 'env' | 'headers'
-  live: Record<string, unknown>
-  declared: Record<string, McpValue> | undefined
-  refused: McpCaptureRefusal[]
-}): Record<string, McpValue> => {
+}: ToCapturedValuesInput): Record<string, McpValue> => {
   const captured: Record<string, McpValue> = {}
 
   for (const key of Object.keys(live).toSorted((left, right) =>

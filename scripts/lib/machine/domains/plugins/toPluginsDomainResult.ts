@@ -1,15 +1,11 @@
 import type { DomainResult } from '../../types/DomainResult'
 import { plan } from './plan'
-import type { PluginsManifestParseResult } from './types/PluginsManifestParseResult'
-import type { PluginsState } from './types/PluginsState'
+import type { ToPluginsDomainResultInput } from './types/ToPluginsDomainResultInput'
 
 export const toPluginsDomainResult = ({
   parsed,
   state,
-}: {
-  parsed: PluginsManifestParseResult | undefined
-  state: PluginsState
-}): DomainResult => {
+}: ToPluginsDomainResultInput): DomainResult => {
   if (parsed === undefined) {
     return {
       domain: 'plugins',

@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import type { LockEntry } from '../types/LockEntry'
+import type { ReadSkillLockParsed } from './types/ReadSkillLockParsed'
 
 export const readSkillLock = async (
   libraryDir: string,
@@ -10,9 +11,7 @@ export const readSkillLock = async (
       join(libraryDir, '.skill-lock.json'),
       'utf8',
     )
-    const parsed = JSON.parse(contents) as {
-      skills?: Record<string, LockEntry>
-    }
+    const parsed = JSON.parse(contents) as ReadSkillLockParsed
     return parsed.skills ?? {}
   } catch {
     return {}

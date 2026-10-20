@@ -1,16 +1,13 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { sortRecordKeys } from './sortRecordKeys'
+import type { WriteCursorConfigInput } from './types/WriteCursorConfigInput'
 
 export const writeCursorConfig = async ({
   path,
   servers,
   ownedNames,
-}: {
-  path: string
-  servers: Record<string, unknown>
-  ownedNames: string[]
-}) => {
+}: WriteCursorConfigInput) => {
   let existing: Record<string, unknown> = {}
   try {
     const contents = await readFile(path, 'utf8')

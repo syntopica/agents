@@ -1,9 +1,8 @@
 import { relative } from 'node:path'
 import { ROOT } from '../constants/ROOT'
+import type { LlmsSkillEntry } from '../lib/skills/types/LlmsSkillEntry'
 
-export function buildLlmsTxt(
-  skills: { name: string; description: string; skillPath: string }[],
-) {
+export function buildLlmsTxt(skills: LlmsSkillEntry[]) {
   const lines = [
     '# BusiRocket Agent Skills',
     '',

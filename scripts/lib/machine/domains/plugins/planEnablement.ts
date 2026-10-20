@@ -1,16 +1,12 @@
 import { PLUGIN_PROFILES } from './PLUGIN_PROFILES'
 import { toEnablement } from './toEnablement'
-import type { DeclaredPlugin } from './types/DeclaredPlugin'
+import type { PlanEnablementInput } from './types/PlanEnablementInput'
 import type { PluginChange } from './types/PluginChange'
-import type { PluginsState } from './types/PluginsState'
 
 export const planEnablement = ({
   plugin,
   state,
-}: {
-  plugin: DeclaredPlugin
-  state: PluginsState
-}): PluginChange[] =>
+}: PlanEnablementInput): PluginChange[] =>
   PLUGIN_PROFILES.flatMap((profile) => {
     const current = toEnablement(state.enabledByProfile[profile], plugin.id)
     const wanted = plugin.enabled[profile] ? 'enabled' : 'disabled'

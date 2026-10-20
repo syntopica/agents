@@ -1,9 +1,11 @@
 import { looksLikeSecurityCredential } from './looksLikeSecurityCredential'
+import type { InspectSecurityCredentialNodeChildren } from './types/InspectSecurityCredentialNodeChildren'
+import type { InspectSecurityCredentialNodeNode } from './types/InspectSecurityCredentialNodeNode'
+import type { InspectSecurityCredentialNodeResult } from './types/InspectSecurityCredentialNodeResult'
 
-export const inspectSecurityCredentialNode = (node: {
-  path: string
-  value: unknown
-}): { findings: string[]; children: { path: string; value: unknown }[] } => {
+export const inspectSecurityCredentialNode = (
+  node: InspectSecurityCredentialNodeNode,
+): InspectSecurityCredentialNodeResult => {
   if (typeof node.value === 'string') {
     return {
       findings: looksLikeSecurityCredential(node.value)
@@ -16,7 +18,7 @@ export const inspectSecurityCredentialNode = (node: {
     return { findings: [], children: [] }
   }
   const findings: string[] = []
-  const children: { path: string; value: unknown }[] = []
+  const children: InspectSecurityCredentialNodeChildren[] = []
   for (const [key, value] of Object.entries(node.value)) {
     const path = `${node.path}.${key}`
     if (

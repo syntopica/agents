@@ -4,7 +4,8 @@ import { isAllowedDocumentationUrl } from '../isAllowedDocumentationUrl'
 import { parseReconciliationResult } from '../parseReconciliationResult'
 import { toGuidanceInputHashes } from '../toGuidanceInputHashes'
 import type { GuidancePolicy } from '../types/GuidancePolicy'
-import type { ReconciliationResult } from '../types/ReconciliationResult'
+import type { ValidateReconciliationResultFailure } from './types/ValidateReconciliationResultFailure'
+import type { ValidateReconciliationResultSuccess } from './types/ValidateReconciliationResultSuccess'
 import { validateReconciliationSchema } from './validateReconciliationSchema'
 
 export const validateReconciliationResult = (
@@ -14,8 +15,7 @@ export const validateReconciliationResult = (
   runStartedAt: Date,
   runEndedAt: Date,
 ):
-  | { ok: true; result: ReconciliationResult }
-  | { ok: false; errors: string[] } => {
+  ValidateReconciliationResultSuccess | ValidateReconciliationResultFailure => {
   const schemaErrors = validateReconciliationSchema(raw)
   if (schemaErrors.length > 0) return { ok: false, errors: schemaErrors }
   const parsed = parseReconciliationResult(raw)

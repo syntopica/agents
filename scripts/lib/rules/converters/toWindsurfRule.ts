@@ -1,6 +1,7 @@
 import { formatWindsurfFrontmatter } from '../windsurf/formatters/formatWindsurfFrontmatter'
 import { addWindsurfAnnotations } from '../windsurf/transformers/addWindsurfAnnotations'
 import { convertToWindsurfReferences } from '../windsurf/transformers/convertToWindsurfReferences'
+import type { ToWindsurfRuleParsed } from './types/ToWindsurfRuleParsed'
 
 /**
  * Main conversion function
@@ -9,13 +10,8 @@ import { convertToWindsurfReferences } from '../windsurf/transformers/convertToW
  * @returns {string} - Windsurf-formatted rule
  */
 
-import type { RuleFrontmatter } from '../types/RuleFrontmatter'
-
 export function toWindsurfRule(
-  parsed: {
-    content?: string
-    frontmatter?: RuleFrontmatter | null
-  },
+  parsed: ToWindsurfRuleParsed,
   _rulePath: string,
 ) {
   const frontmatter = formatWindsurfFrontmatter(parsed.frontmatter ?? {})

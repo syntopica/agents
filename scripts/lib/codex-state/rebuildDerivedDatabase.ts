@@ -7,6 +7,7 @@ import { quarantineFile } from './quarantineFile'
 import { runSqliteIntegrityCheck } from './runSqliteIntegrityCheck'
 import type { CodexRepairOptions } from './types/CodexRepairOptions'
 import type { QuarantineResult } from './types/QuarantineResult'
+import type { RebuildDerivedDatabaseManifest } from './types/RebuildDerivedDatabaseManifest'
 import { verifyCodexSnapshot } from './verifyCodexSnapshot'
 
 export const rebuildDerivedDatabase = async (
@@ -32,7 +33,7 @@ export const rebuildDerivedDatabase = async (
   }
   const manifest = JSON.parse(
     await readFile(join(options.snapshotDir, 'manifest.json'), 'utf8'),
-  ) as { entries?: { relativePath?: string }[] }
+  ) as RebuildDerivedDatabaseManifest
   if (
     manifest.entries?.some(
       ({ relativePath }) => relativePath === databaseName,

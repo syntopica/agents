@@ -3,6 +3,7 @@ import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
+import type { CursorConfigFixture } from './types/CursorConfigFixture'
 import { writeCursorConfig } from './writeCursorConfig'
 
 void test('Cursor config preserves foreign keys and is idempotent', async () => {
@@ -44,9 +45,7 @@ void test('Cursor config removes stale owned servers and keeps foreign servers',
     }),
   )
   await writeCursorConfig({ path, servers: {}, ownedNames: ['stale'] })
-  const parsed = JSON.parse(await readFile(path, 'utf8')) as {
-    mcpServers: Record<string, unknown>
-  }
+  const parsed = JSON.parse(await readFile(path, 'utf8')) as CursorConfigFixture
   assert.deepEqual(parsed.mcpServers, { foreign: { command: 'keep' } })
 })
 

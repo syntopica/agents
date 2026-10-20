@@ -1,13 +1,11 @@
 import { promises as fs } from 'node:fs'
 import { ensureParentDirectory } from './ensureParentDirectory'
+import type { LinkOneWithBackupInput } from './types/LinkOneWithBackupInput'
 
 export const linkOneWithBackup = async ({
   source,
   target,
-}: {
-  source: string
-  target: string
-}) => {
+}: LinkOneWithBackupInput) => {
   await ensureParentDirectory(target)
   await fs.access(source)
 

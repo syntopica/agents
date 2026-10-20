@@ -1,9 +1,10 @@
 import type { CurationManifest } from './types/CurationManifest'
+import type { MergeSeedIntoManifestResult } from './types/MergeSeedIntoManifestResult'
 
 export const mergeSeedIntoManifest = (
   existing: CurationManifest,
   seeded: CurationManifest,
-): { manifest: CurationManifest; added: string[] } => {
+): MergeSeedIntoManifestResult => {
   const entries = { ...existing.entries }
   const added: string[] = []
 

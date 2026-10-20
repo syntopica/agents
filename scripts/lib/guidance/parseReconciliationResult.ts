@@ -3,13 +3,12 @@ import { isRecord } from './isRecord'
 import { parseGuidanceInputHashes } from './parseGuidanceInputHashes'
 import type { DocumentationEvidence } from './types/DocumentationEvidence'
 import type { GuidanceDecision } from './types/GuidanceDecision'
-import type { ReconciliationResult } from './types/ReconciliationResult'
+import type { ParseReconciliationResultFailure } from './types/ParseReconciliationResultFailure'
+import type { ParseReconciliationResultSuccess } from './types/ParseReconciliationResultSuccess'
 
 export const parseReconciliationResult = (
   raw: unknown,
-):
-  | { ok: true; result: ReconciliationResult }
-  | { ok: false; errors: string[] } => {
+): ParseReconciliationResultSuccess | ParseReconciliationResultFailure => {
   if (!isRecord(raw)) return { ok: false, errors: ['result must be an object'] }
   const isEvidence = (value: unknown): boolean =>
     isRecord(value) &&

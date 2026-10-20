@@ -1,17 +1,14 @@
 import { normalizeCodexServer } from '../normalizeCodexServer'
 import { normalizeCodexSubTable } from '../normalizeCodexSubTable'
 import type { LiveServer } from '../types/LiveServer'
-import type { McpTarget } from '../types/McpTarget'
 import { toRecord } from './toRecord'
 import { toStringArray } from './toStringArray'
+import type { ToLiveServerInput } from './types/ToLiveServerInput'
 
 export const toLiveServer = ({
   live,
   target,
-}: {
-  live: Record<string, unknown>
-  target: McpTarget
-}): LiveServer => {
+}: ToLiveServerInput): LiveServer => {
   if (target === 'codex') {
     const record = live as Record<string, string>
     const normalized = normalizeCodexServer(record)

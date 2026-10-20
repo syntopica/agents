@@ -3,6 +3,12 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { buildManagedOAuthApplicationUpdate } from '../lib/connectors/buildManagedOAuthApplicationUpdate'
+import type { ConfigureCloudflareManagedOAuthCredentials } from './types/ConfigureCloudflareManagedOAuthCredentials'
+import type { ConfigureCloudflareManagedOAuthCurrentBody } from './types/ConfigureCloudflareManagedOAuthCurrentBody'
+import type { ConfigureCloudflareManagedOAuthDesiredOAuth } from './types/ConfigureCloudflareManagedOAuthDesiredOAuth'
+import type { ConfigureCloudflareManagedOAuthUpdateBody } from './types/ConfigureCloudflareManagedOAuthUpdateBody'
+import type { ConfigureCloudflareManagedOAuthVerifiedOAuth } from './types/ConfigureCloudflareManagedOAuthVerifiedOAuth'
+import type { ConfigureCloudflareManagedOAuthVerifyBody } from './types/ConfigureCloudflareManagedOAuthVerifyBody'
 
 export const main = async () => {
   const cliArguments = process.argv.slice(2)
@@ -38,9 +44,9 @@ export const main = async () => {
     profile,
     'cf-oauth.json',
   )
-  const credentials = JSON.parse(await readFile(credentialPath, 'utf8')) as {
-    access?: unknown
-  }
+  const credentials = JSON.parse(
+    await readFile(credentialPath, 'utf8'),
+  ) as ConfigureCloudflareManagedOAuthCredentials
   if (
     typeof credentials.access !== 'string' ||
     credentials.access.length === 0
@@ -56,11 +62,8 @@ export const main = async () => {
     'Content-Type': 'application/json',
   }
   const currentResponse = await fetch(endpoint, { headers })
-  const currentBody = (await currentResponse.json()) as {
-    success?: boolean
-    result?: Record<string, unknown>
-    errors?: unknown[]
-  }
+  const currentBody =
+    (await currentResponse.json()) as ConfigureCloudflareManagedOAuthCurrentBody
   if (
     !currentResponse.ok ||
     currentBody.success !== true ||
@@ -72,14 +75,9 @@ export const main = async () => {
   }
 
   const update = buildManagedOAuthApplicationUpdate(currentBody.result)
-  const desiredOAuth = update['oauth_configuration'] as {
-    enabled?: boolean
-    dynamic_client_registration?: {
-      enabled?: boolean
-      allow_any_on_localhost?: boolean
-      allow_any_on_loopback?: boolean
-    }
-  }
+  const desiredOAuth = update[
+    'oauth_configuration'
+  ] as ConfigureCloudflareManagedOAuthDesiredOAuth
   if (!values.apply) {
     console.log(
       JSON.stringify(
@@ -113,10 +111,8 @@ export const main = async () => {
     headers,
     body: JSON.stringify(update),
   })
-  const updateBody = (await updateResponse.json()) as {
-    success?: boolean
-    errors?: unknown[]
-  }
+  const updateBody =
+    (await updateResponse.json()) as ConfigureCloudflareManagedOAuthUpdateBody
   if (!updateResponse.ok || updateBody.success !== true) {
     throw new Error(
       `Cloudflare application update failed (${String(updateResponse.status)}): ${JSON.stringify(updateBody.errors ?? [])}`,
@@ -124,11 +120,8 @@ export const main = async () => {
   }
 
   const verifyResponse = await fetch(endpoint, { headers })
-  const verifyBody = (await verifyResponse.json()) as {
-    success?: boolean
-    result?: Record<string, unknown>
-    errors?: unknown[]
-  }
+  const verifyBody =
+    (await verifyResponse.json()) as ConfigureCloudflareManagedOAuthVerifyBody
   if (
     !verifyResponse.ok ||
     verifyBody.success !== true ||
@@ -139,15 +132,7 @@ export const main = async () => {
     )
   }
   const verifiedOAuth = verifyBody.result['oauth_configuration'] as
-    | {
-        enabled?: boolean
-        dynamic_client_registration?: {
-          enabled?: boolean
-          allow_any_on_localhost?: boolean
-          allow_any_on_loopback?: boolean
-        }
-      }
-    | undefined
+    ConfigureCloudflareManagedOAuthVerifiedOAuth | undefined
   const verification = {
     enabled: verifiedOAuth?.enabled === true,
     dynamicClientRegistration:

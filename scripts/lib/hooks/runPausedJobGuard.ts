@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { RunPausedJobGuardParsed } from './types/RunPausedJobGuardParsed'
 
 /**
  * Run the PreToolUse paused-job guard against one Bash tool call and return the
@@ -32,8 +33,6 @@ export const runPausedJobGuard = (
   }).trim()
 
   if (raw === '') return null
-  const parsed = JSON.parse(raw) as {
-    hookSpecificOutput?: { additionalContext?: string }
-  }
+  const parsed = JSON.parse(raw) as RunPausedJobGuardParsed
   return parsed.hookSpecificOutput?.additionalContext ?? null
 }

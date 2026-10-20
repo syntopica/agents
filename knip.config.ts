@@ -27,6 +27,8 @@ const config: KnipConfiguration = {
     'scripts/**/*_TEST.{ts,mts}',
   ],
   project: [...(baseline.project as string[]), 'scripts/**/*.{ts,mts,mjs}'],
+  // Required by the CSS formatter's parser peers, rather than imported here.
+  ignoreDependencies: [...(baseline.ignoreDependencies ?? []), 'postcss'],
   // System tools the scripts shell out to, not packages: installed by
   // Homebrew, pipx or a global npm, and knip cannot resolve any of them. Only
   // the ones knip really cannot resolve belong here -- an entry for a binary

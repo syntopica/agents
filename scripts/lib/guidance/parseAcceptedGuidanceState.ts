@@ -1,11 +1,12 @@
 import { isRecord } from './isRecord'
 import { parseGuidanceInputHashes } from './parseGuidanceInputHashes'
 import type { AcceptedGuidanceState } from './types/AcceptedGuidanceState'
+import type { ParseAcceptedGuidanceStateFailure } from './types/ParseAcceptedGuidanceStateFailure'
+import type { ParseAcceptedGuidanceStateSuccess } from './types/ParseAcceptedGuidanceStateSuccess'
 
 export const parseAcceptedGuidanceState = (
   raw: unknown,
-):
-  { ok: true; state: AcceptedGuidanceState } | { ok: false; error: string } => {
+): ParseAcceptedGuidanceStateSuccess | ParseAcceptedGuidanceStateFailure => {
   if (!isRecord(raw))
     return { ok: false, error: 'accepted guidance state must be an object' }
   if (

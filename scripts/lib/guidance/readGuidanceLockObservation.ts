@@ -1,5 +1,6 @@
 import { open } from 'node:fs/promises'
 import type { GuidanceLockObservation } from './types/GuidanceLockObservation'
+import type { ReadGuidanceLockObservationPid } from './types/ReadGuidanceLockObservationPid'
 
 export const readGuidanceLockObservation = async (
   lockPath: string,
@@ -18,7 +19,7 @@ export const readGuidanceLockObservation = async (
       const parsed = JSON.parse(owner) as unknown
       const pid =
         typeof parsed === 'object' && parsed !== null
-          ? (parsed as { pid?: unknown }).pid
+          ? (parsed as ReadGuidanceLockObservationPid).pid
           : undefined
       if (typeof pid === 'number' && Number.isSafeInteger(pid) && pid > 0)
         try {

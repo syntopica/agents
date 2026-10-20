@@ -1,14 +1,12 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { pathExists } from '../../link/operations/pathExists'
+import type { CopyAgentsIntoPluginRootInput } from './types/CopyAgentsIntoPluginRootInput'
 
 export const copyAgentsIntoPluginRoot = async ({
   srcAgentsDir,
   pluginAgentsDir,
-}: {
-  srcAgentsDir: string
-  pluginAgentsDir: string
-}): Promise<string[]> => {
+}: CopyAgentsIntoPluginRootInput): Promise<string[]> => {
   const srcExists = await pathExists(srcAgentsDir)
   if (!srcExists) return []
 

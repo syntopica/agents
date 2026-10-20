@@ -1,18 +1,12 @@
 import { planEnablement } from './planEnablement'
-import type { DeclaredPlugin } from './types/DeclaredPlugin'
-import type { InstalledPlugin } from './types/InstalledPlugin'
+import type { PlanDeclaredPluginInput } from './types/PlanDeclaredPluginInput'
 import type { PluginChange } from './types/PluginChange'
-import type { PluginsState } from './types/PluginsState'
 
 export const planDeclaredPlugin = ({
   plugin,
   installed,
   state,
-}: {
-  plugin: DeclaredPlugin
-  installed: InstalledPlugin | undefined
-  state: PluginsState
-}): PluginChange[] => {
+}: PlanDeclaredPluginInput): PluginChange[] => {
   if (installed === undefined) {
     return [{ operation: 'install', id: plugin.id, detail: plugin.version }]
   }

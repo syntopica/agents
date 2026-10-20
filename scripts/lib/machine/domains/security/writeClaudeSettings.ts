@@ -1,16 +1,13 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { readClaudeSettings } from './readClaudeSettings'
-import type { ClaudeSecurityPolicy } from './types/ClaudeSecurityPolicy'
 import type { ClaudeSettingsPaths } from './types/ClaudeSettingsPaths'
+import type { WriteClaudeSettingsInput } from './types/WriteClaudeSettingsInput'
 
 export const writeClaudeSettings = async ({
   paths,
   policy,
-}: {
-  paths: ClaudeSettingsPaths
-  policy: ClaudeSecurityPolicy
-}) => {
+}: WriteClaudeSettingsInput) => {
   const current = await readClaudeSettings(paths)
   const owned: Record<keyof ClaudeSettingsPaths, string[]> = {
     'claude-personal': [],

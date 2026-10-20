@@ -1,8 +1,9 @@
 import { promises as fs } from 'node:fs'
 import { dirname, join } from 'node:path'
 import type { SnapshotEntry } from './SnapshotEntry'
+import type { RestoreSnapshotInput } from './types/RestoreSnapshotInput'
 
-export const restoreSnapshot = async ({ runDir }: { runDir: string }) => {
+export const restoreSnapshot = async ({ runDir }: RestoreSnapshotInput) => {
   const raw = await fs.readFile(join(runDir, 'manifest.json'), 'utf8')
   const entries = JSON.parse(raw) as SnapshotEntry[]
   const restored: string[] = []

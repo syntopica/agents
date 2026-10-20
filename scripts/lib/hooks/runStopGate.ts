@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { RunStopGateParsed } from './types/RunStopGateParsed'
 
 /**
  * Run the Stop verification gate against a working directory and return the
@@ -30,6 +31,6 @@ export const runStopGate = (cwd: string): string | null => {
   }).trim()
 
   if (raw === '') return null
-  const parsed = JSON.parse(raw) as { decision?: string; reason?: string }
+  const parsed = JSON.parse(raw) as RunStopGateParsed
   return parsed.decision === 'block' ? (parsed.reason ?? '') : null
 }

@@ -1,11 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { GuidanceDocumentContents } from './types/GuidanceDocumentContents'
+import type { ReadGuidanceDocumentsOptions } from './types/ReadGuidanceDocumentsOptions'
+import type { ReadGuidanceDocumentsResult } from './types/ReadGuidanceDocumentsResult'
 
-export const readGuidanceDocuments = async (options: {
-  home: string
-  canonicalDir: string
-}): Promise<{ contents: GuidanceDocumentContents; findings: string[] }> => {
+export const readGuidanceDocuments = async (
+  options: ReadGuidanceDocumentsOptions,
+): Promise<ReadGuidanceDocumentsResult> => {
   const paths: Record<keyof GuidanceDocumentContents, string> = {
     shared: join(options.canonicalDir, 'shared.md'),
     claudeOverlay: join(options.canonicalDir, 'claude-overlay.md'),

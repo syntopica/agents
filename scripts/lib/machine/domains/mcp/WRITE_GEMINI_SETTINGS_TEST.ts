@@ -3,6 +3,7 @@ import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
+import type { GeminiSettingsFixture } from './types/GeminiSettingsFixture'
 import { writeGeminiSettings } from './writeGeminiSettings'
 
 void test('Gemini settings preserve foreign settings and MCP servers', async () => {
@@ -50,9 +51,9 @@ void test('Gemini settings remove only stale owned MCP servers', async () => {
     servers: {},
     ownedNames: ['stale'],
   })
-  const parsed = JSON.parse(await readFile(path, 'utf8')) as {
-    mcpServers: Record<string, unknown>
-  }
+  const parsed = JSON.parse(
+    await readFile(path, 'utf8'),
+  ) as GeminiSettingsFixture
   assert.deepEqual(owned, [])
   assert.deepEqual(parsed.mcpServers, { foreign: { command: 'keep' } })
 })

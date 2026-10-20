@@ -4,13 +4,13 @@ import { collectAcceptedGuidanceFindings } from './collectAcceptedGuidanceFindin
 import { collectGuidanceDocumentFindings } from './collectGuidanceDocumentFindings'
 import { parseGuidancePolicy } from './parseGuidancePolicy'
 import { readGuidanceDocuments } from './readGuidanceDocuments'
+import type { GuidanceDoctorOptions } from './types/GuidanceDoctorOptions'
+import type { GuidanceDoctorResult } from './types/GuidanceDoctorResult'
 import type { GuidancePolicy } from './types/GuidancePolicy'
 
-export const guidanceDoctor = async (options: {
-  home: string
-  canonicalDir: string
-  stateDir: string
-}): Promise<{ ok: boolean; findings: string[] }> => {
+export const guidanceDoctor = async (
+  options: GuidanceDoctorOptions,
+): Promise<GuidanceDoctorResult> => {
   const findings: string[] = []
   let policy: GuidancePolicy | undefined
   try {

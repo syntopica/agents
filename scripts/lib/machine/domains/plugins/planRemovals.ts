@@ -1,14 +1,10 @@
+import type { PlanRemovalsInput } from './types/PlanRemovalsInput'
 import type { PluginChange } from './types/PluginChange'
-import type { PluginsManifestDocument } from './types/PluginsManifestDocument'
-import type { PluginsState } from './types/PluginsState'
 
 export const planRemovals = ({
   manifest,
   state,
-}: {
-  manifest: PluginsManifestDocument
-  state: PluginsState
-}): PluginChange[] => {
+}: PlanRemovalsInput): PluginChange[] => {
   const declared = new Set(manifest.plugins.map((plugin) => plugin.id))
 
   return state.installed

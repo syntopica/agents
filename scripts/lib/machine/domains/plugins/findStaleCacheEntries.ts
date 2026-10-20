@@ -1,4 +1,5 @@
 import type { CacheEntry } from './types/CacheEntry'
+import type { FindStaleCacheEntriesInput } from './types/FindStaleCacheEntriesInput'
 
 /**
  * Cache directories nothing refers to. "Referenced" is wider than "installed":
@@ -8,10 +9,7 @@ import type { CacheEntry } from './types/CacheEntry'
 export const findStaleCacheEntries = ({
   entries,
   referencedPaths,
-}: {
-  entries: CacheEntry[]
-  referencedPaths: string[]
-}): CacheEntry[] => {
+}: FindStaleCacheEntriesInput): CacheEntry[] => {
   const referenced = new Set(referencedPaths)
 
   return entries.filter((entry) => !referenced.has(entry.path))

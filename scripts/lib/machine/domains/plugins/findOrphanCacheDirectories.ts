@@ -1,14 +1,11 @@
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { PluginMarketplaceEntry } from './types/PluginMarketplaceEntry'
+import type { FindOrphanCacheDirectoriesInput } from './types/FindOrphanCacheDirectoriesInput'
 
 export const findOrphanCacheDirectories = async ({
   cacheDir,
   marketplaces,
-}: {
-  cacheDir: string
-  marketplaces: PluginMarketplaceEntry[]
-}): Promise<string[]> => {
+}: FindOrphanCacheDirectoriesInput): Promise<string[]> => {
   const known = new Set(marketplaces.map((marketplace) => marketplace.name))
 
   try {

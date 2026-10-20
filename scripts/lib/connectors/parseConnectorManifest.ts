@@ -1,7 +1,7 @@
 import { findSecurityCredentialLiterals } from '../machine/domains/security/findSecurityCredentialLiterals'
 import { collectConnectorDefinitionErrors } from './collectConnectorDefinitionErrors'
-import type { ConnectorDefinition } from './types/ConnectorDefinition'
 import type { ConnectorManifestParseResult } from './types/ConnectorManifestParseResult'
+import type { ParseConnectorManifestManifest } from './types/ParseConnectorManifestManifest'
 
 export const parseConnectorManifest = (
   raw: unknown,
@@ -25,10 +25,7 @@ export const parseConnectorManifest = (
   return errors.length === 0
     ? {
         ok: true,
-        manifest: candidate as unknown as {
-          version: 1
-          connectors: ConnectorDefinition[]
-        },
+        manifest: candidate as unknown as ParseConnectorManifestManifest,
       }
     : {
         ok: false,

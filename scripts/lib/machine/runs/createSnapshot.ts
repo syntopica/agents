@@ -1,14 +1,12 @@
 import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import type { SnapshotEntry } from './SnapshotEntry'
+import type { CreateSnapshotInput } from './types/CreateSnapshotInput'
 
 export const createSnapshot = async ({
   runDir,
   files,
-}: {
-  runDir: string
-  files: string[]
-}) => {
+}: CreateSnapshotInput) => {
   await fs.mkdir(join(runDir, 'files'), { recursive: true })
   const entries: SnapshotEntry[] = []
 

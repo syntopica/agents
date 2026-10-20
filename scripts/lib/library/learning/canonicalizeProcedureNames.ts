@@ -1,5 +1,6 @@
 import { jaccardSimilarity } from './jaccardSimilarity'
 import { tokenizeProcedureName } from './tokenizeProcedureName'
+import type { CanonicalizeProcedureNamesClusters } from './types/CanonicalizeProcedureNamesClusters'
 
 export const canonicalizeProcedureNames = (
   names: string[],
@@ -18,7 +19,7 @@ export const canonicalizeProcedureNames = (
     )
     .map(([name]) => name)
 
-  const clusters: { representative: string; tokens: string[] }[] = []
+  const clusters: CanonicalizeProcedureNamesClusters[] = []
   const mapping: Record<string, string> = {}
 
   for (const name of ordered) {

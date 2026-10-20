@@ -1,7 +1,6 @@
 import { join } from 'node:path'
 import { renderServiceUnits } from './renderServiceUnits'
-import type { ServicesManifestParseResult } from './types/ServicesManifestParseResult'
-import type { ServicesPaths } from './types/ServicesPaths'
+import type { ResolveDeclaredUnitPathsInput } from './types/ResolveDeclaredUnitPathsInput'
 
 /**
  * Every unit file an apply could write, so the run snapshot can restore them.
@@ -11,10 +10,7 @@ import type { ServicesPaths } from './types/ServicesPaths'
 export const resolveDeclaredUnitPaths = ({
   parsed,
   paths,
-}: {
-  parsed: ServicesManifestParseResult | undefined
-  paths: ServicesPaths
-}): string[] => {
+}: ResolveDeclaredUnitPathsInput): string[] => {
   if (parsed?.ok !== true) {
     return []
   }

@@ -1,8 +1,9 @@
 import { inspectSecurityCredentialNode } from './inspectSecurityCredentialNode'
+import type { FindSecurityCredentialLiteralsPending } from './types/FindSecurityCredentialLiteralsPending'
 
 export const findSecurityCredentialLiterals = (raw: unknown): string[] => {
   const findings: string[] = []
-  const pending: { path: string; value: unknown }[] = [
+  const pending: FindSecurityCredentialLiteralsPending[] = [
     { path: 'manifest', value: raw },
   ]
   while (pending.length > 0) {

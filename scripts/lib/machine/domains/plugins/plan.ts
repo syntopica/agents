@@ -1,16 +1,9 @@
 import { planDeclaredPlugin } from './planDeclaredPlugin'
 import { planRemovals } from './planRemovals'
+import type { PlanInput } from './types/PlanInput'
 import type { PluginChange } from './types/PluginChange'
-import type { PluginsManifestDocument } from './types/PluginsManifestDocument'
-import type { PluginsState } from './types/PluginsState'
 
-export const plan = ({
-  manifest,
-  state,
-}: {
-  manifest: PluginsManifestDocument
-  state: PluginsState
-}): PluginChange[] => {
+export const plan = ({ manifest, state }: PlanInput): PluginChange[] => {
   const actual = new Map(state.installed.map((plugin) => [plugin.id, plugin]))
 
   return [

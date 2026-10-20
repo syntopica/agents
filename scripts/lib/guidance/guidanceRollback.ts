@@ -2,14 +2,12 @@ import { join } from 'node:path'
 import { guidanceTargets } from './guidanceTargets'
 import { listGuidanceRuns } from './listGuidanceRuns'
 import { restoreGuidanceSnapshot } from './restoreGuidanceSnapshot'
+import type { GuidanceRollbackOptions } from './types/GuidanceRollbackOptions'
 import type { GuidanceRunReport } from './types/GuidanceRunReport'
 
-export const guidanceRollback = async (options: {
-  home: string
-  canonicalDir: string
-  stateDir: string
-  runId?: string
-}): Promise<GuidanceRunReport> => {
+export const guidanceRollback = async (
+  options: GuidanceRollbackOptions,
+): Promise<GuidanceRunReport> => {
   const runs = await listGuidanceRuns(join(options.stateDir, 'runs'))
   const runId = options.runId ?? runs.at(-1) ?? 'rollback'
   const snapshotDir = join(options.stateDir, 'runs', runId)

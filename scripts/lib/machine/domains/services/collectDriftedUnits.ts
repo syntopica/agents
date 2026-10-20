@@ -1,18 +1,12 @@
 import { renderServiceUnits } from './renderServiceUnits'
+import type { CollectDriftedUnitsInput } from './types/CollectDriftedUnitsInput'
 import type { DriftedServiceUnit } from './types/DriftedServiceUnit'
-import type { ServicesManifest } from './types/ServicesManifest'
-import type { ServicesPlatform } from './types/ServicesPlatform'
-import type { ServicesState } from './types/ServicesState'
 
 export const collectDriftedUnits = ({
   manifest,
   platform,
   state,
-}: {
-  manifest: ServicesManifest
-  platform: ServicesPlatform
-  state: ServicesState
-}): DriftedServiceUnit[] =>
+}: CollectDriftedUnitsInput): DriftedServiceUnit[] =>
   manifest.services.flatMap((service) => {
     const units = renderServiceUnits({ service, platform })
     const hasTimer = units.some((unit) => unit.file.endsWith('.timer'))

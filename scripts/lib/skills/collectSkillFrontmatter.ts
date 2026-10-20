@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { INSTANCE_SKILLS_DIR } from '../../constants/INSTANCE_SKILLS_DIR'
+import type { CollectSkillFrontmatterResult } from './types/CollectSkillFrontmatterResult'
 
 /**
  * Read every SKILL.md under the configured skill roots and return its
@@ -12,10 +13,7 @@ import { INSTANCE_SKILLS_DIR } from '../../constants/INSTANCE_SKILLS_DIR'
  * @returns {{ name: string; frontmatter: string }[]} - One entry per skill, named
  *   by its containing directory. Files without a frontmatter fence yield "".
  */
-export const collectSkillFrontmatter = (): {
-  name: string
-  frontmatter: string
-}[] => {
+export const collectSkillFrontmatter = (): CollectSkillFrontmatterResult[] => {
   const repoRoot = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
     '../../..',

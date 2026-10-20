@@ -1,15 +1,11 @@
-import type { applyCapabilityLinks } from './applyCapabilityLinks'
-import type { CapabilityTarget } from './types/CapabilityTarget'
+import type { ToCapabilityMessagesResults } from './types/ToCapabilityMessagesResults'
 
 /**
  * One line per capability target: why it was skipped, or how many paths moved.
  * A converged target contributes nothing.
  */
 export const toCapabilityMessages = (
-  results: {
-    target: CapabilityTarget
-    result: Awaited<ReturnType<typeof applyCapabilityLinks>>
-  }[],
+  results: ToCapabilityMessagesResults[],
 ): string[] =>
   results.flatMap(({ target, result }) => {
     if (result.status !== 'supported') {

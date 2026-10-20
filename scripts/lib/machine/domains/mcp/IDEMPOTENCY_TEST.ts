@@ -8,6 +8,7 @@ import { loadCanonicalManifest } from './fixtures/loadCanonicalManifest'
 import { TEST_ENV } from './fixtures/TEST_ENV'
 import { plan } from './plan'
 import { read } from './read'
+import type { McpIdempotencyClaudeConfig } from './types/McpIdempotencyClaudeConfig'
 import type { McpManifest } from './types/McpManifest'
 
 void test('a second apply changes nothing', async () => {
@@ -59,9 +60,7 @@ void test('a foreign key added between runs is not disturbed', async () => {
 
   const config = JSON.parse(
     await readFile(paths['claude-personal'], 'utf8'),
-  ) as {
-    mcpServers: Record<string, unknown>
-  }
+  ) as McpIdempotencyClaudeConfig
   config.mcpServers['injectedByAnotherTool'] = { type: 'stdio', command: 'x' }
   await writeFile(paths['claude-personal'], JSON.stringify(config, null, 2))
 
@@ -69,9 +68,7 @@ void test('a foreign key added between runs is not disturbed', async () => {
 
   const after = JSON.parse(
     await readFile(paths['claude-personal'], 'utf8'),
-  ) as {
-    mcpServers: Record<string, unknown>
-  }
+  ) as McpIdempotencyClaudeConfig
   assert.equal('injectedByAnotherTool' in after.mcpServers, true)
 })
 
@@ -121,9 +118,7 @@ void test('dropping a server from the manifest removes it from every target', as
 
   const claude = JSON.parse(
     await readFile(paths['claude-personal'], 'utf8'),
-  ) as {
-    mcpServers: Record<string, unknown>
-  }
+  ) as McpIdempotencyClaudeConfig
   assert.equal('codegraph' in claude.mcpServers, false)
   assert.equal(
     (await readFile(paths.codex, 'utf8')).includes('mcp_servers.codegraph'),
@@ -140,9 +135,7 @@ void test('a missing secret leaves the server out and is reported', async () => 
 
   const claude = JSON.parse(
     await readFile(paths['claude-personal'], 'utf8'),
-  ) as {
-    mcpServers: Record<string, unknown>
-  }
+  ) as McpIdempotencyClaudeConfig
   assert.equal('context7' in claude.mcpServers, false)
   assert.equal('serena' in claude.mcpServers, true)
 })

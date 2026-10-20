@@ -1,3 +1,4 @@
+import type { CollectSkillInvocationsInput } from './types/CollectSkillInvocationsInput'
 import type { ObservedTurn } from './types/ObservedTurn'
 
 export const collectSkillInvocations = (content: unknown): ObservedTurn[] => {
@@ -17,7 +18,7 @@ export const collectSkillInvocations = (content: unknown): ObservedTurn[] => {
       continue
     }
 
-    const input = record['input'] as { skill?: unknown } | undefined
+    const input = record['input'] as CollectSkillInvocationsInput | undefined
     if (typeof input?.skill === 'string') {
       turns.push({ text: '', invokedSkill: input.skill })
     }

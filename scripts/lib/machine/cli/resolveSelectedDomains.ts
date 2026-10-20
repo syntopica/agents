@@ -1,4 +1,7 @@
 import { flagValues } from './flagValues'
+import type { RejectedDomains } from './types/RejectedDomains'
+import type { ResolveSelectedDomainsInput } from './types/ResolveSelectedDomainsInput'
+import type { SelectedDomains } from './types/SelectedDomains'
 
 /**
  * The domains one run may converge. Without `--domain` a run converges the
@@ -10,10 +13,7 @@ import { flagValues } from './flagValues'
 export const resolveSelectedDomains = ({
   argv,
   profileDomains,
-}: {
-  argv: string[]
-  profileDomains: readonly string[]
-}): { domains: string[] } | { errors: string[] } => {
+}: ResolveSelectedDomainsInput): SelectedDomains | RejectedDomains => {
   const requested = flagValues(argv, '--domain')
   if (requested.length === 0) return { domains: [...profileDomains] }
 

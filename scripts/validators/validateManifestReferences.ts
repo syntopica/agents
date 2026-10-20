@@ -1,7 +1,8 @@
 import { MANIFEST_PATH } from '../constants/MANIFEST_PATH'
+import type { ValidateManifestReferencesManifest } from './types/ValidateManifestReferencesManifest'
 
 export const validateManifestReferences = (
-  manifest: { skills: Record<string, { rules?: string[] }> },
+  manifest: ValidateManifestReferencesManifest,
   validRuleRefs: Set<string>,
   skillNames: Set<string>,
 ) => {

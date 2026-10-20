@@ -1,16 +1,13 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { sortRecordKeys } from './sortRecordKeys'
+import type { WriteGeminiSettingsInput } from './types/WriteGeminiSettingsInput'
 
 export const writeGeminiSettings = async ({
   path,
   servers,
   ownedNames,
-}: {
-  path: string
-  servers: Record<string, unknown>
-  ownedNames: string[]
-}) => {
+}: WriteGeminiSettingsInput) => {
   let existing: Record<string, unknown> = {}
   try {
     const contents = await readFile(path, 'utf8')

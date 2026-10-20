@@ -1,6 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { FindUnreachableHooksDeclared } from './types/FindUnreachableHooksDeclared'
+import type { FindUnreachableHooksPluginName } from './types/FindUnreachableHooksPluginName'
+import type { FindUnreachableHooksSettings } from './types/FindUnreachableHooksSettings'
 
 /**
  * Find hooks this repo declares that nothing live would ever invoke.
@@ -21,7 +24,7 @@ export const findUnreachableHooks = (): string[] => {
   )
   const declared = JSON.parse(
     readFileSync(path.join(repoRoot, 'src/hooks/hooks.json'), 'utf8'),
-  ) as Record<string, { hooks?: { command?: string }[] }[]>
+  ) as Record<string, FindUnreachableHooksDeclared[]>
 
   const names = new Set<string>()
   for (const entries of Object.values(declared)) {
@@ -40,9 +43,7 @@ export const findUnreachableHooks = (): string[] => {
   if (!existsSync(settingsPath)) return []
 
   const settingsRaw = readFileSync(settingsPath, 'utf8')
-  const settings = JSON.parse(settingsRaw) as {
-    enabledPlugins?: Record<string, boolean>
-  }
+  const settings = JSON.parse(settingsRaw) as FindUnreachableHooksSettings
 
   // Match the plugin by its manifest name. Substring-matching the repo path would
   // be satisfied by any hook registered from a checkout of this repo, which makes
@@ -53,7 +54,7 @@ export const findUnreachableHooks = (): string[] => {
         path.join(repoRoot, 'dist/plugins/claude/.claude-plugin/plugin.json'),
         'utf8',
       ),
-    ) as { name: string }
+    ) as FindUnreachableHooksPluginName
   ).name
 
   const pluginEnabled = Object.entries(settings.enabledPlugins ?? {}).some(

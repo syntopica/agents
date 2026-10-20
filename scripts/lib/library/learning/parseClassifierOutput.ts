@@ -1,4 +1,6 @@
 import { firstJsonObject } from './firstJsonObject'
+import type { ParseClassifierOutputClassified } from './types/ParseClassifierOutputClassified'
+import type { ParseClassifierOutputItems } from './types/ParseClassifierOutputItems'
 
 export const parseClassifierOutput = (raw: string) => {
   const block = firstJsonObject(raw)
@@ -14,13 +16,13 @@ export const parseClassifierOutput = (raw: string) => {
     return []
   }
 
-  const items = (parsed as { requests?: unknown }).requests
+  const items = (parsed as ParseClassifierOutputItems).requests
 
   if (!Array.isArray(items)) {
     return []
   }
 
-  const classified: { procedure: string; project?: string }[] = []
+  const classified: ParseClassifierOutputClassified[] = []
 
   for (const item of items) {
     if (typeof item !== 'object' || item === null) {

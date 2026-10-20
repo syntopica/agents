@@ -1,10 +1,12 @@
+import type { AggregateProceduresClassified } from './types/AggregateProceduresClassified'
+import type { AggregateProceduresTally } from './types/AggregateProceduresTally'
 import type { Procedure } from './types/Procedure'
 
 export const aggregateProcedures = (
-  classified: { procedure: string; project?: string }[],
+  classified: AggregateProceduresClassified[],
   minRequests: number,
 ): Procedure[] => {
-  const tally: Record<string, { requests: number; projects: Set<string> }> = {}
+  const tally: Record<string, AggregateProceduresTally> = {}
 
   for (const item of classified) {
     const name = item.procedure.trim().toLowerCase()

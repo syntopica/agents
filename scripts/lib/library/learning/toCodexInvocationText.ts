@@ -1,3 +1,5 @@
+import type { ToCodexInvocationTextPayload } from './types/ToCodexInvocationTextPayload'
+import type { ToCodexInvocationTextRecord } from './types/ToCodexInvocationTextRecord'
 /**
  * The command text of one Codex rollout line, or undefined when the line is
  * not the agent invoking a tool. Rollouts also carry the injected skill
@@ -18,13 +20,13 @@ export const toCodexInvocationText = (line: string): string | undefined => {
     return undefined
   }
 
-  const record = parsed as { type?: unknown; payload?: unknown }
+  const record = parsed as ToCodexInvocationTextRecord
 
   if (record.type !== 'response_item' || typeof record.payload !== 'object') {
     return undefined
   }
 
-  const payload = record.payload as { type?: unknown }
+  const payload = record.payload as ToCodexInvocationTextPayload
 
   if (payload.type !== 'custom_tool_call' && payload.type !== 'function_call') {
     return undefined

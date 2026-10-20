@@ -1,18 +1,12 @@
 import type { DomainResult } from '../../types/DomainResult'
 import { plan } from './plan'
-import type { ServicesManifestParseResult } from './types/ServicesManifestParseResult'
-import type { ServicesPlatform } from './types/ServicesPlatform'
-import type { ServicesState } from './types/ServicesState'
+import type { ToServicesDomainResultInput } from './types/ToServicesDomainResultInput'
 
 export const toServicesDomainResult = ({
   parsed,
   platform,
   state,
-}: {
-  parsed: ServicesManifestParseResult | undefined
-  platform: ServicesPlatform
-  state: ServicesState
-}): DomainResult => {
+}: ToServicesDomainResultInput): DomainResult => {
   if (parsed === undefined) {
     return {
       domain: 'services',

@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
+import type { MachineRunSummary } from './types/MachineRunSummary'
 
 export const listRuns = async (rootDir: string) => {
   let names: string[]
@@ -9,7 +10,7 @@ export const listRuns = async (rootDir: string) => {
     return []
   }
 
-  const runs: { runId: string; complete: boolean }[] = []
+  const runs: MachineRunSummary[] = []
 
   for (const runId of names.toSorted((left, right) =>
     left.localeCompare(right),

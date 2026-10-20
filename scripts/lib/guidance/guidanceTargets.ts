@@ -1,10 +1,7 @@
 import { join } from 'node:path'
+import type { GuidanceTargetsOptions } from './types/GuidanceTargetsOptions'
 
-export const guidanceTargets = (options: {
-  home: string
-  canonicalDir: string
-  stateDir: string
-}) => ({
+export const guidanceTargets = (options: GuidanceTargetsOptions) => ({
   'canonical/shared.md': join(options.canonicalDir, 'shared.md'),
   'canonical/claude-overlay.md': join(
     options.canonicalDir,

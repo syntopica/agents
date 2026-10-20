@@ -1,11 +1,9 @@
-import type { LiveServer } from '../types/LiveServer'
-import type { McpCaptureRefusal } from '../types/McpCaptureRefusal'
 import type { McpServer } from '../types/McpServer'
-import type { McpTarget } from '../types/McpTarget'
 import type { McpValue } from '../types/McpValue'
 import { isApprovalMode } from './isApprovalMode'
 import { toCapturedTransport } from './toCapturedTransport'
 import { toCapturedValues } from './toCapturedValues'
+import type { ToCapturedServerInput } from './types/ToCapturedServerInput'
 
 export const toCapturedServer = ({
   name,
@@ -13,13 +11,7 @@ export const toCapturedServer = ({
   live,
   declared,
   refused,
-}: {
-  name: string
-  targets: McpTarget[]
-  live: LiveServer
-  declared: McpServer | undefined
-  refused: McpCaptureRefusal[]
-}): McpServer => {
+}: ToCapturedServerInput): McpServer => {
   const transport = toCapturedTransport(live)
   const env = toCapturedValues({
     server: name,

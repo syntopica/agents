@@ -7,6 +7,9 @@ import { chunkRequests } from '../lib/library/learning/chunkRequests'
 import { parseClassifierOutput } from '../lib/library/learning/parseClassifierOutput'
 import { runClassifier } from '../lib/library/learning/runClassifier'
 import { flagValue } from '../lib/machine/cli/flagValue'
+import type { LibraryClassifyClassified } from './types/LibraryClassifyClassified'
+import type { LibraryClassifyParsed } from './types/LibraryClassifyParsed'
+import type { LibraryClassifyPrevious } from './types/LibraryClassifyPrevious'
 
 export const main = async () => {
   const home = homedir()
@@ -45,7 +48,7 @@ export const main = async () => {
   const requests: string[] = []
   for (const line of lines) {
     try {
-      const parsed = JSON.parse(line) as { text?: unknown }
+      const parsed = JSON.parse(line) as LibraryClassifyParsed
       if (typeof parsed.text === 'string' && parsed.text.trim() !== '') {
         requests.push(parsed.text.replaceAll('\n', ' '))
       }
@@ -63,7 +66,7 @@ export const main = async () => {
   try {
     const previous = JSON.parse(
       await fs.readFile(join(learningDir, 'procedures.json'), 'utf8'),
-    ) as { name?: unknown }[]
+    ) as LibraryClassifyPrevious[]
     const anchors = previous
       .map((item) => item.name)
       .filter((name): name is string => typeof name === 'string')
@@ -73,7 +76,7 @@ export const main = async () => {
     await fs.writeFile(anchorsPath, '')
   }
 
-  const classified: { procedure: string; project?: string }[] = []
+  const classified: LibraryClassifyClassified[] = []
   let failed = 0
 
   for (const [index, batch] of batches.entries()) {

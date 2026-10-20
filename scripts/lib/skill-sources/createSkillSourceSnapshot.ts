@@ -1,6 +1,7 @@
 import { access, cp, mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { resolveSkillSourceLogicalName } from './resolveSkillSourceLogicalName'
+import type { CreateSkillSourceSnapshotEntries } from './types/CreateSkillSourceSnapshotEntries'
 import type { SkillSourceManifest } from './types/SkillSourceManifest'
 import type { SkillSourceSnapshot } from './types/SkillSourceSnapshot'
 
@@ -18,7 +19,7 @@ export const createSkillSourceSnapshot = async (
     .catch(() => false)
   if (lockExists) await cp(lockPath, join(snapshotDir, '.skill-lock.json'))
 
-  const entries: { skill: string; logicalName: string; existed: boolean }[] = []
+  const entries: CreateSkillSourceSnapshotEntries[] = []
   for (const source of manifest.sources) {
     for (const skill of source.skills) {
       const logicalName = resolveSkillSourceLogicalName(source, skill)

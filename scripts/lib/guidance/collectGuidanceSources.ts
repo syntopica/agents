@@ -1,14 +1,12 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { sha256Text } from './sha256Text'
+import type { CollectGuidanceSourcesOptions } from './types/CollectGuidanceSourcesOptions'
 import type { GuidanceSources } from './types/GuidanceSources'
 
-export const collectGuidanceSources = async (options: {
-  home: string
-  canonicalDir: string
-  stateDir: string
-  rulesInventoryPath?: string
-}): Promise<GuidanceSources> => {
+export const collectGuidanceSources = async (
+  options: CollectGuidanceSourcesOptions,
+): Promise<GuidanceSources> => {
   const values: Record<string, string> = {}
   const readOptionalText = async (path: string): Promise<string> => {
     if (path === '') return ''

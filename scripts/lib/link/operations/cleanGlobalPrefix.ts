@@ -2,6 +2,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { pathExists } from './pathExists'
 import { removeSkillEntry } from './removeSkillEntry'
+import type { GlobalPrefixCleanupError } from './types/GlobalPrefixCleanupError'
 
 export const cleanGlobalPrefix = async (targetDir: string, prefix: string) => {
   // An empty prefix would match every entry and wipe foreign skills
@@ -33,7 +34,7 @@ export const cleanGlobalPrefix = async (targetDir: string, prefix: string) => {
   try {
     entries = await fs.readdir(targetDir)
   } catch (error: unknown) {
-    const err = error as { code?: string } | null
+    const err = error as GlobalPrefixCleanupError | null
 
     if (err?.code === 'ENOENT' || err?.code === 'ENOTDIR') {
       return []

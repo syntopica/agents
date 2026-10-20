@@ -1,5 +1,7 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import type { LoadInstanceSkillRulesParsed } from './types/LoadInstanceSkillRulesParsed'
+import type { LoadInstanceSkillRulesResult } from './types/LoadInstanceSkillRulesResult'
 
 /**
  * The private skills directory's own `skill-rules.map.json`.
@@ -15,7 +17,7 @@ import path from 'node:path'
  */
 export const loadInstanceSkillRules = async (
   instanceDir: string,
-): Promise<Record<string, { rules?: string[] }>> => {
+): Promise<Record<string, LoadInstanceSkillRulesResult>> => {
   const fragmentPath = path.join(instanceDir, 'skill-rules.map.json')
 
   const raw = await fs.readFile(fragmentPath, 'utf8').catch(() => undefined)
@@ -23,9 +25,7 @@ export const loadInstanceSkillRules = async (
     return {}
   }
 
-  const parsed = JSON.parse(raw) as {
-    skills?: Record<string, { rules?: string[] }>
-  }
+  const parsed = JSON.parse(raw) as LoadInstanceSkillRulesParsed
 
   return parsed.skills ?? {}
 }
