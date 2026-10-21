@@ -6,6 +6,7 @@ import { CODEX_HOME } from '../constants/CODEX_HOME'
 import { applyCodexSkillTrim } from './applyCodexSkillTrim'
 import { collectCodexSkillTrimPaths } from './collectCodexSkillTrimPaths'
 import { renderCodexSkillTrim } from './renderCodexSkillTrim'
+import type { WriteCodexSkillTrimInput } from './types/WriteCodexSkillTrimInput'
 
 /**
  * Keeps Codex's generated skills trim in step with what was just linked.
@@ -15,14 +16,22 @@ import { renderCodexSkillTrim } from './renderCodexSkillTrim'
  * alone. The previous file is backed up before any change: this is the user's
  * own configuration, and everything outside the markers is theirs.
  */
-export const writeCodexSkillTrim = async () => {
-  const configPath = path.join(CODEX_HOME, 'config.toml')
-  const config = await fs.readFile(configPath, 'utf8').catch(() => undefined)
+export const writeCodexSkillTrim = async ({
+  configPath = path.join(CODEX_HOME, 'config.toml'),
+  skillsDir = CANONICAL_SKILLS_DIR,
+  curatedDir = path.join(CLAUDE_HOME, 'skills'),
+}: Partial<WriteCodexSkillTrimInput> = {}) => {
+  const config = await fs
+    .readFile(configPath, 'utf8')
+    .catch((error: unknown) => {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined
+      throw error
+    })
   if (config === undefined) return { written: false, disabled: 0 }
 
   const disabled = await collectCodexSkillTrimPaths({
-    skillsDir: CANONICAL_SKILLS_DIR,
-    curatedDir: path.join(CLAUDE_HOME, 'skills'),
+    skillsDir,
+    curatedDir,
   })
   const updated = applyCodexSkillTrim(config, renderCodexSkillTrim(disabled))
   if (updated === config) return { written: false, disabled: disabled.length }

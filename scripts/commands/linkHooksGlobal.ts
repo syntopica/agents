@@ -1,4 +1,6 @@
+import { inspectInstalledCodexHooks } from '../lib/hooks/inspectInstalledCodexHooks'
 import { CANONICAL_HOOKS_DIR } from '../lib/link/constants/CANONICAL_HOOKS_DIR'
+import { CODEX_HOME } from '../lib/link/constants/CODEX_HOME'
 import { applyCapabilityLinks } from '../lib/machine/domains/capabilities/applyCapabilityLinks'
 import { HOOKS_DIST_DIR } from './constants/HOOKS_DIST_DIR'
 
@@ -23,4 +25,13 @@ export const main = async () => {
   console.log(
     'Point ~/.claude/settings.json at that path so hooks survive a repo move.',
   )
+  const issues = await inspectInstalledCodexHooks(
+    CODEX_HOME,
+    CANONICAL_HOOKS_DIR,
+    process.cwd(),
+  )
+  if (issues.length > 0) {
+    console.error(JSON.stringify({ codexHookRegistrationIssues: issues }))
+    process.exitCode = 1
+  }
 }
