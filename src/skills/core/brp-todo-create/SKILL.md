@@ -24,12 +24,11 @@ win where they differ.
 - Offload bulk history reading to agy, OpenRouter free models, local models, or
   cheaper Claude subagents (Haiku or Sonnet); use a read-only Codex pass only to
   verify the result.
-- Commit and push authority is standing in `~/p` and in owned repositories, per
-  each repository's own instructions. Client repositories (origin owner
-  `client-example`, `client-example`, `client-example`, `client-example`, `client-example`,
-  `client-example`, `client-example`) are report-only: no commit, no push. `owner-product` is
-  the owner's product, not a client: commit, push to `main` and deploy per its
-  `AGENTS.md` (owner, 2026-10-13: "hacemos push y commit y todo").
+- Resolve repository ownership and standing authority from private instance
+  guidance and the repository's own instructions. Classified client repositories
+  are report-only: no commit, no push. Owner products follow their own
+  `AGENTS.md` authorization for commit, push, branch, and deployment actions. If
+  the ownership classification is unavailable, do not infer write authority.
 - Cross-project discoveries go to the owning repository under `~/p`, or to
   `~/p/TODO.md` when none owns them.
 - Finish with `tadu doctor <repo>` exiting 0, or report each remaining finding.

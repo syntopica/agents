@@ -23,15 +23,14 @@ The owner rules below apply on top of it and win where they differ.
 - Second model and offloading follow the owner's routing: bulk and
   implementation go to agy, OpenRouter free models, local models, or cheaper
   Claude subagents (Haiku or Sonnet). Codex is the verifier: every finished wave
-  gets a read-only Codex review (owner, 2026-10-11: "siempre mira con codex
-  todo"), and open forks are adjudicated with one read-only `codex exec` per
-  wave as described in `references/codex-adjudication.md`.
-- Commit and push authority is standing in `~/p` and in owned repositories, per
-  each repository's own instructions. Client repositories (origin owner
-  `client-example`, `client-example`, `client-example`, `client-example`, `client-example`,
-  `client-example`, `client-example`) are report-only: no commit, no push. `owner-product` is
-  the owner's product, not a client: commit, push to `main` and deploy per its
-  `AGENTS.md` (owner, 2026-10-13: "hacemos push y commit y todo").
+  gets a read-only Codex review, and open forks are adjudicated with one
+  read-only `codex exec` per wave as described in
+  `references/codex-adjudication.md`.
+- Resolve repository ownership and standing authority from private instance
+  guidance and the repository's own instructions. Classified client repositories
+  are report-only: no commit, no push. Owner products follow their own
+  `AGENTS.md` authorization for commit, push, branch, and deployment actions. If
+  the ownership classification is unavailable, do not infer write authority.
 - Cross-project discoveries go to the owning repository under `~/p`, or to
   `~/p/TODO.md` when none owns them.
 - Finish with `tadu doctor <repo>` exiting 0, or report each remaining finding.

@@ -3,9 +3,8 @@
   "claude": {
     "profiles": ["claude-personal", "claude-secondary"],
     "defaultMode": "auto",
-    "skipDangerousModePermissionPrompt": true,
-    "remoteControlAtStartup": true,
-    "remoteControlExceptionReason": "Explicitly retained for an established remote terminal workflow"
+    "skipDangerousModePermissionPrompt": false,
+    "remoteControlAtStartup": false
   },
   "codex": {
     "forcedLoginMethod": "chatgpt"

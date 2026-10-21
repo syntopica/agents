@@ -29,9 +29,9 @@ export const collectClaudeSecurityErrors = (
   }
   if (policy['defaultMode'] !== 'auto')
     errors.push('manifest.claude.defaultMode must be auto')
-  if (policy['skipDangerousModePermissionPrompt'] !== true) {
+  if (typeof policy['skipDangerousModePermissionPrompt'] !== 'boolean') {
     errors.push(
-      'manifest.claude.skipDangerousModePermissionPrompt must be true',
+      'manifest.claude.skipDangerousModePermissionPrompt must be a boolean',
     )
   }
   if (typeof policy['remoteControlAtStartup'] !== 'boolean') {

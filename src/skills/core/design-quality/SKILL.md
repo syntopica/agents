@@ -48,9 +48,9 @@ rule cannot see.
 2. Judge the whole area, not the page that was named: every list, and for each
    one a detail, a "new" and an "edit" page. Take real ids from the links each
    list renders; when a local table is empty, seed a clearly labelled local
-   fixture (and its undo script) rather than skipping the page. On example-project
-   the first full run (61 routes) found 297 findings, most of them on child
-   pages nobody had opened.
+   fixture (and its undo script) rather than skipping the page. On a web
+   application the first full run (61 routes) found 297 findings, most of them
+   on child pages nobody had opened.
 3. Credentials come from the password manager into the environment for the one
    command, never into the file, the chat or a commit:
    `UI_QUALITY_USER="$(op read ...)" UI_QUALITY_PASSWORD="$(op read ...)" codeality-ui check --json`.
@@ -126,15 +126,14 @@ the repository as extra context.
    widest light and the phone light screenshot of each route from `report.json`;
    several routes are fine, which is how a flow is shown. A production URL in
    the request names the screen, not the target: capture the same path on the
-   project's running dev server, whose data and login are the ones on record. On
-   2026-10-15 a run aimed at `example-project/admin/leads` lost half an hour
-   to a login that read "Correo o contraseña incorrectos" with the right
-   password. It was blamed on Cloudflare; on 2026-10-19 the cause turned out to
-   be a headless fill before hydration, which never reached React state. When a
-   headless login fails with known-good credentials, wait for `networkidle`
-   before filling and check the login form reads its fields at submit, before
-   suspecting the password or the network. The leads board also holds its `load`
-   event on per-lead avatar requests.
+   project's running dev server, whose data and login are the ones on record. A
+   production admin-board run lost half an hour to a login that read "Correo o
+   contraseña incorrectos" with the right password. It was blamed on Cloudflare;
+   the cause turned out to be a headless fill before hydration, which never
+   reached React state. When a headless login fails with known-good credentials,
+   wait for `networkidle` before filling and check the login form reads its
+   fields at submit, before suspecting the password or the network. The leads
+   board also holds its `load` event on per-lead avatar requests.
 4. **Hand-off.** Make `.codeality-ui/propose/<YYYY-MM-DD-HHMM>/`, copy the
    chosen screenshots and the brief into it, and run the prompt in
    `references/propose.md` with the command given there for the chosen model. It
@@ -169,11 +168,11 @@ the repository as extra context.
    wants integrated, not background reading. Mark each `build`, `exists`,
    `needs schema` (new table or column; say which) or `rejected` with a reason
    the person would accept; "minor" and "later" are not reasons. Everything
-   marked `build` is in scope. On 2026-10-15 the example-project lead, client and
-   booking pages shipped with the mockups' skeleton only - no activity tabs, no
-   "Vincular cliente", no pending-issues block, no contact rows, edit form still
-   always open - and the owner had to point out that ChatGPT's designs were
-   complete and the copy was minimal.
+   marked `build` is in scope. On 2026-10-15 a web application's lead, client
+   and booking pages shipped with the mockups' skeleton only - no activity tabs,
+   no "Vincular cliente", no pending-issues block, no contact rows, edit form
+   still always open - and the owner had to point out that ChatGPT's designs
+   were complete and the copy was minimal.
 3. Agree the scope from the review (or the creative direction). Change the code
    where the design system lives: tokens and shared components before one-off
    classes. Keep the project's stack, conventions and file rules. When a model

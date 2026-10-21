@@ -4,7 +4,10 @@ import type { McpManifest } from '../types/McpManifest'
 
 export const loadCanonicalManifest = async (): Promise<McpManifest> => {
   const raw = JSON.parse(
-    await readFile('examples/machine/mcp.json', 'utf8'),
+    await readFile(
+      new URL('./mcpManifestExample.json', import.meta.url),
+      'utf8',
+    ),
   ) as unknown
   const parsed = parseMcpManifest(raw)
 

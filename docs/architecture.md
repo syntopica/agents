@@ -1,186 +1,78 @@
-# Architecture Overview
+# Architecture
 
-## Rocket Agents ecosystem
+Rocket Agents is a TypeScript control plane for agent policy and client
+configuration. BRP provides workflow routing and reusable procedures within that
+control plane.
 
-Rocket Agents is the complete agent environment. BRP is the workflow engine
-implemented by this control-plane repository.
+## Ownership
 
-| Component        | Source of truth                        | Responsibility                                                                 |
-| ---------------- | -------------------------------------- | ------------------------------------------------------------------------------ |
-| Control plane    | `~/p/agents`                           | Policy, adapters, diagnostics, machine convergence, and conversation transport |
-| Machine instance | `~/p/dotfiles`                         | Host bootstrap, packages, services, and private machine manifests              |
-| Skill library    | `~/p/rocket-agents-library`            | Curated skill sources and provenance shared across clients                     |
-| Knowledge vault  | `<data-dir>` (private)                 | Human-authored knowledge and operational source material                       |
-| Memory runtime   | `~/p/memstore` plus machine-local data | Search and indexing derived from knowledge and conversations                   |
+| Component                | Responsibility                                                                               |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| Public control plane     | Rules, reusable skills, client adapters, schemas, diagnostics, and configuration convergence |
+| Private machine instance | Host manifests, account ownership, authorization exceptions, and operating procedures        |
+| Private skill sources    | Instance-specific workflows and their rule mappings                                          |
+| Scribe                   | Conversation capture, archive storage, import, export, and transport                         |
+| Atrium                   | Context indexing and retrieval                                                               |
 
-Credentials and client databases are intentionally outside this graph. They are
-authenticated or rebuilt on each machine instead of being synchronized. The
-repository naming decision and legacy `ai-state` disposition are recorded in
-[`adr/0001-rocket-agents-repository-family.md`](adr/0001-rocket-agents-repository-family.md).
+Authentication state, credentials, client databases, and derived indexes stay
+local or in approved private storage. Registering an external tool does not make
+its data part of this repository.
 
-## High-Level Components
+## Source and distribution
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                    BRP Orchestrator                       │
-│  (detects stack, selects skills/rules, enforces protocol) │
-├──────────────┬────────────────┬──────────────────────────┤
-│  Core Skills │  Stack Skills  │     Canonical Rules      │
-│  (9 skills)  │  (future)      │     (.mdc source)        │
-├──────────────┴────────────────┴──────────────────────────┤
-│              Compile Pipeline (scripts/)                  │
-│  compile skills → stage canonical dir → distribute to IDEs │
-├──────────────────────────────────────────────────────────┤
-│  IDE Outputs: Cursor | Claude | Codex | Antigravity |    │
-│               Windsurf | Claude Code Plugin              │
-└──────────────────────────────────────────────────────────┘
-```
+`src/rules/` contains canonical rule bodies. `src/skills/` contains skill
+definitions and supporting resources; `src/skills/skill-rules.map.json` maps
+skills to rule references. Agent definitions and hook sources live in
+`src/agents/` and `src/hooks/`. CLI entry points live in `scripts/bin/`,
+commands in `scripts/commands/`, and their dependencies in `scripts/lib/`.
 
-## Component Details
+The build compiles rules, skills, and plugins into `dist/`. Skill compilation
+injects rule indexes and emits Claude and portable variants. The portable
+variant strips client-specific frontmatter. Plugin compilation packages the
+Claude bundle and generates Codex agent definitions.
 
-### Orchestrator (`skills/orchestrator/brp/`)
+An optional `AGENTS_INSTANCE_SKILLS_DIR` supplies private skills and a
+`skill-rules.map.json` fragment. Duplicate names across engine and instance
+roots fail compilation. The public `llms.txt` generator filters the compiled
+catalog to engine-owned names.
 
-The entry point for all `/brp-*` commands. Responsibilities:
+## Client installation
 
-1. **Stack detection** — Scan project files for stack signals (see
-   `core/policy.json`)
-2. **Skill chain resolution** — Map intent to skill sequence
-3. **Rule selection** — Apply precedence: Task > Project > Stack > Global
-4. **Protocol enforcement** — Ensure all 6 steps are followed
+Link commands install generated artifacts into user-level client locations. The
+product-managed canonical skill directory is `~/.agents/skills`; adapters
+distribute skills to other locations where a target requires them. These
+destinations are product conventions unless confirmed in the client's
+documentation.
 
-### Core Skills (`skills/core/`)
+Edit canonical source, rebuild, verify, then install the relevant artifact. The
+[setup guide](ide-setup.md) describes the mutation boundaries.
 
-Nine workflow skills that implement the BRP protocol:
+## Machine configuration
 
-| Skill              | Protocol Steps Covered       |
-| ------------------ | ---------------------------- |
-| `brp-plan`         | DISCOVERY + PLAN             |
-| `brp-implement`    | IMPLEMENT                    |
-| `brp-test`         | TEST                         |
-| `brp-review`       | SELF-CHECK + REVIEW          |
-| `brp-fix`          | DISCOVERY + IMPLEMENT + TEST |
-| `brp-refactor`     | All 6 steps                  |
-| `brp-debug`        | DISCOVERY + PLAN + IMPLEMENT |
-| `brp-docs`         | DISCOVERY + IMPLEMENT        |
-| `brp-code-quality` | DISCOVERY + PLAN + REVIEW    |
+Machine commands resolve the instance directory from `--instance`, then
+`AGENTS_MACHINE_DIR`, then the checkout's `machine/` directory. Public examples
+reference environment variables rather than credential values.
 
-### Skill Classes
+Diff reports desired changes without applying them. Apply snapshots managed
+configuration before changes; rollback restores a snapshot. MCP configuration,
+security, plugins, capabilities, and services have separate domain
+implementations. Provider credentials remain account-local.
 
-- `workflow` — route and execute multi-step work with strong implicit invocation
-  boundaries.
-- `domain` — inject narrow stack- or subsystem-specific constraints.
-- `execution-assist` — provide deterministic helpers through references,
-  scripts, or tools.
+## Guidance and diagnostics
 
-### Stack Skills (`skills/stacks/`)
+Guidance reconciliation reads private canonical policy, provider overlays, live
+guidance, and accepted-run state. It validates reconciler output before applying
+changes and creates a recoverable snapshot.
 
-Stack-specific conventions and patterns. Selected by the orchestrator based on
-detected stack:
+Agent diagnostics report client lifecycle and managed capabilities. Connector
+diagnostics report declared profile scope, ownership, and health. Required
+failures affect exit status; unavailable optional clients and optional external
+outages remain visible. Reports redact home paths and credential-shaped output.
 
-- `busirocket-core-conventions` — Always active
-- `busirocket-react` — React projects
-- `busirocket-nextjs` — Next.js projects
-- `busirocket-rust` — Rust projects
-- `busirocket-typescript-standards` — TypeScript projects
-- etc.
+## Public content boundary
 
-### Canonical Rules (`src/rules/`)
-
-IDE-agnostic rules written in `.mdc` format (Markdown with YAML frontmatter).
-The compile pipeline reads these and produces IDE-specific outputs.
-
-### Compile Pipeline (`scripts/`)
-
-```
-src/skills/**/SKILL.md + agents/openai.yaml + manifest
-       │
-       ▼
-  compile-skills    → copy pure skill sources into dist/skills
-       │
-       ▼
-  inject rules index → add generated Rules Index blocks to compiled skills
-       │
-       ▼
-  link-skills       → stage skills in ~/.agents/skills
-       │
-       ▼
-  IDE distribution  → product-managed targets per IDE
-```
-
-Rules still compile into `dist/markdown/` and per-IDE rule outputs, but for
-Codex and other skill-capable IDEs the main reusable BRP surface is the global
-skills pipeline, not `AGENTS.md`.
-
-## Data Flow
-
-```mermaid
-flowchart LR
-    A[User Command] --> B[Orchestrator]
-    B --> C{Detect Stack}
-    C --> D[Select Rules]
-    C --> E[Select Skills]
-    D --> F[Apply by Precedence]
-    E --> G[Build Skill Chain]
-    F --> H[Execute Protocol]
-    G --> H
-    H --> I[DISCOVERY]
-    I --> J[PLAN]
-    J --> K[IMPLEMENT]
-    K --> L[TEST]
-    L --> M[SELF-CHECK]
-    M --> N[REVIEW]
-```
-
-## Conversation data flow
-
-```mermaid
-flowchart LR
-    A[Local provider files] --> B[Read-only source adapters]
-    B --> C[Normalized and redacted records]
-    C --> D[SHA-256-verified JSONL archive]
-    D --> E[Verified dry-run import]
-    E --> F[Canonical archive]
-    F --> G[Memstore indexing and retrieval]
-```
-
-Provider credentials and databases never cross the adapter boundary. Rocket
-Agents owns capture, schema validation, and transport. Memstore owns derived
-indexes, topics, and search. `dotfiles` owns only private host aliases,
-scheduling, and invocation.
-
-## Precedence Model
-
-```
-┌─────────────────────────┐  Highest priority
-│  Task Rules             │  (create/fix/refactor/...)
-├─────────────────────────┤
-│  Project Rules          │  (.brp/project.json)
-├─────────────────────────┤
-│  Stack Rules            │  (next/react/rust/php/...)
-├─────────────────────────┤
-│  Global Rules           │  (personal invariants)
-└─────────────────────────┘  Lowest priority
-```
-
-When rules conflict, the higher-priority level wins.
-
-## Plugin Distribution
-
-### Claude Code
-
-The `.claude-plugin/plugin.json` manifest registers the project as a Claude Code
-plugin. Skills in `skills/` are auto-discovered and namespaced as
-`/rocket-agents:<skill-name>`.
-
-### Cursor
-
-Rules are compiled to `.cursor/rules/` which Cursor reads directly. No separate
-plugin manifest needed — the rules appear in Cursor's Rules settings.
-
-### Other IDEs
-
-Rule-capable IDEs can still receive generated markdown/rule outputs.
-Skill-capable IDEs are handled through the product-managed linker, which stages
-compiled skills in `~/.agents/skills` first and then distributes them to
-IDE-specific targets. Those targets are product conventions unless their vendor
-documentation is confirmed separately.
+Public skills use role-based authorization and generic examples. Account names,
+customer classifications, browser session observations, and host inventories
+belong to the private instance. The
+[boundary decision](adr/0002-public-engine-and-private-instance.md) records this
+separation.

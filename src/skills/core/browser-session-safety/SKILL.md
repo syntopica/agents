@@ -12,12 +12,11 @@ allowed-tools: Read, Grep, Glob, Bash
 
 # Browser control: Orca always, the real Chrome only to read, never a fresh profile
 
-Owner order, 2026-09-25: "usa orca browser como primario siempre... que no me
-roba el foco". The real Chrome carries what an automation browser cannot
-reproduce: many authenticated profiles, the password manager extension in each,
-and the trusted-device state banks demand. That is why a login missing in Orca
-is fixed by importing the Chrome profile into Orca, not by driving Chrome. A
-browser launched with a temporary or isolated profile has none of it and is
+The owner's real Chrome carries authenticated state that an automation browser
+cannot reproduce: many authenticated profiles, the password manager extension in
+each, and the trusted-device state banks demand. That is why a login missing in
+Orca is fixed by importing the Chrome profile into Orca, not by driving Chrome.
+A browser launched with a temporary or isolated profile has none of it and is
 unusable for any logged-in site, so do not launch one for that.
 
 **Load this once per session.** It does not change between browser commands, so
@@ -31,30 +30,22 @@ Chrome or a fresh/isolated profile. The real Chrome may only be read with
 `chrome-cli source -t <id>` / `info -t <id>`. Prefer an API from the access map
 over any browser._
 
-0a. **Every browser task runs in Orca's embedded browser** (owner decision
-2026-09-23, "always when you can" on 2026-09-24, "siempre" on 2026-09-25):
-application forms, public boards, anything an API does not cover, and every
-logged-in site. When no Orca profile holds the login (typically Google SSO or
-GitHub with no password on record), ask the owner to import that Chrome profile
-into Orca through its UI (the CLI cannot) or to sign in inside Orca's browser;
-do not fall back to Chrome, not even with the screen locked. On 2026-09-24 a
-Resend SSO login went through the imported Chrome profile when an import would have kept
-it in Orca; on 2026-09-25 a session logged into Product Hunt through the real
-Chrome with the screen locked, and the owner was back at the keyboard on another
-tab before the next write, which is exactly the focus theft the order forbids.
-The Chrome references (1 and 2 below) stay for reading (`chrome-cli source -t`,
-`info -t`, which take no focus) and for the day an owner explicitly asks for
-Chrome. `orca tab create --url`, `snapshot`, `fill`, `upload`, `click`, `eval`;
-full command list in the `orca-cli` skill. It shares no tab and no focus with
-the owner, so none of the Chrome traps apply, and Ashby's bot gate accepted it
-where a Playwright-launched Chrome was refused. It also holds the sessions
-imported from the real Chrome through Orca's UI: `orca tab profile list --json`
-lists the profiles configured in the private instance. Switch a tab with
-`orca tab profile set --page <browserPageId> --profile <id>` and confirm with
-`orca cookie get` before reading the page as logged in;
-`orca tab profile create --scope imported` only creates an empty profile, the
-import itself is a UI action the owner does in one step, so ask for it rather
-than reaching for the real Chrome below.
+0a. **Every browser task runs in Orca's embedded browser**: application forms,
+public boards, anything an API does not cover, and every logged-in site. When no
+Orca profile holds the login, ask the owner to import the relevant Chrome
+profile through Orca's UI or sign in there. Do not fall back to Chrome, even
+with the screen locked; the owner can resume using it during automation.
+
+Use `orca tab profile list --json` to inspect available profiles. Profile names,
+account mappings, and authentication observations belong in private instance
+guidance, never in a reusable skill. Select the intended profile with
+`orca tab profile set --page <browserPageId> --profile <id>` and verify that the
+page is authenticated without printing cookie values. Creating an empty
+imported-profile entry does not import its authenticated session.
+
+The Chrome references below remain for focus-free reads with
+`chrome-cli source -t` and `info -t`, or an explicit owner request to use
+Chrome. See `orca-cli` for embedded-browser commands.
 
 0. **Before any of this, ask whether the site has an API key here.** Discord is
    the measured case: an instance that already owns a bot token (recorded in its

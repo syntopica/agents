@@ -24,6 +24,7 @@ dist/
 *.tsbuildinfo
 # CocoIndex Code (ccc)
 /.cocoindex_code/
+/.serena/
 eslint-report.json
 firebase-debug.log
 

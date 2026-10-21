@@ -36,6 +36,26 @@ void test('remote control requires a documented exception reason', () => {
   )
 })
 
+void test('the dangerous-mode warning preference rejects non-boolean values', async () => {
+  const manifest = JSON.parse(
+    await readFile(
+      join(import.meta.dirname, 'fixtures', 'securityManifestExample.json'),
+      'utf8',
+    ),
+  ) as Record<string, unknown>
+  const claude = manifest['claude'] as Record<string, unknown>
+  claude['skipDangerousModePermissionPrompt'] = 'false'
+
+  const parsed = parseSecurityManifest(manifest)
+
+  assert.equal(parsed.ok, false)
+  assert.ok(
+    parsed.errors.includes(
+      'manifest.claude.skipDangerousModePermissionPrompt must be a boolean',
+    ),
+  )
+})
+
 void test('credential-shaped fields and values are rejected without echoing values', () => {
   const credential = 'sk-example123456789'
   const parsed = parseSecurityManifest({
