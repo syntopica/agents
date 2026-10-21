@@ -3,6 +3,9 @@ minimumReleaseAgeStrict: true
 minimumReleaseAgeIgnoreMissingTime: false
 blockExoticSubdeps: true
 autoInstallPeers: false
+minimumReleaseAgeExclude:
+  # Reviewed source and the OIDC-published tarball match the verified release.
+  - '@syntopica/quality-config@0.15.0'
 
 overrides:
   'handlebars@<4.7.10': ^4.7.10 # GHSA-8r5x-fm3f-whwj and GHSA-p8wg-vrv2-v86f
