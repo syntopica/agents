@@ -79,9 +79,15 @@ schema built any other way.
 Run it exactly as written; add `--add-dir` only when the evidence lives outside
 the working root.
 
+First read the `codex` skill's fast path and build `codex_mcp_args` in the same
+shell and target directory. Continue only after its `codex mcp list` preflight
+prints `No enabled MCP servers`. An empty `mcp_servers` override does not prove
+isolation; the setup disables configured servers, plugins and apps locally to
+the invocation without changing global settings.
+
 ```bash
 codex exec -C "$PWD" -s read-only \
-  -c 'mcp_servers={}' \
+  "${codex_mcp_args[@]}" \
   --output-schema "$DIR/decision.schema.json" \
   -o "$DIR/decision.json" \
   -c model_reasoning_effort=low \

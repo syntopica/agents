@@ -84,9 +84,13 @@ Run it from the run directory. It needs the network for research and images. The
 screenshots go in with `-i` as well as on disk. Keep the prompt before the `-i`
 flags: `-i` takes several files, so a prompt after it is read as an image.
 
+First read the `codex` skill's fast path and build `codex_mcp_args` in the same
+shell. Continue only when its CLI preflight reports `No enabled MCP servers`.
+The empty-map override and a fixed Atrium-only override do not establish
+isolation from configured servers, plugins and apps.
+
 ```bash
-codex --search exec --skip-git-repo-check --yolo -c 'mcp_servers={}' \
-  -c mcp_servers.atrium.enabled=false -c mcp_servers.atrium.required=false \
+codex --search exec --skip-git-repo-check --yolo "${codex_mcp_args[@]}" \
   "Read prompt.md in the current directory fully and execute it." \
   -i desktop-<screen>.png -i phone-<screen>.png \
   < /dev/null > codex.log 2>&1
