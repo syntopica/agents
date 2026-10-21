@@ -1,3 +1,5 @@
+import type { GuidanceProposalReport } from './GuidanceProposalReport'
+
 export interface GuidanceRunReport {
   ok: boolean
   applied: boolean
@@ -5,4 +7,5 @@ export interface GuidanceRunReport {
   snapshotDir: string
   errors: string[]
   warnings: string[]
+  proposal?: GuidanceProposalReport
 }

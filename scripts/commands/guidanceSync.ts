@@ -13,12 +13,22 @@ export const main = async (): Promise<void> => {
     readGuidanceFlag(process.argv, '--state-dir') ??
     join(home, '.local', 'state', 'rocket-agents', 'guidance', 'default')
   const rulesInventory = readGuidanceFlag(process.argv, '--rules-inventory')
+  const proposalOutput = readGuidanceFlag(process.argv, '--proposal-output')
+  const applyProposal = readGuidanceFlag(process.argv, '--apply-proposal')
+  const proposalSha256 = readGuidanceFlag(process.argv, '--proposal-sha256')
   const report = await guidanceSync({
     home: resolve(home),
     canonicalDir: resolve(canonicalDir),
     stateDir: resolve(stateDir),
     dryRun: process.argv.includes('--dry-run'),
     acceptPublished: process.argv.includes('--accept-published'),
+    ...(proposalOutput === undefined
+      ? {}
+      : { proposalOutput: resolve(proposalOutput) }),
+    ...(applyProposal === undefined
+      ? {}
+      : { applyProposal: resolve(applyProposal) }),
+    ...(proposalSha256 === undefined ? {} : { proposalSha256 }),
     ...(rulesInventory === undefined
       ? {}
       : { rulesInventoryPath: resolve(rulesInventory) }),

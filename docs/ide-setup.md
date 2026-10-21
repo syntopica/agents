@@ -24,6 +24,16 @@ and generated custom agents. The registry in
 strategies. Support varies by capability; a rules adapter does not imply a
 plugin adapter.
 
+Codex skill trimming follows the curated Claude skill links. Explicit skill
+exclusions outside the generated configuration block survive regeneration. An
+unreadable selection or library aborts trimming before any configuration write;
+an absent selection is not treated as an empty one.
+
+When Codex has a configuration file, `hooks:link` also checks its native BRP
+hook registrations. Copying hook scripts does not register or trust them. A
+missing, disabled, or untrusted registration fails the check without changing
+native registrations or unrelated handlers.
+
 ## Claude Code plugin
 
 The plugin root is `dist/plugins/claude/`; its manifest is
@@ -60,6 +70,7 @@ configuration for an existing machine.
 | ---------------------------- | -------------------------------------------------------- |
 | `pnpm run agents:doctor`     | Clients and managed capabilities                         |
 | `pnpm run connectors:doctor` | Connector registration, ownership, and authentication    |
+| `pnpm run hooks:doctor`      | Native Codex BRP hook registrations and trust            |
 | `pnpm run guidance:doctor`   | Canonical guidance, live targets, and accepted-run state |
 | `pnpm run machine:diff`      | Proposed machine changes                                 |
 
@@ -82,6 +93,23 @@ there.
 
 The generated rule inventory is a routing layer. Open relevant full rule
 sources; another client's import syntax does not activate a rule loader.
+
+### Review a reconciliation proposal
+
+`guidance:sync --proposal-output <file>` saves a validated proposal and reports
+its SHA-256 without installing guidance or creating an accepted-run snapshot.
+The destination must be a new file in an existing owner-private directory. The
+proposal contains private guidance and target paths; keep it outside this public
+repository.
+
+Apply reviewed bytes with `--apply-proposal <file> --proposal-sha256 <hash>`.
+Application checks the exact file hash, target paths, policy, and original
+source hashes before using the snapshot-backed writer. Changed inputs, tampered
+files, proposals older than 24 hours, and conflicting modes are rejected.
+Applying a proposal does not run the reconciliation agent again.
+
+The existing `--dry-run` mode validates without saving a proposal. Published
+guidance adoption still refuses to replace locally edited instruction files.
 
 ## Verification without installing client configuration
 

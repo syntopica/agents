@@ -5,4 +5,7 @@ export interface GuidanceSyncOptions {
   dryRun?: boolean
   acceptPublished?: boolean
   rulesInventoryPath?: string
+  proposalOutput?: string
+  applyProposal?: string
+  proposalSha256?: string
 }

@@ -105,4 +105,26 @@ void test('guidance fast paths are deterministic and conflict-aware', () => {
     }).kind,
     'reconcile',
   )
+  for (const livePath of ['live/claude/CLAUDE.md', 'live/codex/AGENTS.md']) {
+    for (const localEdit of [
+      'Preserve local instruction discovery requirements.\n',
+      'Open the relevant full rule sources.\n',
+      '',
+    ]) {
+      const sources = createSources(true)
+      sources.values[livePath] = localEdit
+      sources.hashes[livePath] = sha256Text(localEdit)
+      const originalValues = structuredClone(sources.values)
+      assert.equal(
+        resolveGuidanceFastPath({
+          sources,
+          policy,
+          acceptPublished: true,
+        }).kind,
+        'reconcile',
+        `published adoption must preserve local edits to ${livePath}`,
+      )
+      assert.deepEqual(sources.values, originalValues)
+    }
+  }
 })

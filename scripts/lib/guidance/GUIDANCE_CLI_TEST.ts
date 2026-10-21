@@ -67,3 +67,22 @@ void test('guidance flags reject missing and conflicting values', () => {
     /conflicting values/u,
   )
 })
+
+void test('proposal flags require explicit values and reject conflicting duplicates', () => {
+  for (const flag of [
+    '--proposal-output',
+    '--apply-proposal',
+    '--proposal-sha256',
+  ]) {
+    assert.throws(() => readGuidanceFlag([flag], flag), /missing value/u)
+    assert.throws(
+      () => readGuidanceFlag([flag, '--dry-run'], flag),
+      /missing value/u,
+    )
+    assert.throws(
+      () => readGuidanceFlag([flag, 'one', flag, 'two'], flag),
+      /conflicting values/u,
+    )
+    assert.equal(readGuidanceFlag([flag, 'value'], flag), 'value')
+  }
+})

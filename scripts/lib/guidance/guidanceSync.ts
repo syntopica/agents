@@ -1,20 +1,15 @@
-import { mkdir, readFile, realpath } from 'node:fs/promises'
+import { mkdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { acquireGuidanceLock } from './acquireGuidanceLock'
-import { applyGuidanceFastPath } from './applyGuidanceFastPath'
-import { applyGuidanceResult } from './applyGuidanceResult'
-import { buildReconciliationPrompt } from './buildReconciliationPrompt'
-import { collectGuidanceSources } from './collectGuidanceSources'
-import { containsSensitiveGuidanceContent } from './containsSensitiveGuidanceContent'
 import { createGuidanceRunId } from './createGuidanceRunId'
 import { parseGuidancePolicy } from './parseGuidancePolicy'
 import { removeCreatedGuidanceStateDir } from './removeCreatedGuidanceStateDir'
-import { resolveGuidanceFastPath } from './resolveGuidanceFastPath'
-import { runReconciliationAgent } from './runReconciliationAgent'
+import { runGuidanceReconciliation } from './runGuidanceReconciliation'
+import { sha256Text } from './sha256Text'
 import { shouldRemoveGuidanceStateDir } from './shouldRemoveGuidanceStateDir'
 import type { GuidanceRunReport } from './types/GuidanceRunReport'
 import type { GuidanceSyncOptions } from './types/GuidanceSyncOptions'
-import { validateReconciliationResult } from './validators/validateReconciliationResult'
+import { validateGuidanceProposalOptions } from './validators/validateGuidanceProposalOptions'
 
 export const guidanceSync = async (
   options: GuidanceSyncOptions,
@@ -22,14 +17,27 @@ export const guidanceSync = async (
   const runId = createGuidanceRunId()
   const lockPath = join(options.stateDir, 'lock')
   const snapshotDir = join(options.stateDir, 'runs', runId)
+  const optionErrors = validateGuidanceProposalOptions(options)
+  if (optionErrors.length > 0)
+    return {
+      ok: false,
+      applied: false,
+      runId,
+      snapshotDir,
+      errors: optionErrors,
+      warnings: [],
+    }
+  const dryRun = options.dryRun === true || options.proposalOutput !== undefined
   let removeEmptyStateDir = false
   let parsedPolicy: ReturnType<typeof parseGuidancePolicy>
+  let policySha256: string
   try {
-    parsedPolicy = parseGuidancePolicy(
-      JSON.parse(
-        await readFile(join(options.canonicalDir, 'policy.json'), 'utf8'),
-      ) as unknown,
+    const policyText = await readFile(
+      join(options.canonicalDir, 'policy.json'),
+      'utf8',
     )
+    policySha256 = sha256Text(policyText)
+    parsedPolicy = parseGuidancePolicy(JSON.parse(policyText) as unknown)
   } catch {
     return {
       ok: false,
@@ -53,7 +61,7 @@ export const guidanceSync = async (
   try {
     removeEmptyStateDir = await shouldRemoveGuidanceStateDir(
       options.stateDir,
-      options.dryRun === true,
+      dryRun || options.applyProposal !== undefined,
     )
     await mkdir(options.stateDir, { recursive: true, mode: 0o700 })
     releaseLock = await acquireGuidanceLock(
@@ -77,98 +85,13 @@ export const guidanceSync = async (
     }
   }
   try {
-    const sources = await collectGuidanceSources(options)
-    if (containsSensitiveGuidanceContent(JSON.stringify(sources.values)))
-      return {
-        ok: false,
-        applied: false,
-        runId,
-        snapshotDir,
-        errors: [
-          'guidance sources contain credential or captured conversation material',
-        ],
-        warnings: [],
-      }
-    const fastPath = resolveGuidanceFastPath({
-      sources,
-      policy: parsedPolicy.policy,
-      acceptPublished: options.acceptPublished === true,
-    })
-    const fastPathReport = await applyGuidanceFastPath({
-      fastPath,
+    return await runGuidanceReconciliation({
       sync: options,
+      policy: parsedPolicy.policy,
+      policySha256,
       runId,
       snapshotDir,
     })
-    if (fastPathReport !== undefined) return fastPathReport
-    const runStartedAt = new Date()
-    const rawResult = await runReconciliationAgent(
-      parsedPolicy.policy,
-      buildReconciliationPrompt(parsedPolicy.policy, sources),
-      await realpath(options.home),
-    )
-    const validated = validateReconciliationResult(
-      rawResult,
-      parsedPolicy.policy,
-      sources.hashes,
-      runStartedAt,
-      new Date(),
-    )
-    if (!validated.ok)
-      return {
-        ok: false,
-        applied: false,
-        runId,
-        snapshotDir,
-        errors: validated.errors,
-        warnings: [],
-      }
-    const currentSources = await collectGuidanceSources(options)
-    if (
-      JSON.stringify(
-        Object.entries(currentSources.hashes).toSorted(([left], [right]) =>
-          left.localeCompare(right),
-        ),
-      ) !==
-      JSON.stringify(
-        Object.entries(sources.hashes).toSorted(([left], [right]) =>
-          left.localeCompare(right),
-        ),
-      )
-    )
-      return {
-        ok: false,
-        applied: false,
-        runId,
-        snapshotDir,
-        errors: ['guidance sources changed during reconciliation'],
-        warnings: [],
-      }
-    if (options.dryRun === true)
-      return {
-        ok: true,
-        applied: false,
-        runId,
-        snapshotDir,
-        errors: [],
-        warnings: [
-          ...validated.result.warnings,
-          'dry run validated successfully; no guidance files or snapshots were written',
-        ],
-      }
-    const acceptedSnapshotDir = await applyGuidanceResult({
-      ...options,
-      runId,
-      result: validated.result,
-    })
-    return {
-      ok: true,
-      applied: true,
-      runId,
-      snapshotDir: acceptedSnapshotDir,
-      errors: [],
-      warnings: validated.result.warnings,
-    }
   } catch (error) {
     return {
       ok: false,
