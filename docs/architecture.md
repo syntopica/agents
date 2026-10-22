@@ -58,6 +58,12 @@ configuration before changes; rollback restores a snapshot. MCP configuration,
 security, plugins, capabilities, and services have separate domain
 implementations. Provider credentials remain account-local.
 
+Settings writers update only their owned keys and preserve third-party hooks,
+permissions, and other unrelated fields. The Claude security writer merges its
+owned values into existing settings and rejects invalid JSON before writing. Any
+future general configuration domain must preserve this merge contract; replacing
+the entire settings document would discard other clients' changes.
+
 ## Guidance and diagnostics
 
 Guidance reconciliation reads private canonical policy, provider overlays, live
