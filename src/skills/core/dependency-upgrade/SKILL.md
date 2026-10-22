@@ -51,7 +51,9 @@ checks.
 1. Resolve the pinned package manager from `packageManager`, CI and lockfiles;
    retain its pin. Consult current official documentation for that version. Run
    the manager's audit before updating, including development and transitive
-   dependencies, and retain its exit code and structured output.
+   dependencies, and retain its exit code and structured output. Snapshot Git
+   state first: an audit can rewrite generated manager cache files. Preserve
+   their provenance instead of treating them as preexisting user changes.
 2. Read existing ncu filters and exclusions. Discover stable candidates with
    `ncu --deep --target latest --dep prod,dev,optional --jsonUpgraded` and apply
    the reviewed selection with the equivalent `ncu -u` command. Keep
@@ -74,7 +76,9 @@ checks.
    and reference coverage. Keep edits attributable to the selected upgrades.
    Re-audit the whole graph. Prefer updating the introducing dependency; use a
    narrowly scoped compatible override when necessary and verify its consumers.
-   Never hide an unpatched advisory or replace a real audit with ignored output.
+   Confirm a suggested patched version is actually published: audit responses
+   can name unreleased fixes. Never hide an unpatched advisory or replace a real
+   audit with ignored output.
 
 ## Verification, publication and resume
 
