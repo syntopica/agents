@@ -64,6 +64,8 @@ checks.
    policy, including deliberate zero-day policies. If no age policy exists, use
    three days for candidate selection AND transitive resolution. ncu's cooldown
    only filters direct candidates; it does not protect the lock graph. Do not
+   infer an age policy from an exemption list or an installer allowlist: confirm
+   the effective numeric setting and fail closed when it is absent. Do not
    permit all builds, disable trust checks or set age to zero to make an install
    pass. Missing dates, unsupported sources and unvalidated new transitives
    require review before running their code.
