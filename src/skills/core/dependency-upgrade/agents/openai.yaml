@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Dependency Upgrade'
+  short_description: 'Upgrade and verify JavaScript dependencies safely'
+  default_prompt: 'Use $dependency-upgrade to inventory authorized repositories and verify stable dependency upgrades.'

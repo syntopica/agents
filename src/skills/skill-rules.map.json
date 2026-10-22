@@ -82,6 +82,12 @@
     "claude-profile-safety": {
       "rules": ["@rules/core/security-baseline.mdc"]
     },
+    "dependency-upgrade": {
+      "rules": [
+        "@rules/core/git-workflow.mdc",
+        "@rules/core/security-baseline.mdc"
+      ]
+    },
     "design-quality": {
       "rules": ["@rules/core/agent-discipline.mdc"]
     },
