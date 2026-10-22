@@ -49,3 +49,22 @@ void test('a malformed line is ignored rather than throwing', () => {
   assert.equal(toCodexInvocationText('not json'), undefined)
   assert.equal(toCodexInvocationText(''), undefined)
 })
+
+void test('a null payload does not discard neighbouring skill invocations', () => {
+  const payload = {
+    type: 'custom_tool_call',
+    input: 'skillkit read test-skill',
+  }
+  const invocation = JSON.stringify({ type: 'response_item', payload })
+  const lines = [
+    invocation,
+    '{"type":"response_item","payload":null}',
+    invocation,
+  ]
+
+  assert.deepEqual(lines.map(toCodexInvocationText), [
+    JSON.stringify(payload),
+    undefined,
+    JSON.stringify(payload),
+  ])
+})

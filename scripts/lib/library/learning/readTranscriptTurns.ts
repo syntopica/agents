@@ -12,24 +12,30 @@ export const readTranscriptTurns = (contents: string) => {
       continue
     }
 
-    let parsed: Record<string, unknown>
+    let parsed: unknown
     try {
-      parsed = JSON.parse(line) as Record<string, unknown>
+      parsed = JSON.parse(line)
     } catch {
       continue
     }
 
-    const message = parsed['message'] as ReadTranscriptTurnsMessage | undefined
-    if (message === undefined) {
+    if (typeof parsed !== 'object' || parsed === null) {
       continue
     }
 
-    if (parsed['type'] === 'assistant') {
+    const record = parsed as Record<string, unknown>
+    const rawMessage = record['message']
+    if (typeof rawMessage !== 'object' || rawMessage === null) {
+      continue
+    }
+    const message = rawMessage as ReadTranscriptTurnsMessage
+
+    if (record['type'] === 'assistant') {
       turns.push(...collectSkillInvocations(message.content))
       continue
     }
 
-    if (parsed['type'] !== 'user' || parsed['isSidechain'] === true) {
+    if (record['type'] !== 'user' || record['isSidechain'] === true) {
       continue
     }
 

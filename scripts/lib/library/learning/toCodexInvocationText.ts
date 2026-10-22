@@ -22,7 +22,11 @@ export const toCodexInvocationText = (line: string): string | undefined => {
 
   const record = parsed as ToCodexInvocationTextRecord
 
-  if (record.type !== 'response_item' || typeof record.payload !== 'object') {
+  if (
+    record.type !== 'response_item' ||
+    typeof record.payload !== 'object' ||
+    record.payload === null
+  ) {
     return undefined
   }
 

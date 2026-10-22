@@ -83,6 +83,27 @@ void test('unparseable lines are skipped rather than throwing', () => {
   assert.deepEqual(readTranscriptTurns('{ not json\n'), [])
 })
 
+void test('a null record does not discard neighbouring user turns', () => {
+  const first = line({ type: 'user', message: { content: 'before' } })
+  const last = line({ type: 'user', message: { content: 'after' } })
+
+  assert.deepEqual(readTranscriptTurns([first, 'null', last].join('\n')), [
+    { text: 'before' },
+    { text: 'after' },
+  ])
+})
+
+void test('a null message does not discard neighbouring user turns', () => {
+  const first = line({ type: 'user', message: { content: 'before' } })
+  const last = line({ type: 'user', message: { content: 'after' } })
+  const invalid = '{"type":"assistant","message":null}'
+
+  assert.deepEqual(readTranscriptTurns([first, invalid, last].join('\n')), [
+    { text: 'before' },
+    { text: 'after' },
+  ])
+})
+
 void test('a request and the invocation it caused are both observed, in order', () => {
   const contents = [
     line({
