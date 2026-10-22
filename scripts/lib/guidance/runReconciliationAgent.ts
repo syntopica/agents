@@ -1,10 +1,12 @@
-import { spawn } from 'node:child_process'
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 import { mkdtemp, realpath, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createSandboxCommand } from './createSandboxCommand'
+import { finalizeReconciliationProcess } from './finalizeReconciliationProcess'
 import { readSafeAgentDiagnostic } from './readSafeAgentDiagnostic'
 import { stageAgentBootstrapFiles } from './stageAgentBootstrapFiles'
+import { terminateReconciliationProcessGroup } from './terminateReconciliationProcessGroup'
 import type { GuidancePolicy } from './types/GuidancePolicy'
 
 export const runReconciliationAgent = async (
@@ -16,6 +18,9 @@ export const runReconciliationAgent = async (
     const scratchDir = await realpath(
       await mkdtemp(join(tmpdir(), 'guidance-agent-')),
     )
+    let child: ChildProcessWithoutNullStreams | undefined
+    let termination: Promise<void> | undefined
+    let timer: ReturnType<typeof setTimeout> | undefined
     try {
       const bootstrapDir = await stageAgentBootstrapFiles(
         policy.agentBootstrapFiles ?? [],
@@ -41,7 +46,7 @@ export const runReconciliationAgent = async (
           command,
           args,
         })
-        const child = spawn(sandbox.executable, sandbox.args, {
+        child = spawn(sandbox.executable, sandbox.args, {
           cwd: '/',
           env: {
             PATH: '/usr/bin:/bin:/usr/sbin:/sbin',
@@ -56,23 +61,36 @@ export const runReconciliationAgent = async (
           },
           stdio: ['pipe', 'pipe', 'pipe'],
           shell: false,
+          detached: true,
         })
         const chunks: Buffer[] = []
         const errorChunks: Buffer[] = []
         let bytes = 0
         let errorBytes = 0
-        const timer = setTimeout(() => child.kill('SIGKILL'), policy.timeoutMs)
+        timer = setTimeout(() => {
+          reject(new Error('agent exceeded configured timeout'))
+        }, policy.timeoutMs)
         child.stdout.on('data', (chunk: Buffer) => {
           bytes += chunk.length
-          if (bytes > policy.maxOutputBytes) child.kill('SIGKILL')
+          if (bytes > policy.maxOutputBytes)
+            reject(new Error('agent output exceeded configured byte limit'))
           else chunks.push(chunk)
         })
         child.stderr.on('data', (chunk: Buffer) => {
           errorBytes += chunk.length
-          if (errorBytes > policy.maxOutputBytes) child.kill('SIGKILL')
+          if (errorBytes > policy.maxOutputBytes)
+            reject(new Error('agent stderr exceeded configured byte limit'))
           else errorChunks.push(chunk)
         })
         child.on('error', reject)
+        child.stdin.on('error', () => {
+          reject(new Error('agent input closed unexpectedly'))
+        })
+        child.once('exit', () => {
+          if (child !== undefined)
+            termination ??= terminateReconciliationProcessGroup(child)
+          termination?.catch(reject)
+        })
         child.on('close', (code) => {
           clearTimeout(timer)
           if (bytes > policy.maxOutputBytes) {
@@ -105,6 +123,12 @@ export const runReconciliationAgent = async (
         child.stdin.end(prompt)
       })
     } finally {
+      clearTimeout(timer)
+      if (child !== undefined) {
+        termination ??= terminateReconciliationProcessGroup(child)
+        await finalizeReconciliationProcess(child, termination)
+      }
+      // Preserve private scratch if termination cannot confirm the group stopped.
       await rm(scratchDir, { recursive: true, force: true })
     }
   })()
