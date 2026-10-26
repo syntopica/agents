@@ -137,6 +137,15 @@ def main() -> None:
         raise RuntimeError("an attachment kept failing to upload")
 
     send_and_wait(page, prompt, run_dir)
+    # Every chip can be present and the sent message still carry one image:
+    # four runs started together on 2026-10-26 each delivered 1 of 2-6
+    # screenshots, and ChatGPT critiqued screens it never saw. Count what the
+    # sent message holds rather than trust the composer.
+    sent = int(js(page, 'String(document.querySelectorAll(\'img[alt="Archivo adjunto del usuario"]\').length)'))
+    if sent < len(shots):
+        raise RuntimeError(
+            f"the message carried {sent} of {len(shots)} screenshots; rerun alone, not beside another run"
+        )
     nudge_stalled(page)
     if len(read_answer(page)) < 200:
         send_and_wait(page, FOLLOW_UP)
