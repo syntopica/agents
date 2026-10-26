@@ -30,7 +30,11 @@ argument-hint: [optional-topic]
 2. Read the project's continuation artifacts in order: a handoff document if one
    exists (the `handoff` skill writes them), the active plan file, `TODO.md`
    (items marked `[~]` or `[!]` first), and `TODO_LOG.md` for what already
-   closed.
+   closed. When the prompt names a previous Codex session, its transcript is the
+   rollout under `~/.codex/sessions/YYYY/MM/DD/` whose first line carries the
+   repository `cwd`. Sort by mtime, not by directory date: a long goal run keeps
+   writing to a rollout started days earlier. Read only the last `response_item`
+   messages with `jq`; these files reach hundreds of MB.
 3. State back the recovered picture in one short summary: what was done, what is
    verified, what remains, and the exact next command or edit.
 4. Resume at the smallest unfinished step and validate it the way the original
