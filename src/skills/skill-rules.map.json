@@ -172,6 +172,9 @@
         "@rules/core/security-baseline.mdc"
       ]
     },
+    "ui-improvement-loop": {
+      "rules": ["@rules/core/agent-discipline.mdc"]
+    },
     "ui-verification-loop": {
       "rules": [
         "@rules/core/agent-discipline.mdc",

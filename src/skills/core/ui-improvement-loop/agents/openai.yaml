@@ -1,0 +1,15 @@
+interface:
+  display_name: UI Improvement Loop
+  short_description: Simplify an existing app section by section with progressive disclosure, real data, outside critique and before/after screenshots.
+  default_prompt:
+    Read docs/ui-loop.md, pick the next section, capture it on real data, get an outside critique,
+    apply progressive disclosure, prove it with before/after screenshots, and update the ledger.
+  brand_color: '#2563EB'
+policy:
+  allow_implicit_invocation: true
+busirocket:
+  skill_class: workflow
+  requires_references: false
+  failure_mode:
+    Stop and report when real data or a logged-in session cannot be reached; never judge a screen
+    from fake fixtures or from source code alone.
