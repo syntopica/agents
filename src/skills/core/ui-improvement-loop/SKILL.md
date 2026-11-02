@@ -73,7 +73,12 @@ pass looking different from its siblings is a regression, however calm it is.
    not assessable. Send critique and mockups to the owner when they arrive.
 3. **Choose** changes that apply the doctrine. Extend or create a shared
    component and list every section it will touch. Record rejected proposals in
-   the ledger with the reason.
+   the ledger with the reason. Before trimming a default (columns, filters),
+   check what else reads it: a list's default columns can also be its export's
+   columns, so hiding one silently changes the file an accountant downloads.
+   Migrate the siblings in the same pass when the change is mechanical (moving
+   an export into "Más" took one component per section); otherwise add them to
+   the catalogue's "still to migrate" line.
 4. **Build** in the project's design system, then run the project gates
    (type-check, lint, tests, `codeality-ui check` on every route touched).
 5. **Prove.** Before/after screenshots of the same state, side by side, plus the
@@ -87,6 +92,28 @@ pass looking different from its siblings is a regression, however calm it is.
    lesson is general, edit this skill in its source repository in the same
    session, replacing the stale line rather than adding a second one; when it
    changes a rule rather than adds a fact, follow `instruction-ab-test`.
+
+## Tools
+
+`scripts/` holds the measurement kit, Playwright with a saved storage state
+(seed a session for the real account; never a password in the file):
+
+- `shot.mjs <state> <out.png> <path> [w] [h] [full]`: one screenshot.
+- `count-controls.mjs <state> <path> [w] [h]`: `C_toolbar` as JSON with labels,
+  so the before/after list shows which controls moved, not only how many.
+- `operate.mjs <state> <path> <prefix> <button>...`: opens each named button,
+  screenshots it, presses Escape and prints where focus went: the
+  moved-functions manifest. Names match exactly ("Vista" otherwise hits a
+  "Buscar vista" palette button).
+
+Set `BASE_URL` and, when the project does not install it, `PLAYWRIGHT_CORE` to a
+`playwright-core` directory. An app that scrolls inside `main` needs a tall
+viewport (1700px) rather than `fullPage` to show the whole screen.
+
+When the outside critique dies after the answer arrived (an Orca
+`runtime_timeout` did on 2026-11-02),
+`chatgpt_propose.py <run-dir> --collect <page-id>` recovers the text and the
+mockups from the open tab.
 
 Budget: three attempts per section; after that mark it `blocked` with the reason
 and move on. Stop when every section is at least `technically verified` or the
