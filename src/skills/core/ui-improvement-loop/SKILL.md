@@ -106,6 +106,15 @@ pass looking different from its siblings is a regression, however calm it is.
   moved-functions manifest. Names match exactly ("Vista" otherwise hits a
   "Buscar vista" palette button).
 
+`operate.mjs` presses the buttons in order, so a view that needs a choice first
+(a company picker on an empty state) is reached by naming that button before the
+menu.
+
+Read every after screenshot for data, not only layout: a pass on 2026-11-02
+found an account posted to but missing from the chart (blank name in Sumas y
+saldos). Fix such a defect at its source in the same pass, with a test that
+keeps it fixed.
+
 Set `BASE_URL` and, when the project does not install it, `PLAYWRIGHT_CORE` to a
 `playwright-core` directory. An app that scrolls inside `main` needs a tall
 viewport (1700px) rather than `fullPage` to show the whole screen.
