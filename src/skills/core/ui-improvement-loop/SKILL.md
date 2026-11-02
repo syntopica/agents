@@ -1,9 +1,8 @@
 ---
 name: ui-improvement-loop
 description:
-  Runs a self-paced loop that simplifies an existing app one section at a time
-  with progressive disclosure, on real data, with an outside critique and
-  before/after screenshots, and rewrites its own playbook after every pass.
+  Self-paced loop simplifying an app section by section on real data, with
+  outside critique, before/after screenshots and a self-updating playbook.
   Trigger when the owner says the app feels cluttered, saturating or hard for a
   newcomer, asks to go section by section improving the UI, to keep iterating on
   the design, or to make one product serve both novices and experts. Triggers
