@@ -22,7 +22,8 @@ import sys
 import time
 from pathlib import Path
 
-TIMEOUT_S = 1200
+# Image rounds with several mockups ran past 20 minutes on 2026-11-04.
+TIMEOUT_S = 2100
 POLL_S = 5
 # Images keep arriving after the stop button goes away (2026-10-15: a run saved
 # no mockups because it read the page between image steps), so a reply is
@@ -93,6 +94,23 @@ def main() -> None:
         nudge_stalled(sys.argv[3])
         collect(run_dir, sys.argv[3])
         return
+    if sys.argv[2:3] == ["--followup-images"]:
+        # A follow-up that carries new screenshots (the next design round in the
+        # same chat): upload each one, then send the message.
+        page, message = sys.argv[3], Path(sys.argv[4]).read_text()
+        for n, shot in enumerate([str(Path(p).resolve()) for p in sys.argv[5:]], start=1):
+            orca("exec", "--page", page, "--command", f"upload input[type=file] {shot}")
+            wait_for(
+                page,
+                f'String(document.querySelectorAll("button[aria-label^=Quitar]").length >= {n})',
+                f"attachment {n}",
+                120,
+            )
+        time.sleep(POLL_S * 2)
+        send_and_wait(page, message)
+        nudge_stalled(page)
+        collect(run_dir, page)
+        return
     if sys.argv[2:3] == ["--collect"]:
         # Re-read an answered chat still open in Orca (its browserPageId) without resending.
         collect(run_dir, sys.argv[3])
@@ -100,7 +118,7 @@ def main() -> None:
     shots = [str(Path(p).resolve()) for p in sys.argv[2:]]
     if not shots:
         sys.exit(
-            "usage: chatgpt_propose.py <run-dir> <screenshot.png> [...] | <run-dir> --collect <page-id> | <run-dir> --followup <page-id> <message.md>"
+            "usage: chatgpt_propose.py <run-dir> <screenshot.png> [...] | <run-dir> --collect <page-id> | <run-dir> --followup <page-id> <message.md> | <run-dir> --followup-images <page-id> <message.md> <screenshot.png> [...]"
         )
     prompt = (run_dir / "prompt.md").read_text()
 
@@ -109,6 +127,10 @@ def main() -> None:
     profile = os.environ.get("CHATGPT_ORCA_PROFILE")
     create = ["tab", "create", "--url", "https://chatgpt.com/"]
     page = orca(*create, *(["--profile", profile] if profile else []))["browserPageId"]
+    # Saved before anything can time out, so a killed run can still be collected
+    # or continued with --collect / --followup (2026-11-04).
+    (run_dir / "page-id.txt").write_text(page + "\n")
+    print(json.dumps({"page": page}), flush=True)
     wait_for(
         page, 'String(!!document.querySelector(".ProseMirror"))', "the composer", 60
     )

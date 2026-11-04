@@ -125,7 +125,7 @@ three runs answered with mockups only and no text, which then took a follow-up
 message in the same chat. Then:
 
 ```bash
-timeout 1500 /opt/homebrew/bin/python3.13 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
+timeout 2400 /opt/homebrew/bin/python3.13 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \
   <run-dir> <run-dir>/desktop-<screen>.png <run-dir>/phone-<screen>.png
 ```
 
@@ -142,13 +142,16 @@ run: `chatgpt_propose.py <run-dir> --followup <page-id> <message.md>` sends it,
 waits and rewrites `critique.md` with that reply alone (copy it aside first: on
 2026-10-16 a follow-up asking for one missing mockup replaced a 25K critique
 with one word) and the mockups; `--collect <page-id>` only re-reads an answered
-chat (the page id is in the script's last JSON line or in
-`orca tab list --json`). An image-only reply (three of five runs on 2026-10-15)
-takes a `--followup` asking for the written sections. A turn that stops at a
-plan ending in a literal `end_turn=false` line, with no images, is nudged with
-"Continúa" up to twice by the script itself (2026-10-19). Every collect rewrites
-`mockup-1..N` from all the images in the chat, in page order, so the numbers
-shift between rounds: copy each round's new images to their own names before the
-next follow-up. The script reads ChatGPT's Spanish UI labels (`Enviar`,
-`Detener`, `Quitar`, `Imagen generada`, `ChatGPT dijo:`); when it times out,
-take an `orca screenshot` of the tab and fix the selector in the script.
+chat (the page id is in `page-id.txt` in the run directory, written as soon as
+the tab opens so a killed run can still be collected).
+`--followup-images <page-id> <message.md> <screenshot.png> [...]` uploads new
+screenshots before the message, for the next design round in the same chat. An
+image-only reply (three of five runs on 2026-10-15) takes a `--followup` asking
+for the written sections. A turn that stops at a plan ending in a literal
+`end_turn=false` line, with no images, is nudged with "Continúa" up to twice by
+the script itself (2026-10-19). Every collect rewrites `mockup-1..N` from all
+the images in the chat, in page order, so the numbers shift between rounds: copy
+each round's new images to their own names before the next follow-up. The script
+reads ChatGPT's Spanish UI labels (`Enviar`, `Detener`, `Quitar`,
+`Imagen generada`, `ChatGPT dijo:`); when it times out, take an
+`orca screenshot` of the tab and fix the selector in the script.
