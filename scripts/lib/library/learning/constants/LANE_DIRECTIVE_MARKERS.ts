@@ -11,7 +11,7 @@ export const LANE_DIRECTIVE_MARKERS: Record<string, string> = {
   'environment-ops': 'Environment/host work',
   'repo-modernization': 'Repo modernization',
   loop: '/loop',
-  plan: 'superpowers:brainstorming',
+  plan: 'brainstorming',
   docs: 'brp-docs',
   release: 'brp-release',
 }
