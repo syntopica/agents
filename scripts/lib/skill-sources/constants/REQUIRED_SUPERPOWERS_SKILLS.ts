@@ -7,4 +7,6 @@ export const REQUIRED_SUPERPOWERS_SKILLS = [
   'verification-before-completion',
   'requesting-code-review',
   'receiving-code-review',
+  'test-driven-development',
+  'dispatching-parallel-agents',
 ] as const
