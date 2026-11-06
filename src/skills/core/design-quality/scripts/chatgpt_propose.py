@@ -175,13 +175,22 @@ def main() -> None:
 
 
 def send_and_wait(page: str, text: str, run_dir: Path | None = None) -> None:
-    js(
+    filled = js(
         page,
         # The composer is the last ProseMirror: an answer's "Escritura" canvas is one too
         # and comes first, so querySelector typed a follow-up into it (2026-10-19).
+        # ChatGPT restores an unsent draft into a new chat's composer, and these runs
+        # never clear it: on 2026-11-06 a fresh chat opened with 28,260 characters of
+        # five earlier prompts (two clients' briefs among them), and every run had
+        # been sending the whole pile. Empty it first, then check it holds only `text`.
         "(() => { const e = [...document.querySelectorAll('.ProseMirror')].at(-1); e.focus();"
-        f" document.execCommand('insertText', false, {json.dumps(text)}); return 'ok' }})()",
+        " document.execCommand('selectAll'); document.execCommand('delete');"
+        f" document.execCommand('insertText', false, {json.dumps(text)});"
+        " const squash = s => s.replace(/\\s+/g, '');"
+        f" return squash(e.innerText) === squash({json.dumps(text)}) ? 'ok' : 'mismatch ' + e.innerText.length }})()",
     )
+    if filled != "ok":
+        raise RuntimeError(f"the composer does not hold only the prompt ({filled}); nothing was sent")
     wait_for(
         page,
         'String(!!document.querySelector("button[aria-label=Enviar]:not([disabled])"))',

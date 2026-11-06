@@ -134,6 +134,12 @@ of their 2-6 screenshots, and every critique was written about screens ChatGPT
 never saw; a single run delivers all of them. The script now fails when the sent
 message holds fewer images than it was given.
 
+ChatGPT restores an unsent draft into a new chat's composer. Until 2026-11-06
+the script typed after it, so each run sent every earlier prompt too: a tadu run
+went out with 28,260 characters of two clients' briefs ahead of its own. The
+script now empties the composer and refuses to send unless it holds only the
+prompt. A critique that names another project means this has regressed.
+
 It opens a new chat, attaches each screenshot, sends the prompt, waits for the
 answer, and writes `critique.md` (the answer text), `mockup-<n>.png` (every
 image ChatGPT generated) and `chat-url.txt`. The tab stays open: corrections go
