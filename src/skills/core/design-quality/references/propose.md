@@ -129,10 +129,10 @@ timeout 2400 /opt/homebrew/bin/python3.13 -I ~/.claude/skills/design-quality/scr
   <run-dir> <run-dir>/desktop-<screen>.png <run-dir>/phone-<screen>.png
 ```
 
-Run one at a time. Four runs started together on 2026-10-26 each delivered one
-of their 2-6 screenshots, and every critique was written about screens ChatGPT
-never saw; a single run delivers all of them. The script now fails when the sent
-message holds fewer images than it was given.
+Runs from different sessions may overlap: ChatGPT serves several chats at once
+(owner, 2026-11-06), and each run has its own tab. Four runs started together on
+2026-10-26 each delivered one of their 2-6 screenshots, so the script fails when
+the sent message holds fewer images than it was given; rerun that one.
 
 ChatGPT restores an unsent draft into a new chat's composer. Until 2026-11-06
 the script typed after it, so each run sent every earlier prompt too: a tadu run
