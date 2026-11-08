@@ -2,17 +2,18 @@
 name: design-quality
 description:
   Audits and improves a running web UI's design with codeality-ui measurements
-  plus a screenshot review. Trigger when asked to check, review or improve how
-  a screen looks, whether a UI is polished, what a screen is missing, or to
-  redesign a page so it stops looking AI-made, or to have a chosen model
-  (Codex, Claude, ChatGPT web) critique screens and propose a better design as mockup images.
-  Triggers (ES) are revisa el diseño, check-design, mejora la UI, que le falta
-  a esta pantalla, modo creativo, vamos a mejorar la UI de X usando codex.
-  Do not use for building a new UI from a blank page (that is
-  frontend-design), for prose (prose-quality) or for functional testing of a
-  running app (ui-verification-loop).
+  plus a screenshot review. Trigger when asked to check, review or improve how a
+  screen looks, whether a UI is polished, what a screen is missing, or to
+  redesign a page so it stops looking AI-made, or to have a chosen model (Codex,
+  Claude, ChatGPT web) critique screens and propose a better design as mockup
+  images. Triggers (ES) are revisa el diseño, check-design, mejora la UI, que le
+  falta a esta pantalla, modo creativo, vamos a mejorar la UI de X usando codex.
+  Do not use for building a new UI from a blank page (that is frontend-design),
+  for prose (prose-quality) or for functional testing of a running app
+  (ui-verification-loop).
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write
-argument-hint: [route-or-url...] [check|review|propose|redesign] [codex|claude]
+argument-hint:
+  '[route-or-url...] [check|review|propose|redesign] [codex|claude]'
 ---
 
 # Design quality: measure, then judge, then change

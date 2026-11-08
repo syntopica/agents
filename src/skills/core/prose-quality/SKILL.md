@@ -9,7 +9,7 @@ description:
   governed by their own format, or ASCII punctuation alone (that is
   text-hygiene).
 allowed-tools: Read, Grep, Glob, Edit, Write
-argument-hint: [file-or-draft] [edit|detect]
+argument-hint: '[file-or-draft] [edit|detect]'
 ---
 
 ## Modes
