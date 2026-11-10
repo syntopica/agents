@@ -5,7 +5,9 @@ description:
   answering means sweeping many files, directories, or naming conventions and
   only the conclusion is needed. Locates code and returns file paths with line
   numbers. Do not use for review, audit, design judgment, or edits.
-disallowedTools: Agent, Edit, Write, NotebookEdit
+disallowedTools:
+  Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode,
+  Edit, Write, NotebookEdit
 model: haiku
 ---
 

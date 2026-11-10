@@ -50,6 +50,19 @@ void test('acknowledgements and ordinary work stay silent', () => {
   }
 })
 
+void test('the word changelog alone does not start a release', () => {
+  for (const prompt of [
+    'vale haz un changelog de las ultimas cosas que hicimos',
+    'read the Claude Code changelog and check whether agent teams exist',
+  ]) {
+    assert.equal(runRouterHook(prompt), null, `expected silence for: ${prompt}`)
+  }
+  assert.match(
+    String(runRouterHook('genera el changelog de la release')),
+    new RegExp(LANE_MARKERS['release'] ?? 'brp-release'),
+  )
+})
+
 void test('a lane fires at most once per session', () => {
   const prompt = ROUTER_FIXTURES.routes['debug']?.[0]
   assert.ok(prompt, 'debug lane needs at least one fixture prompt')

@@ -183,7 +183,10 @@ ROUTES = [
         "release",
         "Use the brp-release skill: collect commits since the last tag, pick the "
         "semver bump, update changelog, gate on a green check, then tag.",
-        r"\b(changelog|release notes|haz(me)? (un|el) release|"
+        # A bare "changelog" is not release intent: every real prompt sampled on
+        # 2026-11-10 meant a stakeholder recap or reading a vendor's changelog.
+        r"\b(changelog\b.{0,30}\b(release|tag)|(release|tag)\b.{0,30}\bchangelog|"
+        r"release notes|haz(me)? (un|el) release|"
         r"sube la versi[oó]n|bump|semver|taggea|crea (el|un) tag)\b",
     ),
     (
