@@ -13,7 +13,7 @@
 set -uo pipefail
 
 input=$(cat 2>/dev/null || true)
-get() { printf '%s' "$input" | python3 -c "
+get() { printf '%s' "$input" | python3 -I -c "
 import json, sys
 try:
     print(json.load(sys.stdin).get('$1', ''))
@@ -40,7 +40,7 @@ cd "$cwd" 2>/dev/null || exit 0
 # build system it uses. Node-only detection left PHP, Make and just repos silent,
 # which is where "you said it was done" corrections clustered.
 cmd=""
-if [ -f package.json ] && python3 -c "
+if [ -f package.json ] && python3 -I -c "
 import json, sys
 try:
     s = json.load(open('package.json')).get('scripts', {})
@@ -53,7 +53,7 @@ sys.exit(0 if 'check' in s else 1)
   elif [ -f yarn.lock ]; then pm="yarn"
   else pm="npm"; fi
   cmd="$pm run check"
-elif [ -f composer.json ] && python3 -c "
+elif [ -f composer.json ] && python3 -I -c "
 import json, sys
 try:
     s = json.load(open('composer.json')).get('scripts', {})
@@ -74,7 +74,7 @@ out=$(timeout 180 $cmd 2>&1); code=$?
 [ "$code" -eq 124 ] && exit 0   # timed out — do not block
 [ "$code" -eq 0 ] && exit 0     # passed
 
-printf '%s' "$out" | tail -30 | python3 -c "
+printf '%s' "$out" | tail -30 | python3 -I -c "
 import json, sys
 tail = sys.stdin.read()
 print(json.dumps({

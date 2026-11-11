@@ -17,7 +17,7 @@ set -uo pipefail
 input=$(cat 2>/dev/null || true)
 [ -n "$input" ] || exit 0
 
-printf '%s' "$input" | python3 -c '
+printf '%s' "$input" | python3 -I -c '
 import json, os, sys
 
 try:
