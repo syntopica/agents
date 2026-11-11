@@ -15,6 +15,10 @@
         {
           "type": "command",
           "command": "${CLAUDE_PLUGIN_ROOT}/hooks/user-prompt-skill-router.sh"
+        },
+        {
+          "type": "command",
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/context-size-guard.sh"
         }
       ]
     }
