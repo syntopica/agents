@@ -15,7 +15,7 @@ export const LANE_MARKERS: Record<string, string> = {
   'environment-ops': 'Environment/host work',
   'repo-modernization': 'Repo modernization',
   loop: '/loop',
-  plan: 'brainstorming',
+  plan: 'superpowers:brainstorming',
   docs: 'brp-docs',
   release: 'brp-release',
 }

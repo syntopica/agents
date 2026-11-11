@@ -67,7 +67,7 @@ ROUTES = [
     ),
     (
         "plan",
-        "Use the brainstorming skill, then writing-plans. Do not "
+        "Use superpowers:brainstorming, then superpowers:writing-plans. Do not "
         "start editing before the approach is agreed.",
         r"\b(hazme un plan|haz un plan|dame un plan|crea(r)? un plan|"
         r"dise[ñn]a(r)? (el|un) .{0,12}plan|necesito un plan|roadmap|"
@@ -152,7 +152,7 @@ ROUTES = [
     ),
     (
         "debug",
-        "Use the systematic-debugging skill before proposing a fix. "
+        "Use the superpowers:systematic-debugging skill before proposing a fix. "
         "Reproduce first; do not guess at the cause.",
         r"\b(no funciona|no va\b|sigue (sin|igual|fallando|roto)|falla|fallando|"
         r"est[aá] roto|se ha roto|(has|hemos|hab[eé]is|han) roto|se rompi[oó]|"
