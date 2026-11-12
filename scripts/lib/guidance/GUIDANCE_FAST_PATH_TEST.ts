@@ -103,7 +103,16 @@ void test('guidance fast paths are deterministic and conflict-aware', () => {
       policy,
       acceptPublished: true,
     }).kind,
-    'reconcile',
+    'adopt',
+    'a changed rules inventory must not force a rewrite of published guidance',
+  )
+  assert.equal(
+    resolveGuidanceFastPath({
+      sources: createSources(false, 'changed rules'),
+      policy,
+      acceptPublished: true,
+    }).kind,
+    'converged',
   )
   for (const livePath of ['live/claude/CLAUDE.md', 'live/codex/AGENTS.md']) {
     for (const localEdit of [

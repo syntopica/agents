@@ -11,17 +11,6 @@ import type { ResolveGuidanceFastPathOptions } from './types/ResolveGuidanceFast
 export const resolveGuidanceFastPath = (
   options: ResolveGuidanceFastPathOptions,
 ): GuidanceFastPath => {
-  const canonicalPaths = [
-    'canonical/shared.md',
-    'canonical/claude-overlay.md',
-    'canonical/codex-overlay.md',
-  ]
-  const livePaths = ['live/claude/CLAUDE.md', 'live/codex/AGENTS.md']
-  const volatilePaths = new Set([
-    ...canonicalPaths,
-    ...livePaths,
-    'state/accepted.json',
-  ])
   let parsed: ReturnType<typeof parseAcceptedGuidanceState>
   try {
     parsed = parseAcceptedGuidanceState(
@@ -64,31 +53,9 @@ export const resolveGuidanceFastPath = (
       parsed.state.outputHashes.codexDocument
   )
     return { kind: 'reconcile' }
-  const previousInputs = Object.fromEntries(
-    parsed.state.inputHashes.map(({ path, sha256 }) => [path, sha256]),
-  )
-  const stablePaths = Object.keys(options.sources.hashes).filter(
-    (path) => !volatilePaths.has(path),
-  )
-  const previousStablePaths = Object.keys(previousInputs).filter(
-    (path) => !volatilePaths.has(path),
-  )
-  if (
-    JSON.stringify(stablePaths.toSorted()) !==
-      JSON.stringify(previousStablePaths.toSorted()) ||
-    stablePaths.some(
-      (path) => options.sources.hashes[path] !== previousInputs[path],
-    )
-  )
-    return { kind: 'reconcile' }
-  if (
-    canonicalPaths.every((path, index) => {
-      const name = ['shared', 'claudeOverlay', 'codexOverlay'][index] as
-        'shared' | 'claudeOverlay' | 'codexOverlay'
-      return options.sources.hashes[path] === parsed.state.outputHashes[name]
-    })
-  )
-    return { kind: 'reconcile' }
+  // The rules inventory and linked rules are not adopted text: the published
+  // documents only point to them. Letting their change force a semantic rewrite
+  // made the reconciler re-inline mechanics the canonical sources had moved out.
   const adoptedDocuments: typeof documents = {
     ...documents,
     claudeDocument: renderGuidanceDocument(
