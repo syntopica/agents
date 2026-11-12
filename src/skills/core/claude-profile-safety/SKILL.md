@@ -42,10 +42,10 @@ primary profile is plain `claude`, with no variable set.
 
 ## What is shared, and what must never be
 
-`CLAUDE.md` already states the general shape: the canonical directory, what may
-be symlinked, what stays per-profile, aligning the MCP lists without printing
-env values, absolute hook paths, and serialising plugin updates. Only what it
-does not say is here.
+The general shape is in `agent-guidance-maintenance` (Claude Code loading): the
+canonical directory, what may be symlinked, what stays per-profile, aligning the
+MCP lists without printing env values, absolute hook paths, and serialising
+plugin updates. Only what it does not say is here.
 
 - Editing a file under the secondary profile's directory directly is a bug:
   either it belongs in `~/.claude` and should be linked, or it is session state

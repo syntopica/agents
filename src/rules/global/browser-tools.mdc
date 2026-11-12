@@ -5,32 +5,4 @@ alwaysApply: true
 
 # Browser control: Orca always, the real Chrome only to read, never a fresh profile
 
-**Every browser task runs in Orca's embedded browser** (owner order 2026-09-25:
-"usa orca browser como primario siempre... que no me roba el foco"). It shares
-no tab and no focus with the owner or other sessions. The real Chrome is not
-the fallback for a missing login: check `orca tab profile list --json`, and if
-no profile holds it, ask the owner to import that Chrome profile in Orca's UI
-(no CLI for it) or to sign in inside Orca. A locked screen is not permission:
-on 2026-09-25 a session drove Chrome to Product Hunt while it was locked, and
-the owner was back at the keyboard, on another tab, before the next write.
-
-What the real Chrome may still do is answer without focus: `chrome-cli source -t
-<id>` and `info -t <id>` read a tab wherever it sits. Its traps are in
-`browser-session-safety`. Before it loads:
-
-**A temporary or isolated Chrome profile is unusable for any logged-in site.**
-Never substitute one, and never copy cookies between profiles.
-
-**Two sessions share one browser.** `chrome-cli execute` acts on the active tab
-of the frontmost window; guard every call with a URL check, and never close a
-window without counting whose tabs are in it.
-
-**Reading a tab needs no focus, so never take it:** `chrome-cli source -t <id>`
-and `info -t <id>`.
-
-**A missing identity is usually a config gap, not a broken browser** — compare
-the profiles' MCP server lists before debugging Chrome.
-
-Invoke `browser-session-safety` before the first browser command of a task, and
-before any browser troubleshooting. If it cannot load, do not drive a logged-in
-session.
+Every browser task runs in Orca's embedded browser. The real Chrome is read-only (`chrome-cli source -t <id>` and `info -t <id>`), is never the fallback for a missing login, and is never replaced by a temporary or isolated profile. Invoke `browser-session-safety` before the first browser command of a task and before any browser troubleshooting; if it cannot load, do not drive a logged-in session.

@@ -79,6 +79,9 @@
         "@rules/core/boundaries.mdc"
       ]
     },
+    "agent-guidance-maintenance": {
+      "rules": ["@rules/core/security-baseline.mdc"]
+    },
     "claude-profile-safety": {
       "rules": ["@rules/core/security-baseline.mdc"]
     },
