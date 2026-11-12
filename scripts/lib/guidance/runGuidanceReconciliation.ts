@@ -11,6 +11,7 @@ import { guidanceProposalContext } from './guidanceProposalContext'
 import { resolveGuidanceFastPath } from './resolveGuidanceFastPath'
 import { resolveGuidanceProposalOutput } from './resolveGuidanceProposalOutput'
 import { runReconciliationAgent } from './runReconciliationAgent'
+import { toPublishedPromptSources } from './toPublishedPromptSources'
 import type { GuidanceReconciliationOptions } from './types/GuidanceReconciliationOptions'
 import type { GuidanceRunReport } from './types/GuidanceRunReport'
 import { validateReconciliationResult } from './validators/validateReconciliationResult'
@@ -64,7 +65,10 @@ export const runGuidanceReconciliation = async (
   const runStartedAt = new Date()
   const rawResult = await runReconciliationAgent(
     policy,
-    buildReconciliationPrompt(policy, sources),
+    buildReconciliationPrompt(
+      policy,
+      toPublishedPromptSources(sources, options.acceptPublished === true),
+    ),
     await realpath(options.home),
   )
   const runEndedAt = new Date()
