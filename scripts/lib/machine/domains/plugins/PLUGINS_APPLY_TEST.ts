@@ -67,9 +67,7 @@ void test("enablement targets the profile's config directory", async () => {
   assert.deepEqual(calls.at(0)?.env, {
     CLAUDE_CONFIG_DIR: join('/home/u', '.claude-secondary'),
   })
-  assert.deepEqual(calls.at(1)?.env, {
-    CLAUDE_CONFIG_DIR: join('/home/u', '.claude'),
-  })
+  assert.deepEqual(calls.at(1)?.env, { CLAUDE_CONFIG_DIR: undefined })
   assert.deepEqual(calls.at(1)?.argv, [
     'claude',
     'plugin',

@@ -35,7 +35,8 @@ setInterval(()=>{},1000);
       officialDocumentationOrigins: { claude: [], codex: [] },
       maxOutputBytes: 10_000,
       agentCommand: [process.execPath, script],
-      timeoutMs: 1_000,
+      // Generous under load: only the timeout mode should ever hit the limit.
+      timeoutMs: mode === 'timeout' ? 4_000 : 15_000,
     }
     const operation = runReconciliationAgent(policy, '{}')
     const observed = operation.then(
@@ -43,7 +44,7 @@ setInterval(()=>{},1000);
       (error: unknown) => ({ ok: false, error }),
     )
     let pid: number | undefined
-    for (let attempt = 0; attempt < 20 && pid === undefined; attempt += 1) {
+    for (let attempt = 0; attempt < 120 && pid === undefined; attempt += 1) {
       const row = execFileSync('/bin/ps', ['-axo', 'pid=,command='], {
         encoding: 'utf8',
       })

@@ -18,6 +18,7 @@ export const buildReconciliationPrompt = (
       'Translate provider syntax into documented target behavior; Codex output must not retain Claude imports.',
       'Include every requiredInvariants string verbatim in shared, claudeDocument, and codexDocument. Do not paraphrase or omit these strings.',
       'Preserve the semantic union of both live targets, canonical sources, and relevant rules. Keep provider-neutral behavior in shared and provider-specific behavior only in its overlay.',
+      'Use official documentation to verify and correct statements the sources already make. Do not add loading, discovery or configuration facts that no source states: sources may deliberately point to a skill for those mechanics instead of inlining them.',
     ],
     requiredInvariants: policy.requiredInvariants,
     officialDocumentationOrigins: policy.officialDocumentationOrigins,

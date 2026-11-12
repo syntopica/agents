@@ -1,4 +1,4 @@
 export interface PluginCommand {
   argv: string[]
-  env?: Record<string, string>
+  env?: Record<string, string | undefined>
 }

@@ -47,7 +47,14 @@ export const toPluginCommand = (
         'user',
         change.id,
       ],
-      env: { CLAUDE_CONFIG_DIR: dirname(paths.settings[change.profile]) },
+      // Personal is the default profile (~/.claude.json): unset the variable,
+      // because pinning it to ~/.claude starts a third, empty profile.
+      env: {
+        CLAUDE_CONFIG_DIR:
+          change.profile === 'claude-personal'
+            ? undefined
+            : dirname(paths.settings[change.profile]),
+      },
     }
   }
 

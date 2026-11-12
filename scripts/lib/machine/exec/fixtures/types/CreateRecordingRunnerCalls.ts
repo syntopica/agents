@@ -1,4 +1,4 @@
 export interface CreateRecordingRunnerCalls {
   argv: string[]
-  env?: Record<string, string>
+  env?: Record<string, string | undefined>
 }

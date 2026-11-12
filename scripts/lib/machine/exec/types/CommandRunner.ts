@@ -6,5 +6,5 @@ import type { CommandResult } from './CommandResult'
  */
 export type CommandRunner = (
   argv: string[],
-  env?: Record<string, string>,
+  env?: Record<string, string | undefined>,
 ) => Promise<CommandResult>
