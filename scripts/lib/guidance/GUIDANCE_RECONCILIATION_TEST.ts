@@ -30,13 +30,13 @@ void test('policy parsing accepts only the constrained policy contract', () => {
   })
   assert.equal(rejected.ok, false)
   assert.match(rejected.errors.join('\n'), /unknown property/u)
-  assert.equal(parseGuidancePolicy({ ...policy, timeoutMs: 300_000 }).ok, true)
+  assert.equal(parseGuidancePolicy({ ...policy, timeoutMs: 900_000 }).ok, true)
   const excessiveTimeout = parseGuidancePolicy({
     ...policy,
-    timeoutMs: 300_001,
+    timeoutMs: 900_001,
   })
   assert.equal(excessiveTimeout.ok, false)
-  assert.match(excessiveTimeout.errors.join('\n'), /between 1000 and 300000/u)
+  assert.match(excessiveTimeout.errors.join('\n'), /between 1000 and 900000/u)
   assert.equal(
     parseGuidancePolicy({
       ...policy,

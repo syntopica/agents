@@ -84,9 +84,9 @@ export const parseGuidancePolicy = (
     typeof raw['timeoutMs'] !== 'number' ||
     !Number.isSafeInteger(raw['timeoutMs']) ||
     raw['timeoutMs'] < 1000 ||
-    raw['timeoutMs'] > 300_000
+    raw['timeoutMs'] > 900_000
   )
-    errors.push('timeoutMs must be between 1000 and 300000')
+    errors.push('timeoutMs must be between 1000 and 900000')
   if (containsSensitiveGuidanceContent(JSON.stringify(raw)))
     errors.push('policy contains a credential literal')
   return errors.length > 0

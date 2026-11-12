@@ -12,12 +12,10 @@ benefit here.
 
 ## Branching
 
-- Commit directly to the current working branch (usually `main`). Do NOT create
-  a feature branch or git worktree by default.
-- Create a branch ONLY when one of these is true: a real collaborator/PR is in
-  the loop, the change is a long-lived experiment that must not touch `main`, or
-  the user explicitly asks for a branch.
-- Never create a branch "just in case". A branch only the author will merge back
+- Commit directly to `main`, the only active local and remote branch. Do NOT
+  create a feature branch or git worktree.
+- Create a branch ONLY when the user explicitly asks for one or the repository's
+  own guidance requires pull requests. A branch only the author will merge back
   is pure integration overhead.
 - Leave the repo on the branch you started on. Do not end a task on a detached
   HEAD or an orphaned worktree.
