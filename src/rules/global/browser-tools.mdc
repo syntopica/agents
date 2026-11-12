@@ -5,4 +5,4 @@ alwaysApply: true
 
 # Browser control: Orca always, the real Chrome only to read, never a fresh profile
 
-Every browser task runs in Orca's embedded browser. The real Chrome is read-only (`chrome-cli source -t <id>` and `info -t <id>`), is never the fallback for a missing login, and is never replaced by a temporary or isolated profile. Invoke `browser-session-safety` before the first browser command of a task and before any browser troubleshooting; if it cannot load, do not drive a logged-in session.
+Every browser task runs in Orca's embedded browser. The real Chrome is read-only: `chrome-cli source -t <id>` and `info -t <id>` read a tab without taking focus, and need no skill. It is never the fallback for a missing login, and is never replaced by a temporary or isolated profile. Invoke `browser-session-safety` before driving a browser or troubleshooting one; if it cannot load, do not drive a logged-in session.
