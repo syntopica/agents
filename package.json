@@ -6,9 +6,10 @@
   "description": "Agent workflow engine + rules/skills orchestrator for high-quality code across IDEs",
   "scripts": {
     "build": "pnpm run clean:dist && pnpm run rules:compile && pnpm run skills:compile && pnpm run plugins:compile",
-    "check:all": "pnpm run type-check && pnpm run format && pnpm run lint:fix && pnpm run rules:check && pnpm run rules:test && pnpm run skills:validate && pnpm run skills:test && pnpm run agents:test && pnpm run guidance:test && pnpm run connectors:test && pnpm run codex:test && pnpm run machine:test && pnpm run library:test && pnpm run link:test && pnpm run hooks:test && pnpm run skills:lint && pnpm run hygiene:test && pnpm run check:quality",
+    "check:all": "pnpm run type-check && pnpm run format:check && pnpm run lint && pnpm run rules:check && pnpm run rules:test && pnpm run skills:validate && pnpm run skills:test && pnpm run agents:test && pnpm run guidance:test && pnpm run connectors:test && pnpm run codex:test && pnpm run machine:test && pnpm run library:test && pnpm run link:test && pnpm run hooks:test && pnpm run skills:lint && pnpm run hygiene:test && pnpm run check:quality",
     "check:ci": "pnpm run check:all",
     "check": "pnpm run check:all",
+    "fix": "pnpm run format && pnpm run lint:fix",
     "format:check": "prettier --check .",
     "format": "prettier --write . --list-different",
     "lint:fix": "eslint . --fix",

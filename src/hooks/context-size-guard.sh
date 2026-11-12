@@ -64,13 +64,10 @@ print(json.dumps({
         "additionalContext": (
             f"This session already carries {size} tokens of context, and every turn "
             "re-reads all of it against the owner'"'"'s weekly quota. If this prompt is a "
-            "localized task that does not depend on the conversation so far (a single "
-            "bug, a small edit in another area, an unrelated repository), do not solve "
-            "it here: add it to the owning repository'"'"'s TODO.md with the evidence and the "
-            "smallest next step so the bot works it in a fresh context, or delegate it to "
-            "a subagent with a self-contained brief, and say which you did. If it "
-            "continues the current work, proceed normally. Either way, when the current "
-            "task is done, suggest /clear before the next one."
+            "localized task that does not depend on the conversation so far, still do "
+            "it: never defer an authorized task to a TODO or a subagent for cost alone. "
+            "Say once that a fresh session would be cheaper for such work. When the "
+            "current task is done, suggest /clear before the next one."
         ),
     },
 }))
