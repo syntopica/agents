@@ -72,6 +72,19 @@ noise.
 **A bench with generated code cannot live inside the repository it judges.** A
 copy left under the tree failed `check:ci` with 40 parse errors.
 
+**A script does not inherit the shell's `codex` function.** Here `codex` is a
+zsh function that runs `env -u OPENAI_API_KEY`; a bash runner calls the binary
+with the key still exported. Write `env -u OPENAI_API_KEY codex ...` in every
+runner, so no bench run can bill an API key.
+
+**Isolate skills with a throwaway home, and check what it pulled in.** Codex
+reads skills from `$HOME/.agents` and `$CODEX_HOME`, so set both to an empty
+directory holding only `auth.json` and the model keys of `config.toml`. Codex
+still downloads remote plugins into that home (superpowers among them), so grep
+the logs for each arm's skill reads before trusting the isolation. A rule that
+defers to a skill must also be measured with that skill installed, as it ships:
+on 2026-11-12 a shortened rule lost without its skill and tied with it.
+
 **`codex exec` needs `< /dev/null`.** A heredoc earlier in the same shell call
 consumes stdin and codex waits on it until the timeout, logging only "Reading
 additional input from stdin...". Outside a git repository it also needs
