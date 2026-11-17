@@ -6,3 +6,5 @@ alwaysApply: true
 # Process hygiene: never kill by size
 
 A large process is not a safe one to kill. Before proposing to kill anything, answer what is lost if it dies half-way, confirm the pid is still the same one, and identify a session's leftovers by `ppid == 1`, never by name. Invoke `orphan-process-cleanup` when memory is short, when a failure looks like a resource problem, or before reaping anything.
+
+Never hand `pkill` or `kill` a target you have not resolved: put the `$(...)` in a variable, stop if it is empty, then kill that exact pid, and never give `pkill -f` a short substring. On 2026-11-17 `pkill -f 'cat' -P $(pgrep ... | head -1)` got an empty substitution and TERMed every process whose argv held "cat", apps and agents included.
