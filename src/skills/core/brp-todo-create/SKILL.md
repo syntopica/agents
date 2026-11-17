@@ -2,11 +2,12 @@
 name: brp-todo-create
 description:
   Builds a project backlog from accessible Claude, Codex, Cursor and Antigravity
-  history into TODO.md, TODO_LOG.md, and the history index. Trigger when a
-  repository has no usable backlog and the work is to audit past conversations,
-  recovering every unfinished task, blocker, decision and milestone they
-  contain. Do not use for implementing the recovered work, for executing an
-  existing backlog, or for summarizing a single conversation.
+  history into a tadu backlog (TODO.md and TODO_LOG.md, or todo/ in format 2)
+  and the history index. Trigger when a repository has no usable backlog and the
+  work is to audit past conversations, recovering every unfinished task,
+  blocker, decision and milestone they contain. Do not use for implementing the
+  recovered work, for executing an existing backlog, or for summarizing a single
+  conversation.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash, TodoWrite, Task
 argument-hint: [repository-or-scope]
 ---
@@ -29,6 +30,6 @@ win where they differ.
   are report-only: no commit, no push. Owner products follow their own
   `AGENTS.md` authorization for commit, push, branch, and deployment actions. If
   the ownership classification is unavailable, do not infer write authority.
-- Cross-project discoveries go to the owning repository under `~/p`, or to
-  `~/p/TODO.md` when none owns them.
+- Cross-project discoveries go to the owning repository under `~/p`, or to the
+  `~/p` backlog when none owns them.
 - Finish with `tadu doctor <repo>` exiting 0, or report each remaining finding.

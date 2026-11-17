@@ -3,10 +3,10 @@ name: brp-todo-work
 description:
   Executes a project's existing TODO backlog end to end until every safe item is
   verified complete, blocked with evidence, or superseded. Trigger when the task
-  is to work through TODO.md, clear the backlog, or resume autonomous TODO
-  execution in the current repository, recording closed work in TODO_LOG.md. Do
-  not use for building a backlog from conversation history, for a single named
-  bug fix or feature, or for review of already-finished work.
+  is to work through the backlog (TODO.md, or todo/ in format 2), clear it, or
+  resume autonomous TODO execution in the current repository. Do not use for
+  building a backlog from conversation history, for a single named bug fix or
+  feature, or for review of already-finished work.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash, TodoWrite, Task
 argument-hint: [scope-or-category]
 ---
@@ -31,6 +31,6 @@ The owner rules below apply on top of it and win where they differ.
   are report-only: no commit, no push. Owner products follow their own
   `AGENTS.md` authorization for commit, push, branch, and deployment actions. If
   the ownership classification is unavailable, do not infer write authority.
-- Cross-project discoveries go to the owning repository under `~/p`, or to
-  `~/p/TODO.md` when none owns them.
+- Cross-project discoveries go to the owning repository under `~/p`, or to the
+  `~/p` backlog when none owns them.
 - Finish with `tadu doctor <repo>` exiting 0, or report each remaining finding.
