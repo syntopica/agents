@@ -38,7 +38,7 @@ ROUTES = [
     (
         "continuation",
         "Resuming earlier work. Load the project-continuation skill: recover state "
-        "from git status, the active plan file, TODO.md, and any handoff document "
+        "from git status, the active plan file, the tadu backlog, and any handoff document "
         "before acting. Do not ask the user to repeat context they already gave.",
         r"(siguiendo (la|el|nuestra)? ?(conversaci[oó]n|sesi[oó]n|hilo)|"
         r"handoff.{0,20}(prosigue|contin[uú]a|sigue)|"

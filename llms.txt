@@ -4,6 +4,9 @@ A collection of reusable Agent Skills for TypeScript/React/Next.js/Rust/Tauri pr
 
 ## Skills
 
+- agent-guidance-maintenance: Updates the owner's agent instruction stack. Trigger when shared guidance, a Claude or Codex overlay, a rule, the rules inventory, a skill, a hook, plugin settings or a profile link is about to be written, rendered, linked or reconciled, or when guidance does not seem to load. Covers where each source lives, how each client loads instructions, and what a change must preserve. Do not use for ordinary work that only follows the guidance.
+  dist/skills/core/agent-guidance-maintenance/SKILL.md
+
 - brain: Retrieves Syntopica context from project history and curated wiki notes, ingests sources, and audits the configured instance. Trigger when a task needs durable context that sounds previously established (a project's setup, a client, a past decision, infra, a credential), when new material has to be folded into the wiki, or when the wiki's health is in question. Triggers (ES) are ingerir, ingestar contenido, guarda en brain, mete en brain. Do not use for a repository that merely contains markdown, for code changes to the brain's own engine code. Context retrieval uses Atrium; it does not require a separate manual wiki search.
   dist/skills/core/brain/SKILL.md
 
@@ -25,10 +28,10 @@ A collection of reusable Agent Skills for TypeScript/React/Next.js/Rust/Tauri pr
 - brp-rust-quality: Audits and hardens a Rust or Tauri project's quality gates (clippy lint level, rustfmt, deny- warnings, unsafe hygiene, Tauri IPC boundaries). Trigger when the task is to bootstrap or improve repo-wide quality gates for a Rust or Tauri codebase and a `Cargo.toml` is present. Do not use for TypeScript, JavaScript, Python, Go, or PHP projects, isolated bug fixes, feature delivery, or behavior-preserving refactors inside a single module.
   dist/skills/core/brp-rust-quality/SKILL.md
 
-- brp-todo-create: Builds a project backlog from accessible Claude, Codex, Cursor and Antigravity history into TODO.md, TODO_LOG.md, and the history index. Trigger when a repository has no usable backlog and the work is to audit past conversations, recovering every unfinished task, blocker, decision and milestone they contain. Do not use for implementing the recovered work, for executing an existing backlog, or for summarizing a single conversation.
+- brp-todo-create: Builds a tadu backlog (format 1 or 2) from Claude, Codex, Cursor and Antigravity history. Trigger when a repository has no usable backlog and the work is to audit past conversations, recovering every unfinished task, blocker, decision and milestone they contain. Do not use for implementing the recovered work, for executing an existing backlog, or for summarizing a single conversation.
   dist/skills/core/brp-todo-create/SKILL.md
 
-- brp-todo-work: Executes a project's existing TODO backlog end to end until every safe item is verified complete, blocked with evidence, or superseded. Trigger when the task is to work through TODO.md, clear the backlog, or resume autonomous TODO execution in the current repository, recording closed work in TODO_LOG.md. Do not use for building a backlog from conversation history, for a single named bug fix or feature, or for review of already-finished work.
+- brp-todo-work: Executes a project's existing TODO backlog end to end until every safe item is verified complete, blocked with evidence, or superseded. Trigger when the task is to work through the tadu backlog, clear it, or resume autonomous TODO execution in the current repository. Do not use for building a backlog from conversation history, for a single named bug fix or feature, or for review of already-finished work.
   dist/skills/core/brp-todo-work/SKILL.md
 
 - brp-traffic-client: Turns observed application traffic into the smallest reliable programmatic client, replacing browser automation with direct HTTP calls. Trigger when the task involves HAR files, DevTools or CDP network exports, cURL or "Copy as fetch" output, proxy captures, or an existing Playwright/Puppeteer/browser-agent flow that is slow, brittle, or token-expensive. Do not use for documented public APIs with an official SDK, for UI testing where the browser is the subject under test, or for bypassing access controls.
@@ -36,6 +39,9 @@ A collection of reusable Agent Skills for TypeScript/React/Next.js/Rust/Tauri pr
 
 - claude-profile-safety: Debugs and updates the two Claude Code account profiles on this machine. Trigger when a session is about to start under a different account, when shared global configuration is being edited or linked, and when MCP tools or an identity are missing for reasons that are not obvious. Covers how each profile is started, what is shared by symlink, what must stay per-profile, and how to verify a profile actually loaded new configuration. Do not use for ordinary work inside one profile.
   dist/skills/core/claude-profile-safety/SKILL.md
+
+- dependency-upgrade: >-
+  dist/skills/core/dependency-upgrade/SKILL.md
 
 - design-quality: Audits and improves a running web UI's design with codeality-ui measurements plus a screenshot review. Trigger when asked to check, review or improve how a screen looks, whether a UI is polished, what a screen is missing, or to redesign a page so it stops looking AI-made, or to have a chosen model (Codex, Claude, ChatGPT web) critique screens and propose a better design as mockup images. Triggers (ES) are revisa el diseño, check-design, mejora la UI, que le falta a esta pantalla, modo creativo, vamos a mejorar la UI de X usando codex. Do not use for building a new UI from a blank page (that is frontend-design), for prose (prose-quality) or for functional testing of a running app (ui-verification-loop).
   dist/skills/core/design-quality/SKILL.md
@@ -81,6 +87,9 @@ A collection of reusable Agent Skills for TypeScript/React/Next.js/Rust/Tauri pr
 
 - tauri-ui-automation: Inspecting, clicking or screenshotting a Tauri v2 desktop app's own window from an agent on macOS. Trigger when a UI change in a Tauri app needs visual or DOM verification, when AppleScript or a synthetic click has just failed silently, and before adding any automation surface to a desktop app. Do not use for web pages in a browser, for headless Playwright runs against a dev server, or for native hit-testing, IME or drag-and-drop, which this cannot test.
   dist/skills/core/tauri-ui-automation/SKILL.md
+
+- ui-improvement-loop: Self-paced loop simplifying an app section by section on real data, with outside critique, before/after screenshots and a self-updating playbook. Trigger when the owner says the app feels cluttered, saturating or hard for a newcomer, asks to go section by section improving the UI, to keep iterating on the design, or to make one product serve both novices and experts. Triggers (ES) are la app esta recargada, satura, que se vea sencilla, itera seccion por seccion, mejora la UI de cada seccion. Do not use for a one-off review of one screen (design-quality), for building a new UI from scratch (frontend-design) or for functional bug hunting (ui-verification-loop).
+  dist/skills/core/ui-improvement-loop/SKILL.md
 
 - ui-verification-loop: Drives a running UI to find what is broken, slow or empty, asserts what actually paints, times the calls behind each screen, and lands the fix. Trigger when asked to test an app through its UI, to keep testing until nothing is left, to check a screen really renders what it should, or to explain why a screen takes seconds. Covers any UI with a JavaScript eval channel (web app, Electron, Tauri). Do not use for writing a test suite from scratch, for a one-off screenshot, or for reviewing code that is not running.
   dist/skills/core/ui-verification-loop/SKILL.md

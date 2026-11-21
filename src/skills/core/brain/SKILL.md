@@ -129,8 +129,8 @@ pnpm run check:ci                                # the gate: types, lint, tests,
 
 `clips audit` exits 2 when it has anything to report, which is a finding to read
 rather than a failure. Findings it cannot close itself - a declared
-contradiction, a source that changed under a page - belong in `TODO.md` with the
-measurement, not in a silent fix.
+contradiction, a source that changed under a page - belong in the project
+backlog (`tadu add`) with the measurement, not in a silent fix.
 
 ## Grade
 

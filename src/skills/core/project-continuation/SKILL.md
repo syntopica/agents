@@ -29,13 +29,13 @@ argument-hint: [optional-topic]
    and any stash or untracked files that look mid-task.
 2. Read the project's continuation artifacts in order: a handoff document if one
    exists (the `handoff` skill writes them), the active plan file, the backlog
-   (`TODO.md`, or `tadu list --open` in format 2; partial and blocked items
-   first), and `TODO_LOG.md` (or `tadu list --history`) for what already closed.
-   When the prompt names a previous Codex session, its transcript is the rollout
-   under `~/.codex/sessions/YYYY/MM/DD/` whose first line carries the repository
-   `cwd`. Sort by mtime, not by directory date: a long goal run keeps writing to
-   a rollout started days earlier. Read only the last `response_item` messages
-   with `jq`; these files reach hundreds of MB.
+   (`tadu list --open`, or `TODO.md` in format 1; partial and blocked items
+   first), and `tadu list --history` (`TODO_LOG.md` in format 1) for what
+   already closed. When the prompt names a previous Codex session, its
+   transcript is the rollout under `~/.codex/sessions/YYYY/MM/DD/` whose first
+   line carries the repository `cwd`. Sort by mtime, not by directory date: a
+   long goal run keeps writing to a rollout started days earlier. Read only the
+   last `response_item` messages with `jq`; these files reach hundreds of MB.
 3. State back the recovered picture in one short summary: what was done, what is
    verified, what remains, and the exact next command or edit.
 4. Resume at the smallest unfinished step and validate it the way the original

@@ -127,8 +127,8 @@ above drops them; parse and check rather than assuming conformance.
 - `needs_human` true, or `confidence` low on an irreversible choice: park the
   item `[!]` with the exact question and keep working elsewhere.
 - Missing or malformed payload: retry once. If it fails again, take the most
-  reversible option, write the assumption into `TODO.md` next to the item, and
-  continue.
+  reversible option, write the assumption into the item's notes (`tadu set`),
+  and continue.
 
 A verdict is guidance from a model that cannot see this session. Treat a claim
 about the code as a hypothesis and verify it before it changes a file.
