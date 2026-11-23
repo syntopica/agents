@@ -42,6 +42,7 @@ TODO_HISTORY_INDEX.jsonl
 TODO.md
 TODO_LOG.md
 TODO-skills-audit.md
+todo/
 
 # Machine manifests are instance data and live in the private instance;
 # AGENTS_MACHINE_DIR points at them. examples/machine/ is the public template
