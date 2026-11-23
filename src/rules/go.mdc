@@ -1,6 +1,6 @@
 ---
 globs: "**/*.go"
-description: "Go backend and microservices standards"
+description: "Go standards: the file unit, packages, errors, context, concurrency, tests, the codeality-go gate"
 alwaysApply: false
 ---
 
@@ -10,10 +10,11 @@ Use **@go** when working on Go codebases.
 
 This rule references:
 
-- **Go microservices**: `@rules/go/microservices.mdc` - clean architecture, interfaces, observability, resilience, testing
+- **Go standards**: `@rules/go/standards.mdc` - the file unit, package design, errors, context, concurrency, testing, the gate
+- **Go microservices** (services only): `@rules/go/microservices.mdc` - layering, resilience, observability
 
 ## Short summary
 
+- A `.go` file holds one exported unit, named after it; this replaces the general one-declaration-per-file rule for Go.
+- `codeality-go gate` is the definition of done. No `//nolint`.
 - Keep handlers thin and domain logic isolated. See `@rules/core/boundaries.mdc` for the universal thin-handler principle.
-- Depend on interfaces, use explicit DI, avoid global mutable state.
-- Enforce context propagation, explicit error handling, and observability.

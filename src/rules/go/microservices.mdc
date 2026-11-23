@@ -42,6 +42,6 @@ alwaysApply: false
 
 ## Testing and tooling
 
-- Use table-driven unit tests and isolate external dependencies with mocks/fakes.
+- Isolate external dependencies with hand-written fakes.
 - Separate fast unit tests from integration/E2E suites.
-- Enforce `go test`, `go fmt`, `goimports`, and `golangci-lint` in CI.
+- CI runs `codeality-go gate`. See `@rules/go/standards.mdc`.

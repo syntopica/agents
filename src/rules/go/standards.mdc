@@ -1,0 +1,88 @@
+---
+globs: "**/*.go"
+description: Go standards enforced by codeality-go (file unit, packages, errors, context, concurrency, tests)
+alwaysApply: false
+---
+
+# Go Standards
+
+Write Go to pass `codeality-go gate` the first time: format, `go mod tidy`,
+golangci-lint under the strict `.golangci.yml` that `codeality-go init` writes,
+the structural rules, duplicates, `go test -race -shuffle=on` with a coverage
+floor, and `govulncheck`. A new module starts with
+`codeality-go init --apply --ci`. Read `.golangci.yml` for the exact linters and
+limits; it is the authority, this file is the shape to aim for.
+
+## The file unit
+
+This replaces the general one-declaration-per-file rule for `.go` files, by the
+owner's decision of 2026-11-23: Go attaches behaviour to types and keeps small
+helpers beside their only caller.
+
+- A file holds one exported unit: a type with its constructor, methods, typed
+  constants and interface assertion; or one function; or one exported constant
+  or variable.
+- The file is the snake case of the unit: `Lease` in `lease.go`, `HTTPServer` in
+  `http_server.go`, `NewPlan` and `Plan` both in `plan.go`.
+- Unexported helpers stay in the file of their only caller. A helper a second
+  file needs becomes a unit with a file of its own.
+- `lease_test.go` sits beside `lease.go`. Helpers shared by the tests of a
+  package live in the test file of the unit they build.
+- At most 200 lines of code per file, 400 per test file.
+- No `util`, `helpers`, `common`, `misc`, `shared` or `types` as a package or a
+  file: name the thing by what it provides.
+- An exception is an `overrides` entry in `codeality-go.yaml` with its reason,
+  never `//nolint`.
+
+## Packages
+
+- Everything sits under `internal/` except `cmd/<binary>/main.go` and packages
+  declared public in `codeality-go.yaml`.
+- A package is named after its directory, a short lower-case noun, and has a
+  `doc.go` with its package comment.
+- `main` only wires: parse flags, build dependencies, call a package, exit.
+- Accept interfaces, return concrete types. Declare an interface in the package
+  that consumes it, as small as that consumer needs.
+- No package-level mutable state and no `init`: pass dependencies through
+  constructors.
+- SQL lives in `.sql` files loaded with `embed`, never in string literals.
+
+## Errors
+
+- Return errors; panic only for a programmer error that cannot be handled.
+- Wrap an error that crosses a package boundary with what was being done:
+  `fmt.Errorf("lease job %s: %w", id, err)`.
+- Sentinel errors are `var ErrNotFound = errors.New(...)`; error types end in
+  `Error`. Compare with `errors.Is` and `errors.As`, never `==` or a string.
+- Handle an error once: return it or log it, not both.
+
+## Context and concurrency
+
+- `ctx context.Context` is the first parameter of anything that blocks or does
+  I/O. Never store it in a struct.
+- Every HTTP request, query and subprocess carries a context with a deadline.
+- Whoever starts a goroutine knows how it stops: a context, a closed channel or
+  a `sync.WaitGroup`. `errgroup` for a group that fails together.
+- The sender closes a channel. Shared state is guarded by a mutex declared just
+  above the fields it protects.
+- Pointer receivers for a type that is mutated or holds a lock, and then on
+  every method of that type.
+
+## Tests
+
+- Package `x_test`, through the exported API; an in-package test only for what
+  the API cannot reach.
+- Table-driven with `t.Run`, `t.Parallel()` in the test and each subtest,
+  `t.Helper()` in helpers, `t.TempDir()` and `t.Context()` for resources.
+- Fakes written by hand against the consumer's interface; no mocking framework.
+- Standard library `testing` and `cmp`-style comparison; failure messages read
+  `Got(%v) = %v, want %v`.
+
+## Style
+
+- Every exported name has a doc comment that starts with the name and ends with
+  a period.
+- Guard clauses and early returns; the happy path stays at the left margin.
+- `log/slog` with constant messages and key-value attributes.
+- Standard library first: `slices`, `maps`, `cmp`, `errors.Join`, range over
+  integers, `net/http` routing patterns. Add a dependency for what it cannot do.
