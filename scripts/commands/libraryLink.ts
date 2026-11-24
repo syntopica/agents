@@ -12,6 +12,7 @@ import { isInstalledUnderAlias } from '../lib/library/isInstalledUnderAlias'
 import { isSkillTarget } from '../lib/library/isSkillTarget'
 import { linkStrategyForTarget } from '../lib/library/linkStrategyForTarget'
 import { planLinks } from '../lib/library/planLinks'
+import { pruneParkedLinks } from '../lib/library/pruneParkedLinks'
 import { resolveLinkDir } from '../lib/library/resolveLinkDir'
 import { selectFannedOutSkills } from '../lib/library/selectors/selectFannedOutSkills'
 import type { PlannedLink } from '../lib/library/types/PlannedLink'
@@ -107,6 +108,21 @@ export const main = async () => {
     console.error(collisions.join('\n'))
     process.exitCode = 1
     return
+  }
+
+  if (target === 'claude') {
+    const pruned = await pruneParkedLinks({
+      manifest: parsed.manifest,
+      skillsRoot,
+      linkDir,
+      keep: links.map((link) => link.target),
+      dryRun,
+    })
+    for (const name of pruned) {
+      console.error(
+        `${dryRun ? 'would remove' : 'removed'} parked link ${name}`,
+      )
+    }
   }
 
   const installed = await installPlannedLinks({
