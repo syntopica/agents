@@ -22,3 +22,14 @@ void test('ordinary guidance about credential handling remains valid', () => {
     false,
   )
 })
+
+void test('the 1Password product name is not a password label', () => {
+  assert.equal(
+    containsSensitiveGuidanceContent(
+      'Never store one outside 1Password: a key goes into the vault.',
+    ),
+    false,
+  )
+  assert.equal(containsSensitiveGuidanceContent('password: hunter2'), true)
+  assert.equal(containsSensitiveGuidanceContent('db_password=hunter2'), true)
+})

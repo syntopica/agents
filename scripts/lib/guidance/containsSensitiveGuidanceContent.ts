@@ -1,5 +1,6 @@
 export const containsSensitiveGuidanceContent = (value: string): boolean => {
-  const lower = value.toLowerCase()
+  // The product name ends in a credential label: "outside 1Password: a key" is prose.
+  const lower = value.toLowerCase().replaceAll('1password', '')
   const searchable = value.replaceAll('\\"', '"')
   return (
     (value.includes('-----BEGIN ') && value.includes('PRIVATE KEY-----')) ||
