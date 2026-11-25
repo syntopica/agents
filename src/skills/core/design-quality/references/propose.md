@@ -122,7 +122,11 @@ repository, so its `prompt.md` inlines the brief, drops the "source of these
 screens" bullet, and asks for the mockups "in this same reply" instead of as
 files. Ask for the written sections before the images: on 2026-10-15 two of
 three runs answered with mockups only and no text, which then took a follow-up
-message in the same chat. Then:
+message in the same chat. Split the prompt in two the same way for research: the
+first message carries the brief, the screenshots and only the research step
+(method step 1); the critique and the mockups go as a `--followup` once the
+answer names at least four products with sources. A single prompt that asks for
+everything lets ChatGPT skip the research, as it did on 2026-11-25. Then:
 
 ```bash
 timeout 2400 /opt/homebrew/bin/python3.13 -I ~/.claude/skills/design-quality/scripts/chatgpt_propose.py \

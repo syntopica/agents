@@ -138,15 +138,26 @@ the repository as extra context.
 4. **Hand-off.** Make `.codeality-ui/propose/<YYYY-MM-DD-HHMM>/`, copy the
    chosen screenshots and the brief into it, and run the prompt in
    `references/propose.md` with the command given there for the chosen model. It
-   writes `critique.md` and `mockup-*.png` into that directory.
+   writes `critique.md` and `mockup-*.png` into that directory. **Competitor
+   research is mandatory on every run** (owner order, 2026-11-25), whatever the
+   model and however small the screen. On 2026-11-25 ChatGPT's first answer to a
+   prompt that asked for it critiqued and drew without naming one product, and
+   the owner had to write "no has analizado a los competidores" in the chat. So
+   research is its own first turn: send the research step alone, accept it only
+   when it names at least four products with a source each and, per product, how
+   it solves this same screen, and only then ask for the critique and the
+   mockups in the same chat. With "usando claude" you do the research yourself
+   with web search before writing anything.
 5. **Check before showing.** Read every mockup. Reject and resume (same session)
    any mockup that drops a real feature, invents data presented as real, or
-   ignores the brief's persona. Confirm each critique point names something
-   visible in a screenshot. A feature the product lacks is not a reason to
-   reject: when the model brings a competitor's pattern or its own idea that
-   would serve the brief's users, keep it marked **new** and weigh it for
-   integration (owner order, 2026-10-15). Drop one only when it contradicts a
-   business or fiscal rule, duplicates something that exists, or serves no job.
+   ignores the brief's persona. Reject a critique whose references section names
+   no products with sources, or whose proposal adopts nothing from them. Confirm
+   each critique point names something visible in a screenshot. A feature the
+   product lacks is not a reason to reject: when the model brings a competitor's
+   pattern or its own idea that would serve the brief's users, keep it marked
+   **new** and weigh it for integration (owner order, 2026-10-15). Drop one only
+   when it contradicts a business or fiscal rule, duplicates something that
+   exists, or serves no job.
 6. **Deliver.** Show the mockups (Read them; send the files when the person is
    on another device), then the critique in five to ten lines: the change of
    approach first, then the problems ranked by how often the user hits them,
