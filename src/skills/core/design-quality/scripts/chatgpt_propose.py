@@ -279,6 +279,13 @@ def collect(run_dir: Path, page: str) -> None:
         (run_dir / f"mockup-{n + 1}.png").write_bytes(
             base64.b64decode(data_url.split(",", 1)[1])
         )
+    # A previous round with more images leaves mockup-(count+1).. behind, and
+    # on 2026-11-26 those stale files were read as this round's answer. Rename
+    # them rather than delete, so nothing generated earlier is lost.
+    for old in run_dir.glob("mockup-*.png"):
+        suffix = old.stem.split("-", 1)[1]
+        if suffix.isdigit() and int(suffix) > count:
+            old.rename(old.with_name(f"stale-{old.name}"))
 
     print(
         json.dumps(
